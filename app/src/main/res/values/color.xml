@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme">#ff0078ad</color>
+    <color name="menu_button_bg">#ff3a93bb</color>
+    <color name="banner_bg">#ff3a93bb</color>
+    <color name="white">#ffffffff</color>
+    <color name="red">#ffff0000</color>
+    <color name="tab_text_off">#ffa0a0a0</color>
+    <color name="tab_button_on">#ff8abed6</color>
+    <color name="gradient_start">#ff0f568a</color>
+    <color name="gradient_center">#ff206e9e</color>
+    <color name="gradient_end">#ff3a93bb</color>
+    <color name="home_button_start">#ffffb901</color>
+    <color name="home_button_history">#ff51b4de</color>
+    <color name="home_button_start_off">#ffd6b766</color>
+    <color name="home_button_history_off">#ff3a93bb</color>
+    <color name="split_line_color">#ffd0d0d0</color>
+    <color name="edittext_bg">#ffefefef</color>
+</resources>

@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/lib/fr.dvilleneuve.android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="颜色"/>
+                <EditText
+                    android:id="@+id/edittext1"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+            <include layout="@layout/tablelayout_color" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="里程数"/>
+                <EnhancedEditText
+                    android:paddingRight="4dp"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/edittext2"
+                    style="@style/edittext_edit"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="排量"/>
+                <EditText
+                    android:id="@+id/edittext3"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="车辆类型"/>
+                <EditText
+                    android:id="@+id/edittext4"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="车门数"/>
+                <EditText
+                    android:id="@+id/edittext5"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="车身型式"/>
+                <EditText
+                    android:id="@+id/edittext6"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="定员"/>
+                <EditText
+                    android:inputType="number"
+                    android:id="@+id/edittext7"
+                    style="@style/edittext_edit"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="变速箱"/>
+                <EditText
+                    android:id="@+id/edittext8"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="燃料类型"/>
+                <EditText
+                    android:id="@+id/edittext9"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="驱动方式"/>
+                <EditText
+                    android:id="@+id/edittext10"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+            </LinearLayout>
+        </ScrollView>
+
+
+
+</LinearLayout>

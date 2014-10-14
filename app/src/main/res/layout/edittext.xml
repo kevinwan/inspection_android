@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="36dp"
+    android:paddingBottom="36dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <EditText
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bg_selector"
+        android:inputType="textMultiLine"
+        android:gravity="start"
+        android:hint="请输入备注信息"
+        android:minHeight="48dp"/>
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:layout_width="match_parent"
+        android:minHeight="36dp"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:gravity="center"
+            android:id="@+id/money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"/>
+        <RelativeLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/split_line_color"/>
+
+
+        <TextView
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:id="@+id/note"
+            android:layout_width="0dp"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete"
+                android:background="@null"
+                android:src="@drawable/delete"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+
+</LinearLayout>

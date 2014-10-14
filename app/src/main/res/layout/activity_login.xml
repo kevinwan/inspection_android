@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
+
+    <include layout="@layout/banner_layout"/>
+
+    <LinearLayout
+        android:paddingLeft="24dp"
+        android:paddingRight="36dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:gravity="center_vertical|right"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:text="用户名:"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/account"
+            android:gravity="center_vertical"
+            android:hint="用户名/邮箱/手机"
+            style="@style/edittext_edit"
+            android:layout_marginLeft="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="24dp"
+        android:gravity="center_vertical"
+        android:paddingRight="36dp"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center_vertical|right"
+            android:layout_width="0dp"
+            android:text="密    码:"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            style="@style/edittext_edit"
+            android:gravity="center_vertical"
+            android:hint="请输入密码"
+            android:layout_marginLeft="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/login"
+        android:layout_marginTop="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="登 录"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_button_bg_selector"/>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/bannerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/banner_bg" >
+
+        <Button
+            android:id="@+id/slidingmenu_toggler"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/slidingmenu_toggler"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:id="@+id/banner_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffffff"
+            android:text="车辆检测"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/extra"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:textColor="#ffffffff" />
+    </RelativeLayout>
+
+</RelativeLayout>

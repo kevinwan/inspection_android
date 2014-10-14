@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.gongpingjia.gpjdetector.kZViews.TouchImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="#66ffffff" >
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/qr_tag"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/qr_tag"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/image_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="#ffffffff"
+                android:text="标 题"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/extra"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/close"
+                android:textColor="#ffffffff" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:layout_gravity="bottom|center"
+            android:background="#66ffffff">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/recapture"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/recapture_selector"
+                    android:gravity="center"
+                    android:src="@drawable/recapture"
+                    android:padding="10dp" />
+                </LinearLayout>
+            <RelativeLayout
+                android:layout_width="1px"
+                android:layout_height="56dp"
+                android:background="@android:color/white"/>
+            <LinearLayout
+                android:id="@+id/delete_group"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/delete"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/delete_selector"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/delete_w" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </FrameLayout>

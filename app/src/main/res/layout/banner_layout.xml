@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bannerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/banner_bg" >
+
+    <Button
+        android:id="@+id/extra"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:background="@null"
+        android:textColor="#ffffffff" />
+
+    <TextView
+        android:id="@+id/banner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#ffffffff"
+        android:text="标 题"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/slidingmenu_toggler"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/slidingmenu_toggler"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp" />
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="800px"
+    android:layout_height="match_parent">
+    <TextView
+        android:gravity="center"
+        android:text="扫二维码立即查看报告"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:textSize="18sp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"/>
+    <include layout="@layout/split_line"/>
+    <ImageView
+        android:id="@+id/qr_img"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="800px" />
+
+</LinearLayout>

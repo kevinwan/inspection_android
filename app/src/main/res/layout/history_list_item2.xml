@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:layout_height="76dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:layout_height="72dp">
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:id="@+id/thumbnail"
+            android:src="@drawable/carnull"/>
+
+        <RelativeLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:background="@color/split_line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:text="奥迪A6 2007款 3.2FSI quattro 豪华型"/>
+            <LinearLayout
+                android:gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date"
+                    android:textSize="12sp"
+                    android:text="检测时间：2014-9-11 17:28:15"/>
+            </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+</LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ModelFragment"
+                android:background="@drawable/model_fargment_bg">
+
+    <ImageView
+            android:id="@+id/left_panel"
+            android:layout_width="8dp"
+            android:layout_height="match_parent"/>
+
+    <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/img_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/left_panel"
+            android:src="@drawable/brandnull"/>
+    
+    <TextView
+            android:id="@+id/txt_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@+id/img_logo"
+            android:gravity="center_vertical"
+            android:textSize="18sp"/>
+
+    <ImageView
+            android:id="@+id/brand_split"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_toRightOf="@+id/left_panel"
+            android:layout_below="@+id/img_logo"
+            android:background="#FF33B5E5"
+            />
+
+    <ListView
+            android:id="@android:id/list"
+            android:layout_toRightOf="@+id/left_panel"
+            android:layout_below="@+id/brand_split"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/split_line_color"
+            android:dividerHeight="1sp"/>
+
+    <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CC000000"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#FFFFFFFF"
+            android:visibility="gone"
+            android:text="正在加载..."
+            />
+
+</RelativeLayout>

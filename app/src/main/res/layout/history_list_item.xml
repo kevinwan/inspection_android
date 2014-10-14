@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:layout_height="76dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:layout_height="match_parent">
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:id="@+id/thumbnail"
+            android:src="@drawable/carnull"/>
+
+        <RelativeLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:background="@color/split_line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:text="奥迪A6 2007款 3.2FSI quattro 豪华型"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:id="@+id/condition"
+                        android:text="车辆现况：90"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="历史车况：B"
+                        android:textSize="12sp"
+                        android:id="@+id/accident" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/time"
+                        android:textSize="12sp"
+                        android:text="检测时间：2014-9-11 17:28:15"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:id="@+id/score"
+                        android:textColor="@android:color/holo_red_light"
+                        android:text="90B"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:minWidth="320dip"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:background="@color/banner_bg">
+        <TextView
+            style="@style/DialogText.Title"
+            android:id="@+id/title"
+            android:text="请选择"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/banner_shadow" />
+
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:orientation="vertical"
+        android:background="@color/banner_bg"
+        android:layout_width="fill_parent"
+        android:minHeight="96dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/DialogText"
+            android:id="@+id/message"
+            android:paddingLeft="12dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:paddingRight="12dp"
+            android:textSize="14sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/banner_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_marginTop="3dip"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:background="#ffffba00"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/negativeButton"
+            android:background="#ff35b2e7"
+            android:layout_marginTop="3dip"
+            android:layout_width="0dip"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

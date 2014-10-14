@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff0078ad"
+    android:paddingTop="24dp"
+    android:gravity="center_horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="车辆检测"
+        android:textSize="18sp"
+        android:textColor="#ffbfdfe9"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#ffbbd6e0"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="18dp"/>
+
+    <Button
+        android:id="@+id/btn_fragment0"
+        android:text="   车辆基本信息"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment1"
+        android:text="    车辆照片采集"
+        style="@style/menu_button"/>
+    <Button
+        android:singleLine="true"
+        android:id="@+id/btn_fragment2"
+        android:text="   钣金修复漆面检查"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment3"
+        android:text="   车架结构检查"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment4"
+        android:text="   外观检查"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment5"
+        android:text="   内饰检查"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment6"
+        android:text="   发动机舱检查"
+        style="@style/menu_button"/>
+    <Button
+        android:id="@+id/btn_fragment7"
+        android:text="   底盘检查"
+        style="@style/menu_button"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#ffbbd6e0"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="18dp"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="保存"
+        android:textSize="18sp"
+        android:textColor="#ffffffff"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/submit_button_bg_selector"
+        android:gravity="center"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:text="提交"
+            android:layout_marginRight="4dp"
+            android:textSize="18sp"
+            android:textColor="#ffffffff"
+            android:background="@drawable/submit_button_bg_selector"
+            android:gravity="center"/>
+
+
+        <Button
+            android:layout_marginLeft="4dp"
+            android:id="@+id/exitButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:text="退出检测"
+            android:textSize="18sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:background="@drawable/exit_button_bg_selector"/>
+        </LinearLayout>
+
+
+
+
+</LinearLayout>

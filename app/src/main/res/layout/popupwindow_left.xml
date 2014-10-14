@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/camera"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_bg_left_selector"
+        android:drawableLeft="@drawable/camera"
+        android:paddingLeft="16dp"
+        android:textColor="@color/white"
+        android:paddingRight="12dp"
+        android:paddingTop="6dp"
+        android:id="@+id/text"
+        android:paddingBottom="6dp"
+        android:drawableRight="@drawable/right_go"
+        android:text="  添加刮蹭痕迹  "
+        android:gravity="center"/>
+
+</LinearLayout>

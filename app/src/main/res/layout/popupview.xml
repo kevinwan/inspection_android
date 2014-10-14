@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/lib/fr.dvilleneuve.android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/buttonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/banner_bg"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        android:paddingRight="8dp" >
+
+        <Button
+            android:id="@+id/complete"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@null"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="24dp"
+        android:gravity="center_vertical"
+        android:paddingRight="36dp"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center_vertical|right"
+            android:layout_width="0dp"
+            android:text="出险金额:"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"/>
+        <EnhancedEditText
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:id="@+id/money"
+            android:inputType="numberDecimal"
+            style="@style/edittext_edit"
+            android:gravity="center_vertical"
+            android:hint="请输入出险金额"
+            android:layout_marginLeft="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            custom:suffixText="元"
+            android:layout_height="wrap_content" />
+        <!--<EditText-->
+            <!--android:id="@+id/money"-->
+            <!--android:inputType="numberDecimal"-->
+            <!--style="@style/edittext_edit"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:hint="请输入出险金额"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="4"-->
+            <!--android:layout_height="wrap_content" />-->
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="24dp"
+        android:gravity="top"
+        android:paddingRight="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center_vertical|right"
+            android:layout_width="0dp"
+            android:text="出险事由:"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"/>
+        <EditText
+            android:id="@+id/note"
+            android:inputType="textMultiLine"
+            style="@style/edittext_edit"
+            android:gravity="start"
+            android:hint="请输入出险事由等备注信息"
+            android:minHeight="48dp"
+            android:layout_marginLeft="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="添 加"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_button_bg_selector"/>
+
+    <include layout="@layout/split_line"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="640px"/>
+
+</LinearLayout>
