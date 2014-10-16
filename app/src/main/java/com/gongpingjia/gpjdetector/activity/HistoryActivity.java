@@ -1,6 +1,7 @@
 package com.gongpingjia.gpjdetector.activity;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.adapter.TabsFragmentPagerAdapter;
 import com.gongpingjia.gpjdetector.fragment.Fragment_History_1_;
 import com.gongpingjia.gpjdetector.fragment.Fragment_History_2_;
+import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -42,6 +44,12 @@ public class HistoryActivity extends FragmentActivity {
     int currIndex = 0;
     Resources resources;
 
+    kZDatabase database;
+
+    public kZDatabase getDatabase() {
+        return database;
+    }
+
     @Click
     void extra () {
         onBackPressed();
@@ -54,9 +62,18 @@ public class HistoryActivity extends FragmentActivity {
         slidingmenu_toggler.setVisibility(View.INVISIBLE);
         resources = getResources();
 
+        database = new kZDatabase(HistoryActivity.this);
+
         tab_0.setOnClickListener(new TabsOnClickListener(0));
         tab_1.setOnClickListener(new TabsOnClickListener(1));
         initViewPager();
+
+        Bundle bundle = getIntent().getExtras();
+        if (null != bundle) {
+            if (bundle.getInt("isFinish") == 0) {
+                vPager.setCurrentItem(1);
+            }
+        }
     }
 
     private ArrayList<Fragment> fragmentList;
@@ -121,4 +138,9 @@ public class HistoryActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        database.close();
+    }
 }

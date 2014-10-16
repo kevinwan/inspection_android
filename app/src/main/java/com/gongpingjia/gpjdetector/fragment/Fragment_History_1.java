@@ -84,12 +84,15 @@ public class Fragment_History_1 extends Fragment {
 
     ImageLoader imageLoader;
 
+    int page = 1;
+    int has_next = 1;
+
 
     @AfterViews
     public void afterViews() {
         parentActivity = getActivity();
         requestUtils = new RequestUtils(parentActivity);
-        db = new kZDatabase(parentActivity);
+        db = ((HistoryActivity)getActivity()).getDatabase();
 
         RequestQueue mQueue = Volley.newRequestQueue(parentActivity);
         imageLoader = new ImageLoader(mQueue, new BitmapCache());
@@ -151,11 +154,13 @@ public class Fragment_History_1 extends Fragment {
         list = new ArrayList<HashMap<String, String>>();
 
 
-        requestUtils.getHistory(new RequestUtils.OngetHistoryCallback() {
+        requestUtils.getHistory(String.valueOf(page), new RequestUtils.OngetHistoryCallback() {
             @Override
             public void OnHistorySuccess(JSONObject jsonObject) {
                 try {
                     report_url = jsonObject.getString("report_url");
+                    has_next = jsonObject.getInt("has_next");
+                    if (1 == has_next) ++page;
                     JSONArray data = jsonObject.getJSONArray("data");
                     for (int i = 0; i < data.length(); ++i) {
                         JSONObject item = data.getJSONObject(i);
@@ -214,6 +219,47 @@ public class Fragment_History_1 extends Fragment {
 
     }
 
+    void loadMore(final View view) {
+        view.findViewById(R.id.button_more).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.progressbar_more).setVisibility(View.VISIBLE);
+        requestUtils.getHistory(String.valueOf(page), new RequestUtils.OngetHistoryCallback() {
+            @Override
+            public void OnHistorySuccess(JSONObject jsonObject) {
+                try {
+                    report_url = jsonObject.getString("report_url");
+                    has_next = jsonObject.getInt("has_next");
+                    if (0 != has_next) ++page;
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < data.length(); ++i) {
+                        JSONObject item = data.getJSONObject(i);
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("accident", item.getString("accident"));
+                        map.put("model", item.getString("model"));
+                        map.put("d_model", item.getString("d_model"));
+                        map.put("condition", item.getString("condition"));
+                        map.put("time", item.getString("time"));
+                        map.put("id", item.getString("id"));
+
+                        list.add(map);
+                    }
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                view.findViewById(R.id.button_more).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.progressbar_more).setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void OnHistoryError(String errorMessage) {
+                wait.setVisibility(View.GONE);
+                Toast.makeText(parentActivity, errorMessage, Toast.LENGTH_LONG).show();
+                view.findViewById(R.id.button_more).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.progressbar_more).setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     class historyAdapter extends BaseAdapter {
         public historyAdapter() {
 
@@ -244,6 +290,27 @@ public class Fragment_History_1 extends Fragment {
             viewHoler.time.setText("检测时间：" + map.get("time"));
 
             viewHoler.thumbnail.setImageUrl(getThumbnailUrl(map.get("model")), imageLoader);
+
+            if (position == list.size() - 1) {
+                view.findViewById(R.id.more).setVisibility(View.VISIBLE);
+                Button button_more = (Button) view.findViewById(R.id.button_more);
+                if (has_next == 1) {
+                    final View subview = view;
+                    button_more.setText("点击加载更多");
+                    button_more.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            loadMore(subview);
+                        }
+                    });
+                } else {
+                    button_more.setText("没有更多了");
+                    button_more.setOnClickListener(null);
+                }
+
+            } else {
+                view.findViewById(R.id.more).setVisibility(View.GONE);
+            }
 
             return view;
         }

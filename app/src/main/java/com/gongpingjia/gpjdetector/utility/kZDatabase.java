@@ -18,7 +18,7 @@ import java.util.Locale;
 public class kZDatabase extends SQLiteAssetHelper {
 
 	private static final String DATABASE_NAME = "detector.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 12;
 	
 	public kZDatabase(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -198,7 +198,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelect = {"tableName", "date", "isFinish"};
         String sqlTables = "history";
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
+        Cursor c = qb.query(db, sqlSelect, "isFinish=?", new String[]{"0"}, null, null, null, null);
         c.moveToFirst();
         return c;
     }
@@ -211,6 +211,11 @@ public class kZDatabase extends SQLiteAssetHelper {
         } catch (SQLiteException e) {
             Log.e("SQLiteException", e.toString());
         }
+    }
+
+    public int getHistorySize() {
+        Cursor c = getHistoryList();
+        return c.getCount();
     }
 
 }

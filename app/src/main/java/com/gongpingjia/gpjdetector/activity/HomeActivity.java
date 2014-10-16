@@ -48,13 +48,39 @@ public class HomeActivity extends Activity {
 
     @Click
     public void act_start() {
-        Constant.setTableName(db.createTable());
+
         if (!GPJApplication.getInstance().isLogin()) {
             Toast.makeText(HomeActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
             startActivityForResult(new Intent().setClass(HomeActivity.this, LoginActivity_.class), Constant.REQUEST_CODE_LOGIN_TO_START);
             return;
         }
-        startActivity(new Intent().setClass(HomeActivity.this, MainActivity_.class));
+
+        int historySize = db.getHistorySize();
+        if (historySize > 0) {
+            AlertDialog dialog = new AlertDialog.Builder(HomeActivity.this)
+                    .setMessage("本地仍有" + historySize + "条未提交的检测记录，是否现在处理？")
+                    .setPositiveButton("现在去处理", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent();
+                            intent.putExtra("isFinish", 0);
+                            intent.setClass(HomeActivity.this, HistoryActivity_.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("创建新检测", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Constant.setTableName(db.createTable());
+                            startActivity(new Intent().setClass(HomeActivity.this, MainActivity_.class));
+                        }
+                    }).create();
+            dialog.show();
+        } else {
+            Constant.setTableName(db.createTable());
+            startActivity(new Intent().setClass(HomeActivity.this, MainActivity_.class));
+        }
+
     }
 
     @Click
@@ -230,4 +256,9 @@ public class HomeActivity extends Activity {
         dialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
 }

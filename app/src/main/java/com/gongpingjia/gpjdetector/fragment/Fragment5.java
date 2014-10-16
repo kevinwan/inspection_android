@@ -40,7 +40,7 @@ public class Fragment5 extends Fragment {
 
         list = mainActivity.getDB5Items();
         item_list.setAdapter(new ItemListAdapter(mainActivity, list));
-        db = new kZDatabase(mainActivity);
+        db = mainActivity.getDatabase();
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {

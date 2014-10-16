@@ -41,7 +41,7 @@ public class Fragment3 extends Fragment {
         banner_title.setText("车架结构检查");
         mainActivity = (MainActivity_)getActivity();
         list = mainActivity.getDB3Items();
-        db = new kZDatabase(mainActivity);
+        db = mainActivity.getDatabase();
         item_list.setAdapter(new ItemListAdapter(mainActivity, list));
 
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {

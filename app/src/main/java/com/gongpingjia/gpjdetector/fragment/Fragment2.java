@@ -241,7 +241,7 @@ public class Fragment2 extends Fragment {
 
         banner_title.setText("钣金修复漆面检查");
         mainActivity = (MainActivity_)getActivity();
-        db = new kZDatabase(mainActivity);
+        db = mainActivity.getDatabase();
         res = getResources();
         paint = new Paint();
         paint.setColor(Color.argb(0xff, 0xf9, 0x3f, 0x25));

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.adapter.TabsFragmentPagerAdapter;
+import com.gongpingjia.gpjdetector.utility.Logger;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.androidannotations.annotations.AfterViews;
@@ -31,7 +32,7 @@ public class Fragment0 extends Fragment {
     SlidingMenu menu;
 
     @ViewById
-    ViewPager vPager;
+    public ViewPager vPager;
     @ViewById
     TextView tab_0, tab_1, tab_2;
     @ViewById
@@ -92,6 +93,7 @@ public class Fragment0 extends Fragment {
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
+                Logger.d("kkkkk", "opened is called.");
                 saveData();
             }
         });

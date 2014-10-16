@@ -10,6 +10,7 @@ import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.fragment.BrandFragment;
 import com.gongpingjia.gpjdetector.fragment.ModelDetailFragment;
 import com.gongpingjia.gpjdetector.fragment.ModelFragment;
+import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 public class CategoryActivity extends FragmentActivity implements
 BrandFragment.OnFragmentBrandSelectionListener,
@@ -26,9 +27,17 @@ ModelDetailFragment.OnFragmentModelDetailSelectionListener {
 	private ModelDetailFragment mModelDetailFragment;
 
 
-	@Override
+    kZDatabase database;
+
+    public kZDatabase getDatabase() {
+        return database;
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        database = new kZDatabase(CategoryActivity.this);
 
 		setContentView(R.layout.activity_category);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -117,4 +126,9 @@ ModelDetailFragment.OnFragmentModelDetailSelectionListener {
 		Toast.makeText(this, "未找到对应车款信息", Toast.LENGTH_SHORT).show();
 	}
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        database.close();
+    }
 }

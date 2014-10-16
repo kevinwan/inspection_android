@@ -47,8 +47,8 @@ public class UpdateHelper {
                 String updateVersion;
                 String url;
                 try {
-                    updateVersion = jsonObject.getString("version");
-                    url = jsonObject.getString("download_url");
+                    updateVersion = jsonObject.getString("extra_data");
+                    url = Constant.SERVER_DOMAIN + jsonObject.getString("url");
                 } catch (JSONException e) {
                     Toast.makeText(context, "检测更新失败：数据格式不正确。", Toast.LENGTH_SHORT).show();
                     return;
@@ -76,7 +76,7 @@ public class UpdateHelper {
     private void showUpdateDialog(String updateVersion, final String url) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("发现新版本 V." + updateVersion);
+        builder.setMessage("发现新版本 " + updateVersion);
         builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

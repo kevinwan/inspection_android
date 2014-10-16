@@ -85,7 +85,7 @@ public class Fragment1 extends Fragment {
     @AfterViews
     public void afterViews() {
         mainActivity = (MainActivity_) getActivity();
-        db = new kZDatabase(mainActivity);
+        db = mainActivity.getDatabase();
         banner_title.setText("车辆照片采集");
 //        list = mainActivity.getCaptureItems();
         adapter = new GridViewAdapter();

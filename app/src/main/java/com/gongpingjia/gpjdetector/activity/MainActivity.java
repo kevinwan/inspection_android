@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -69,6 +70,10 @@ public class MainActivity extends FragmentActivity {
 
     kZDatabase database;
 
+    public kZDatabase getDatabase() {
+        return database;
+    }
+
     Bitmap baseBitmap;
 
     public void setBaseBitmap(Bitmap baseBitmap) {
@@ -97,6 +102,8 @@ public class MainActivity extends FragmentActivity {
     Resources res;
 
     Paint paint;
+
+    boolean isExit = false;
 
     public boolean[] menu_status;
 
@@ -164,7 +171,7 @@ public class MainActivity extends FragmentActivity {
         menu.setOnOpenListener(new SlidingMenu.OnOpenListener() {
             @Override
             public void onOpen(int position) {
-                menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
                 if (menu_status[0]) {
                     ((MenuFragment_)menuFragment).btn_fragment0.setCompoundDrawables(left, null, right, null);
                 }
@@ -192,6 +199,7 @@ public class MainActivity extends FragmentActivity {
             }
 
         });
+
     }
 
     public void showExitDialog() {
@@ -200,6 +208,7 @@ public class MainActivity extends FragmentActivity {
                 setNegativeButton("确定退出", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        isExit = true;
                         database.deleteHistory(Constant.getTableName());
                         MainActivity.this.finish();
                     }
@@ -685,6 +694,14 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (!isExit) {
+            String model = database.getValue(Constant.getTableName(), "CX");
+            if (null == model || model.equals("")) {
+                database.deleteHistory(Constant.getTableName());
+            }
+        }
+
         database.close();
     }
 
@@ -845,6 +862,7 @@ public class MainActivity extends FragmentActivity {
         try {
             //1-1(15)
             for (index = 0; index < items11list.size(); ++index) {
+                if (items11list.get(index).getKey().equals("CXZK")) continue;
                 String value = items11list.get(index).getValue();
                 if (null == value || value.equals("")) {
                     showToast("<基本信息>有未填写的项目，无法提交。");

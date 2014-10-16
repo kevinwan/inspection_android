@@ -24,6 +24,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
+import com.gongpingjia.gpjdetector.activity.CategoryActivity;
+import com.gongpingjia.gpjdetector.activity.HistoryActivity;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
@@ -50,7 +52,7 @@ public class ModelFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         mModelUnderBrand = new ArrayList<Map<String, String>>();
         if (null == mBrandSlug) return;
-        db = new kZDatabase(getActivity());
+        db = ((CategoryActivity)getActivity()).getDatabase();
         Cursor cursor = db.getModelList(mBrandSlug);
         do {
             HashMap<String, String> map = new HashMap<String, String>();

@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.gongpingjia.gpjdetector.global.Constant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,7 +106,7 @@ public class RequestUtils {
         netDataJson.requestData(url, "get");
     }
 
-    public void getHistory (final OngetHistoryCallback ongetHistoryCallback) {
+    public void getHistory (final String page, final OngetHistoryCallback ongetHistoryCallback) {
         NetDataJson netDataJson = new NetDataJson(new NetDataJson.OnNetDataJsonListener() {
             @Override
             public void onDataJsonError(String errorMessage) {
@@ -118,19 +119,56 @@ public class RequestUtils {
             }
         });
         String url = "/inspection/record/list/";
-        netDataJson.requestData(url, "get");
+        String params = "?page=" + page;
+        netDataJson.requestData(url + params, "get");
     }
 
     public void getUpdateInfo(final OngetUpdateInfoCallback ongetUpdateInfoCallback) {
-        //test
-        JSONObject jsonObject = new JSONObject();
+        NetDataJson netDataJson = new NetDataJson(new NetDataJson.OnNetDataJsonListener() {
+            @Override
+            public void onDataJsonError(String errorMessage) {
+                ongetUpdateInfoCallback.OnUpdateError(errorMessage);
+            }
+
+            @Override
+            public void onDataJsonUpdate(JSONObject json) {
+                JSONObject jsonObject = getJsonbyName("android", json);
+                ongetUpdateInfoCallback.OnUpdateSuccess(jsonObject);
+            }
+        });
+        String url = "/inspection/meta-data/";
+        netDataJson.requestData(url, "get");
+
+
+//        //test
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("version", "2.0");
+//            jsonObject.put("download_url", "http://www.gongpingjia.com/static/app/gongpingjia_1.9.95.apk");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        ongetUpdateInfoCallback.OnUpdateSuccess(jsonObject);
+    }
+
+    JSONObject getJsonbyName(String name, JSONObject meta_data) {
+        if (null == name || null == meta_data) {
+            return null;
+        }
+        JSONArray jsonArray = null;
         try {
-            jsonObject.put("version", "2.0");
-            jsonObject.put("download_url", "http://www.gongpingjia.com/static/app/gongpingjia_1.9.95.apk");
+            jsonArray = meta_data.getJSONArray("meta_data");
+            for (int i = 0; i < jsonArray.length(); ++i) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                if (jsonObject.getString("name").equals(name)) {
+                    return jsonObject;
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ongetUpdateInfoCallback.OnUpdateSuccess(jsonObject);
+        return null;
+
     }
 
     public interface OnLoginCallback {

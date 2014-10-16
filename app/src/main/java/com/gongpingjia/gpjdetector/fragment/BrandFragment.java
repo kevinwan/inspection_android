@@ -18,6 +18,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
+import com.gongpingjia.gpjdetector.activity.CategoryActivity;
+import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.kZViews.PinnedHeaderListView;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
@@ -54,7 +56,7 @@ public class BrandFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         brandList = new ArrayList<HashMap<String, String>>();
-        db = new kZDatabase(getActivity());
+        db = ((CategoryActivity) getActivity()).getDatabase();
         Cursor cursor = db.getBrandList();
         do {
             HashMap<String, String> map = new HashMap<String, String>();

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
+import com.gongpingjia.gpjdetector.activity.HistoryActivity;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.activity.ModifyPasswordActivity_;
 import com.gongpingjia.gpjdetector.adapter.ItemListAdapter;
@@ -66,7 +67,7 @@ public class Fragment_History_2 extends Fragment {
     @AfterViews
     public void afterViews() {
         parentActivity = getActivity();
-        db = new kZDatabase(parentActivity);
+        db = ((HistoryActivity)getActivity()).getDatabase();
         historyList = new ArrayList<HashMap<String, String>>();
         RequestQueue mQueue = Volley.newRequestQueue(parentActivity);
         imageLoader = new ImageLoader(mQueue, new BitmapCache());
