@@ -13,6 +13,7 @@ import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
+import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.androidannotations.annotations.AfterViews;
@@ -85,6 +86,8 @@ public class MenuFragment extends Fragment {
 
     int lastMenuID = R.id.btn_fragment0;
 
+    kZDatabase db;
+
     @Click
     public void submitButton() {
 
@@ -139,6 +142,8 @@ public class MenuFragment extends Fragment {
     @AfterViews
     public void afterViews() {
         mainActivity = (MainActivity_) getActivity();
+        db = mainActivity.getDatabase();
+
         btn_fragment0.setOnClickListener(buttonListener);
         btn_fragment1.setOnClickListener(buttonListener);
         btn_fragment2.setOnClickListener(buttonListener);
@@ -178,6 +183,7 @@ public class MenuFragment extends Fragment {
                 public void OnPostSuccess(JSONObject jsonObject) {
                     progressDialog.dismiss();
                     Toast.makeText(mainActivity, "提交成功。", Toast.LENGTH_SHORT).show();
+                    db.setIsFinish(Constant.getTableName());
                     getActivity().finish();
                 }
 

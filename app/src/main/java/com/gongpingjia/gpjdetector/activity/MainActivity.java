@@ -120,7 +120,6 @@ public class MainActivity extends FragmentActivity {
     public Fragment6_ fragment6;
     public Fragment7_ fragment7;
 
-    public String brandSlug, modelSlug, modelDetailSlug;
 
     public SlidingMenu getSlidingMenu() {
         return menu;
@@ -761,9 +760,7 @@ public class MainActivity extends FragmentActivity {
                     int index = searchIndex("CX", getDB01Items());
                     if (-1 == index) return;
                     getDB01Items().get(index).setValue(bundle.getString("modelName") + bundle.getString("modelDetailName"));
-                    brandSlug = bundle.getString("brandSlug");
-                    modelSlug = bundle.getString("modelSlug");
-                    modelDetailSlug = bundle.getString("modelDetailSlug");
+                    String modelDetailSlug = bundle.getString("modelDetailSlug");
 
                     requestUtils.getParams(modelDetailSlug, new RequestUtils.OngetParamsCallback() {
                         @Override
@@ -862,7 +859,9 @@ public class MainActivity extends FragmentActivity {
         try {
             //1-1(15)
             for (index = 0; index < items11list.size(); ++index) {
-                if (items11list.get(index).getKey().equals("CXZK")) continue;
+                if (items11list.get(index).getKey().equals("CXZK")) continue; //跳过出现状况检测
+                if (items11list.get(index).getKey().equals("ZJBGRQ")) continue; //跳过最近变更日期检测
+
                 String value = items11list.get(index).getValue();
                 if (null == value || value.equals("")) {
                     showToast("<基本信息>有未填写的项目，无法提交。");
@@ -870,7 +869,9 @@ public class MainActivity extends FragmentActivity {
                 }
                 rootJson.put(items11list.get(index).getKey(), value);
             }
-            rootJson.put("CX", brandSlug + "," + modelSlug + "," + modelDetailSlug);
+            rootJson.put("CX", database.getValue(Constant.getTableName(), "brandSlug")
+                    + "," + database.getValue(Constant.getTableName(), "modelSlug")
+                    + "," + database.getValue(Constant.getTableName(), "modelDetailSlug"));
             //1-2(10)
             for (index = 0; index < items12list.size(); ++index) {
                 String value = items12list.get(index).getValue();

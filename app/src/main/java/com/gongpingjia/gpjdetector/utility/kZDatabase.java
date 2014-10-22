@@ -152,6 +152,15 @@ public class kZDatabase extends SQLiteAssetHelper {
         }
     }
 
+    public void setIsFinish(String tableName) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.execSQL("UPDATE history SET isFinish = 1 WHERE tableName='" + tableName + "'");
+        } catch (SQLiteException e) {
+            Log.e("SQLiteException", e.toString());
+        }
+    }
+
     public void insertItem (String _id, String key, String name, String value, String type) {
         SQLiteDatabase db = getWritableDatabase();
         SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
