@@ -93,7 +93,6 @@ public class Fragment0 extends Fragment {
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
-                Logger.d("kkkkk", "opened is called.");
                 saveData();
             }
         });

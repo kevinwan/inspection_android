@@ -18,7 +18,7 @@ import java.util.Locale;
 public class kZDatabase extends SQLiteAssetHelper {
 
 	private static final String DATABASE_NAME = "detector.db";
-	private static final int DATABASE_VERSION = 12;
+	private static final int DATABASE_VERSION = 13;
 	
 	public kZDatabase(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -215,8 +215,8 @@ public class kZDatabase extends SQLiteAssetHelper {
     public void deleteHistory (String tableName) {
         SQLiteDatabase db = getWritableDatabase();
         try {
-            db.execSQL("DROP TABLE " + tableName);
             db.execSQL("DELETE FROM history WHERE tableName='" + tableName + "'");
+            db.execSQL("DROP TABLE " + tableName);
         } catch (SQLiteException e) {
             Log.e("SQLiteException", e.toString());
         }

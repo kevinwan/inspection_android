@@ -213,6 +213,8 @@ public class Fragment1 extends Fragment {
                 if (Utils.isFileExist(list.get(position).file_path)) {
                     viewHolder.imageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
                 }
+            } else {
+                viewHolder.imageView.setImageBitmap(null);
             }
             return view;
         }

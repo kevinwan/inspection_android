@@ -46,6 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Handler;
 
 
 @EFragment(R.layout.fragment_history_2)
@@ -104,11 +105,14 @@ public class Fragment_History_2 extends Fragment {
             }
         });
 
-        loadData();
+//        loadData();
     }
 
     @UiThread
     void loadData() {
+        historyList.clear();
+        adapter.notifyDataSetChanged();
+        wait.setVisibility(View.VISIBLE);
         Cursor c = db.getHistoryList();
         if (c.getCount() > 0) {
             do {
@@ -192,5 +196,11 @@ public class Fragment_History_2 extends Fragment {
         return "http://gongpingjia.qiniudn.com"
                 + GPJApplication.getInstance().getApiUrlFromMeta("brand_model_logo_img")
                 + thumbnail;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 }

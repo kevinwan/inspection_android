@@ -35,7 +35,10 @@ import com.gongpingjia.gpjdetector.global.Constant;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -121,6 +124,7 @@ public class Fragment0_1 extends Fragment {
 
             }
 
+
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().equals("")) {
@@ -139,7 +143,7 @@ public class Fragment0_1 extends Fragment {
             }
         });
 
-        views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext7, edittext8, edittext9, edittext10, edittext11, edittext15,
+        views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext7, edittext8, edittext9, edittext10, edittext11,
                 radiogroup12, checkbox14, checkbox13};
 
         edittext11.setSuffixText("元");
@@ -246,10 +250,33 @@ public class Fragment0_1 extends Fragment {
         ((EditText) view).setOnTouchListener(dateListener);
     }
 
+    @UiThread
     public void initView() {
         for (int i = 0; i < views.length; ++i) {
             mainActivity.loadDatatoView(list, views[i]);
         }
+
+        int index = mainActivity.searchIndex("CXZK", list);
+        if (-1 != index) {
+            if (null != list.get(index).getValue() && !list.get(index).getValue().equals("")) {
+                try {
+                    chuxian_list = new ArrayList<HashMap<String, String>>();
+                    JSONArray jsonArray  = new JSONArray(list.get(index).getValue());
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        String[] item = jsonArray.getString(i).split(",");
+                        if (item.length == 2) {
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("money", item[0]);
+                            map.put("note", item[1]);
+                            chuxian_list.add(map);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     @Background
@@ -257,18 +284,19 @@ public class Fragment0_1 extends Fragment {
         for (int i = 0; i < views.length; ++i) {
             mainActivity.saveDatafromView(list, views[i]);
         }
+
+        //出险记录
+        JSONArray jsonArray = new JSONArray();
+        for (HashMap<String, String> map:chuxian_list) {
+            jsonArray.put(map.get("money") + "," + map.get("note"));
+        }
+        mainActivity.updateDatewithString("CXZK", jsonArray.toString(), list);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         initView();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        saveDatafromView();
     }
 
     class chuxianListAdapter extends BaseAdapter {

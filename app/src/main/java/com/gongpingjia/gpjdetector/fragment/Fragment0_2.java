@@ -185,9 +185,5 @@ public class Fragment0_2 extends Fragment {
         initView();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        saveDatafromView();
-    }
+
 }

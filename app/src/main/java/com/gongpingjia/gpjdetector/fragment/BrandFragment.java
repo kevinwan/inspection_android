@@ -43,7 +43,7 @@ public class BrandFragment extends Fragment implements
     private BrandListAdapter mAdapter;
     kZDatabase db;
     private int mCurrentPosition = -1;
-    
+
 
     private ArrayList<HashMap<String, String>> brandList;
  

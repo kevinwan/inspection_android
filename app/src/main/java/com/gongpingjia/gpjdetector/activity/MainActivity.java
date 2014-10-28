@@ -83,8 +83,8 @@ public class MainActivity extends FragmentActivity {
     private long exitTime = 0;
     private boolean pressTag = false;
 
-    HashMap<String, String[]> optionMap;
-
+//    HashMap<String, String[]> optionMap;
+    JSONArray optionJsonArray;
 
     private boolean isPostivebutton = true;
     private String dateTmp;
@@ -127,6 +127,7 @@ public class MainActivity extends FragmentActivity {
 
     @AfterViews
     public void afterViews() {
+        database = new kZDatabase(this);
         paint = new Paint();
         paint.setColor(Color.argb(0xff, 0xf9, 0x3f, 0x25));
         paint.setAntiAlias(true);
@@ -159,7 +160,35 @@ public class MainActivity extends FragmentActivity {
                 }
             }, 1500);
         }
-        optionMap = new HashMap<String, String[]>();
+//        optionMap = new HashMap<String, String[]>();
+
+        try {
+            String options = database.getValue(Constant.getTableName(), "OPTIONS");
+            if (null != options) {
+                optionJsonArray = new JSONArray(options);
+            } else {
+                optionJsonArray = new JSONArray();
+            }
+
+            String times = database.getValue(Constant.getTableName(), "SPTimeArray");
+            if (null != times) {
+                shangpai_time = new int[4];
+                JSONArray time = new JSONArray(times);
+                if (time.length() == 4) {
+                    for (int i =0; i < 4; ++i) {
+                        shangpai_time[i] = time.getInt(i);
+                    }
+                }
+            } else {
+                shangpai_time = new int[4];
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            optionJsonArray = new JSONArray();
+            shangpai_time = new int[4];
+        }
 
         menu_status = new boolean[8];
         final Drawable left, right;
@@ -226,7 +255,7 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        database = new kZDatabase(this);
+
     }
 
     public int searchIndex(String id, ArrayList<kZDBItem> list) {
@@ -627,21 +656,45 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void showSelectDialog(final View v) {
-        final String[] options = optionMap.get((String) v.getTag());
-        if (null == options) {
-            Toast.makeText(MainActivity.this, "请先选择车型", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_list_item, options);
-        AlertDialog dialog = new AlertDialog.Builder(this).
-                setNegativeButton("取消", null).
-                setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ((TextView) v).setText(options[i]);
+        for (int i = 0; i < optionJsonArray.length(); ++i) {
+            String id = null;
+            String[] options = null;
+            try {
+                JSONObject item = optionJsonArray.getJSONObject(i);
+                id = item.getString("id");
+                if (id.equals((String) v.getTag())) {
+                    JSONArray itemArray = item.getJSONArray("array");
+                    options = new String[itemArray.length()];
+                    for (int j = 0; j < itemArray.length(); ++j) {
+                        options[j] = itemArray.getString(j);
                     }
-                }).create();
-        dialog.show();
+
+                    if (null == options) {
+                        Toast.makeText(MainActivity.this, "请先选择车型", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    final String[] text = options;
+                    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_list_item, options);
+                    AlertDialog dialog = new AlertDialog.Builder(this).
+                            setNegativeButton("取消", null).
+                            setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ((TextView) v).setText(text[i]);
+                                }
+                            }).create();
+                    dialog.show();
+                    break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                options = null;
+                continue;
+            }
+        }
+
+
+
     }
 
     public void showDateDialog(final View v, final Calendar curCal, final Calendar minCal,
@@ -728,15 +781,24 @@ public class MainActivity extends FragmentActivity {
 
     @Background
     void add2OptionMap(JSONArray jsonArray, String id) {
-        String[] options = new String[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); ++i) {
-            try {
-                options[i] = jsonArray.getString(i);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        JSONObject itemJson = new JSONObject();
+        try {
+            itemJson.put("id", id);
+            itemJson.put("array", jsonArray);
+            optionJsonArray.put(itemJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        optionMap.put(id, options);
+
+//        String[] options = new String[jsonArray.length()];
+//        for (int i = 0; i < jsonArray.length(); ++i) {
+//            try {
+//                options[i] = jsonArray.getString(i);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        optionMap.put(id, options);
     }
 
     @Override
@@ -772,6 +834,8 @@ public class MainActivity extends FragmentActivity {
                                 shangpai_time [1] = jsonArray.getInt(1);
                                 shangpai_time [2] = jsonArray.getInt(2);
                                 shangpai_time [3] = jsonArray.getInt(3);
+
+                                database.insertItem("4000", "SPTimeArray", "SPTimeArray", jsonArray.toString(), "option");
 
                                 JSONObject config = jsonObject.getJSONObject("configuration");
                                 updateDate("ABS", getDB03Items(), config);
@@ -827,6 +891,8 @@ public class MainActivity extends FragmentActivity {
                                 updateDatewithString("RLLX", attriArray.getString(0), getDB02Items());
                                 add2OptionMap(attriArray.getJSONArray(1), "RLLX");
 
+                                saveOptions();
+
                                 fragment0.fragment0_1.initView();
                                 fragment0.fragment0_2.initView();
                                 fragment0.fragment0_3.initView();
@@ -848,6 +914,11 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    @Background
+    void saveOptions() {
+        database.insertItem("3000", "OPTIONS", "optionArray", optionJsonArray.toString(), "option");
+    }
+
     @UiThread
     void showToast(String content) {
         Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show();
@@ -860,12 +931,20 @@ public class MainActivity extends FragmentActivity {
             //1-1(15)
             for (index = 0; index < items11list.size(); ++index) {
                 if (items11list.get(index).getKey().equals("CXZK")) continue; //跳过出现状况检测
-                if (items11list.get(index).getKey().equals("ZJBGRQ")) continue; //跳过最近变更日期检测
+                if (items11list.get(index).getKey().equals("ZJBGRQ")) {
+                    if (items11list.get(index).getValue().equals("") || null == items11list.get(index).getValue()) {
+                        rootJson.put("ZJBGRQ", "");
+                    } else {
+                        rootJson.put("ZJBGRQ", items11list.get(index).getValue());
+                    }
+                }
 
                 String value = items11list.get(index).getValue();
                 if (null == value || value.equals("")) {
                     showToast("<基本信息>有未填写的项目，无法提交。");
                     return null;
+                } else {
+
                 }
                 rootJson.put(items11list.get(index).getKey(), value);
             }

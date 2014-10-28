@@ -77,12 +77,6 @@ public class Fragment0_3 extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        saveDatafromView();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         initView();
