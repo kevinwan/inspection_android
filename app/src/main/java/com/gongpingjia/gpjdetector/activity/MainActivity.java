@@ -3,6 +3,7 @@ package com.gongpingjia.gpjdetector.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -236,9 +237,18 @@ public class MainActivity extends FragmentActivity {
                 setNegativeButton("确定退出", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        isExit = true;
-                        database.deleteHistory(Constant.getTableName());
-                        MainActivity.this.finish();
+
+                        final ProgressDialog progressDialog = Constant.showProgress(MainActivity.this, null, "正在清除本地数据...");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                                isExit = true;
+                                database.deleteHistory(Constant.getTableName());
+                                MainActivity.this.finish();
+                            }
+                        }, 3000);
+
                     }
                 }).
                 setPositiveButton("继续检测", new DialogInterface.OnClickListener() {
@@ -937,11 +947,12 @@ public class MainActivity extends FragmentActivity {
                     } else {
                         rootJson.put("ZJBGRQ", items11list.get(index).getValue());
                     }
+                    continue;
                 }
 
                 String value = items11list.get(index).getValue();
                 if (null == value || value.equals("")) {
-                    showToast("<基本信息>有未填写的项目，无法提交。");
+                    showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
                     return null;
                 } else {
 

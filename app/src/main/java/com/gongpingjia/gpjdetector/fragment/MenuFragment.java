@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.os.Handler;
+
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
@@ -135,8 +137,28 @@ public class MenuFragment extends Fragment {
 
     @Click
     void saveButton() {
-        mainActivity.finish();
-        Toast.makeText(mainActivity, "检测数据已保存，可以再检测记录-未完成中继续检测。", Toast.LENGTH_LONG).show();
+        int index = mainActivity.searchIndex("CX", mainActivity.getDB01Items());
+        String modelName = null;
+        if (index != 0) {
+            modelName = mainActivity.getDB01Items().get(index).getValue();
+            if (null == modelName || modelName.equals("") || modelName.equals("null") || modelName.equals("NULL")) {
+                Toast.makeText(mainActivity, "请先选定车型后再保存。", Toast.LENGTH_LONG).show();
+                return;
+            }
+        } else {
+            Toast.makeText(mainActivity, "保存失败，请重试。", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final ProgressDialog progressDialog = Constant.showProgress(mainActivity, null, "正在保存...");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                mainActivity.finish();
+                Toast.makeText(mainActivity, "检测数据已保存，可以再检测记录-未完成中继续检测。", Toast.LENGTH_LONG).show();
+            }
+        }, 3000);
     }
 
     @AfterViews
@@ -184,7 +206,8 @@ public class MenuFragment extends Fragment {
                     progressDialog.dismiss();
                     Toast.makeText(mainActivity, "提交成功。", Toast.LENGTH_SHORT).show();
                     db.setIsFinish(Constant.getTableName());
-                    getActivity().finish();
+//                    getActivity().finish();
+                    exitThisActivity();
                 }
 
                 @Override
@@ -194,6 +217,10 @@ public class MenuFragment extends Fragment {
                 }
             });
         }
+    }
+
+    void exitThisActivity() {
+        getActivity().finish();
     }
 
 }

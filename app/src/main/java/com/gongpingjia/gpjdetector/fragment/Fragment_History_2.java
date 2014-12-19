@@ -92,6 +92,7 @@ public class Fragment_History_2 extends Fragment {
                                     //继续检测
                                     Constant.setTableName(historyList.get(position).get("tableName"));
                                     parentActivity.startActivity(new Intent().setClass(parentActivity, MainActivity_.class));
+                                    getActivity().finish();
                                 } else if (1 == i) {
                                     //删除记录
                                     db.deleteHistory(historyList.get(position).get("tableName"));
