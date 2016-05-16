@@ -29,8 +29,8 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:background="@drawable/slidingmenu_toggler"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp" />
+        android:layout_marginLeft="5dp" />
 
 </RelativeLayout>

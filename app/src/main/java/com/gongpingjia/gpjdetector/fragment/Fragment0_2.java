@@ -52,13 +52,13 @@ public class Fragment0_2 extends Fragment {
         edittext1.setTag("YS");
         edittext2.setTag("LCS");
         edittext3.setTag("PL");
-        edittext4.setTag("CLLX");
-        edittext5.setTag("CMS");
-        edittext6.setTag("CSXS");
-        edittext7.setTag("DY");
+//        edittext4.setTag("CLLX");
+//        edittext5.setTag("CMS");
+//        edittext6.setTag("CSXS");
+//        edittext7.setTag("DY");
         edittext8.setTag("BSQ");
-        edittext9.setTag("RLLX");
-        edittext10.setTag("QDFS");
+//        edittext9.setTag("RLLX");
+//        edittext10.setTag("QDFS");
 
         views = new View[]{edittext1, edittext2, edittext3, edittext4,
                 edittext5, edittext6, edittext7, edittext8, edittext9, edittext10};
@@ -83,7 +83,7 @@ public class Fragment0_2 extends Fragment {
         });
 
         edittext2.setSuffixColor(Color.parseColor("#ff585858"));
-        edittext2.setSuffixText("公里");
+        edittext2.setSuffixText("万公里");
 
         edittext3.setOnTouchListener(listener);
         edittext5.setOnTouchListener(listener);

@@ -1,215 +1,244 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/lib/fr.dvilleneuve.android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/root_layout"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
-                style="@style/item_layout">
+
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textSize="@dimen/item_text_size"
                     android:layout_height="wrap_content"
-                    android:text="车型"/>
+                    android:text="车型"
+                    android:textSize="@dimen/item_text_size" />
+
                 <EditText
                     android:id="@+id/edittext1"
-                    style="@style/edittext_selector"/>
+                    style="@style/edittext_selector" />
             </LinearLayout>
-            <include layout="@layout/split_line"/>
-            <LinearLayout
-                style="@style/item_layout">
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="首次上牌"/>
+                    android:text="首次上牌"
+                    android:textSize="@dimen/item_text_size" />
+
                 <EditText
                     android:id="@+id/edittext2"
-                    style="@style/edittext_selector"/>
+                    style="@style/edittext_selector" />
             </LinearLayout>
+
             <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
+
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="出厂时间"/>
+                    android:text="变更次数"
+                    android:textSize="@dimen/item_text_size" />
+
                 <EditText
                     android:id="@+id/edittext3"
-                    style="@style/edittext_selector"/>
+                    style="@style/edittext_edit"
+                    android:inputType="number" />
             </LinearLayout>
+
             <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
+
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="变更次数"/>
+                    android:text="交强险到期"
+                    android:textSize="@dimen/item_text_size" />
+
                 <EditText
                     android:id="@+id/edittext4"
-                    android:inputType="number"
-                    style="@style/edittext_edit"/>
+                    style="@style/edittext_selector" />
             </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                android:id="@+id/layout5"
-                android:visibility="gone"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    style="@style/item_layout">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/item_text_size"
-                        android:text="最近变更"/>
-                    <EditText
-                        android:id="@+id/edittext5"
-                        style="@style/edittext_selector"/>
-                </LinearLayout>
-                <RelativeLayout
-                    android:id="@+id/bannerLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/split_line_color" />
-                </LinearLayout>
 
-            <LinearLayout
-                style="@style/item_layout">
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="车牌号"/>
+                    android:text="商业险到期"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EditText
+                    android:id="@+id/edittext5"
+                    style="@style/edittext_selector" />
+            </LinearLayout>
+
+            <include
+                layout="@layout/split_line"
+                android:visibility="gone" />
+
+            <LinearLayout
+                style="@style/item_layout"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年检到期"
+                    android:textSize="@dimen/item_text_size" />
+
                 <EditText
                     android:id="@+id/edittext6"
-                    style="@style/edittext_edit"/>
+                    style="@style/edittext_selector" />
             </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="车架号"/>
-                <EditText
-                    android:id="@+id/edittext7"
-                    style="@style/edittext_edit"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="交强险到期"/>
-                <EditText
-                    android:id="@+id/edittext8"
-                    style="@style/edittext_selector"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="商业险到期"/>
-                <EditText
-                    android:id="@+id/edittext9"
-                    style="@style/edittext_selector"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="年检到期"/>
-                <EditText
-                    android:id="@+id/edittext10"
-                    style="@style/edittext_selector"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="发票价格"/>
-                <EnhancedEditText
-                    custom:suffixText="元"
-                    android:paddingRight="4dp"
-                    android:inputType="number"
-                    android:id="@+id/edittext11"
-                    style="@style/edittext_edit" />
-            </LinearLayout>
+
             <include layout="@layout/split_line" />
 
-            <LinearLayout
-                style="@style/item_layout">
+            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="使用性质"/>
+                    android:text="发票价格"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EnhancedEditText
+                    android:id="@+id/edittext7"
+                    style="@style/edittext_edit"
+                    android:inputType="numberDecimal"
+                    android:paddingRight="4dp"
+                    custom:suffixText="万元" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用性质"
+                    android:textSize="@dimen/item_text_size" />
+
                 <RadioGroup
-                    android:id="@+id/radiogroup12"
-                    android:layout_marginLeft="36dp"
+                    android:id="@+id/radiogroup8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/radio_pos"
                         style="@style/Radio_Style"
-                        android:text="营运"/>
+                        android:text="营运" />
+
                     <RadioButton
                         android:id="@+id/radio_neu"
                         style="@style/Radio_Style"
-                        android:text="非营运"/>
+                        android:text="非营运" />
                 </RadioGroup>
             </LinearLayout>
+
             <include layout="@layout/split_line" />
+
             <LinearLayout style="@style/item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:id="@+id/checkbox13"
-                    android:text="原厂质保"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:id="@+id/checkbox14"
-                    android:text="保养记录"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout style="@style/item_layout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="出险状况"/>
-                <EditText
-                    android:id="@+id/edittext15"
-                    style="@style/edittext_selector"
-                    android:hint="点击编辑"/>
-            </LinearLayout>
-            </LinearLayout>
-    </ScrollView>
+                    android:text="新车指导价"
+                    android:textSize="@dimen/item_text_size" />
 
+                <EnhancedEditText
+                    android:id="@+id/edittext9"
+                    style="@style/edittext_edit"
+                    android:inputType="numberDecimal"
+                    android:paddingRight="4dp"
+                    custom:suffixText="万元" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车辆归属地"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EditText
+                    android:id="@+id/edittext10"
+                    style="@style/edittext_edit" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/item_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车架号"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EditText
+                    android:id="@+id/edittext11"
+                    style="@style/edittext_edit" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+
+            <LinearLayout style="@style/item_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车牌号"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EditText
+                    android:id="@+id/edittext12"
+                    style="@style/edittext_edit" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+
+            <LinearLayout style="@style/item_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发动机号"
+                    android:textSize="@dimen/item_text_size" />
+
+                <EditText
+                    android:id="@+id/edittext13"
+                    style="@style/edittext_edit" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

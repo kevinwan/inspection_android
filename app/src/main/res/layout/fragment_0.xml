@@ -46,8 +46,8 @@
             android:layout_weight="1.0"
             android:gravity="center"
             android:background="@drawable/right_off_bg"
-            android:text="车辆配置"
-            android:textColor="@color/tab_text_off" />
+            android:text="主要功能"
+            android:textColor="@color/tab_text_off"/>
         </LinearLayout>
 
 

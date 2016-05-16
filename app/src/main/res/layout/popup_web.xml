@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <FrameLayout
-        android:background="@color/banner_bg"
         android:layout_width="match_parent"
-        android:layout_height="36dp">
+        android:layout_height="36dp"
+        android:background="@color/banner_bg">
 
         <ProgressBar
             android:id="@+id/progressbar"
             style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressDrawable="@drawable/progressbar"
             android:layout_width="match_parent"
-            android:layout_height="36dp"/>
+            android:layout_height="36dp"
+            android:progressDrawable="@drawable/progressbar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:background="#00000000" >
+            android:background="#00000000">
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/qr_tag"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/qr_tag"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/qr_tag"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/web_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="#ffffffff"
-                android:text="标 题"
                 android:singleLine="true"
+                android:text="标 题"
+                android:textColor="#ffffffff"
                 android:textSize="16sp" />
 
             <Button
@@ -47,39 +48,56 @@
                 android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:textSize="16sp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/close"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
 
-        </FrameLayout>
+    </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <ImageView
-            android:clickable="true"
             android:id="@+id/qr_img"
-            android:src="@drawable/qr_tag"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="12dp"
-            android:paddingTop="3dp"
+            android:background="#220078ad"
+            android:clickable="true"
             android:paddingBottom="3dp"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            android:background="#220078ad"
-            android:layout_width="36dp"
-            android:layout_height="36dp" />
-        </FrameLayout>
+            android:paddingTop="3dp"
+            android:src="@drawable/qr_tag" />
 
 
+        <Button
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/submit_button_bg_selector"
+            android:text="发送给好友"></Button>
+    </FrameLayout>
 
 
 </LinearLayout>

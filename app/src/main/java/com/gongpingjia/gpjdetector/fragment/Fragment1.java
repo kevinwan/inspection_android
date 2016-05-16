@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.data.CaptureItems;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.kZViews.TouchImageView;
+import com.gongpingjia.gpjdetector.util.PhotoUtil;
 import com.gongpingjia.gpjdetector.utility.FileUtils;
 import com.gongpingjia.gpjdetector.utility.Utils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
@@ -68,6 +70,7 @@ public class Fragment1 extends Fragment {
     TextView banner_title;
     @ViewById
     GridView gridView;
+
     @Click
     void slidingmenu_toggler() {
         mainActivity.getSlidingMenu().toggle();
@@ -161,8 +164,8 @@ public class Fragment1 extends Fragment {
                 public void onClick(View view) {
                     if (list.get(position).file_path == null) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
-                                || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)){
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+                                || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)) {
                             last_capture_path = Constant.sdcard + "/GPJImages/"
                                     + new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                             Uri uri = Uri.fromFile(new File(last_capture_path));
@@ -190,8 +193,8 @@ public class Fragment1 extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
-                                        || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)){
+                                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+                                        || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)) {
                                     last_capture_path = Constant.sdcard + "/GPJImages/"
                                             + new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                                     Uri uri = Uri.fromFile(new File(last_capture_path));
@@ -230,52 +233,65 @@ public class Fragment1 extends Fragment {
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == list.size() - 1) {
-                LayoutInflater inflater = (LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.edittext, null);
-                final EditText editText = (EditText) view.findViewById(R.id.desc);
-                AlertDialog dialog = new AlertDialog.Builder(mainActivity)
-                        .setView(view)
-                        .setPositiveButton("添加备注", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                list.get(requestCode).desc = editText.getText().toString();
-                                adapter.notifyDataSetChanged();
-                            }
-                        }).create();
-                dialog.show();
-                list.add(new CaptureItems("ADD", "点击添加", null));
+            if (requestCode == 10086) {
+                Log.d("msg", "10086");
                 adapter.notifyDataSetChanged();
-            }
-            String sdStatus = Environment.getExternalStorageState();
-            if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-                Toast.makeText(mainActivity, "SD卡不可用，无法存储照片。", Toast.LENGTH_SHORT).show();
             } else {
-                list.get(requestCode).file_path = last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg";
-                compressImage(last_capture_path, Constant.MAX_IMAGE_HEIGHT);
-                adapter.notifyDataSetChanged();
+                if (requestCode == list.size() - 1) {
+                    LayoutInflater inflater = (LayoutInflater) mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View view = inflater.inflate(R.layout.edittext, null);
+                    final EditText editText = (EditText) view.findViewById(R.id.desc);
+                    AlertDialog dialog = new AlertDialog.Builder(mainActivity)
+                            .setView(view)
+                            .setPositiveButton("添加备注", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    list.get(requestCode).desc = editText.getText().toString();
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }).create();
+                    dialog.show();
+                    list.add(new CaptureItems("ADD", "点击添加", null));
+                    adapter.notifyDataSetChanged();
+                }
+                String sdStatus = Environment.getExternalStorageState();
+                if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+                    Toast.makeText(mainActivity, "SD卡不可用，无法存储照片。", Toast.LENGTH_SHORT).show();
+                } else {
+                    list.get(requestCode).file_path = last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg";
+                    compressImage(last_capture_path, Constant.MAX_IMAGE_HEIGHT);
+
+                }
             }
         }
+
     }
 
-    void compressImage(String imagePath, int maxHeight){
+    void compressImage(String imagePath, int maxHeight) {
         Bitmap bitmap;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        bitmap = BitmapFactory.decodeFile(imagePath, options);
-        int scale = (int)(options.outHeight / (float) maxHeight);
-        int ys = options.outHeight % maxHeight;
-        float fe = ys / (float) maxHeight;
-        if(fe >= 0.5) {
-            scale = scale + 1;
-        }
-        if (scale <= 0) {
-            scale = 1;
-        }
-        options.inSampleSize = scale;
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        bitmap = BitmapFactory.decodeFile(imagePath, options);
+//        int scale = (int)(options.outHeight / (float) maxHeight);
+//        int ys = options.outHeight % maxHeight;
+//        float fe = ys / (float) maxHeight;
+//        if(fe >= 0.5) {
+//            scale = scale + 1;
+//        }
+//        if (scale <= 0) {
+//            scale = 1;
+//        }
+//        options.inSampleSize = scale;
+//
+//        options.inJustDecodeBounds = false;
+//        bitmap = BitmapFactory.decodeFile(imagePath, options);
 
-        options.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFile(imagePath, options);
+
+        bitmap = PhotoUtil.getLocalImage(new File(imagePath));
+        int degree = PhotoUtil.getBitmapDegree(imagePath);
+        if (degree != 0) {
+            bitmap = PhotoUtil.rotateBitmapByDegree(bitmap, degree);
+        }
 
         String fileName = last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg";
 
@@ -294,13 +310,19 @@ public class Fragment1 extends Fragment {
                 e.printStackTrace();
             }
         }
+        bitmap.recycle();
+
+        PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
+                Uri.fromFile(new File(fileName)), 10086, 3, 2,
+                1000, this);
+        Log.d("msg", "11111111111111");
     }
 
     class GridViewHolder {
         public ImageView imageView;
         public TextView textView;
 
-        public GridViewHolder (ImageView imageView, TextView textView) {
+        public GridViewHolder(ImageView imageView, TextView textView) {
             this.imageView = imageView;
             this.textView = textView;
         }
@@ -309,7 +331,7 @@ public class Fragment1 extends Fragment {
     @Background
     public void saveData2DB() {
         int _id = 2000;
-        for (CaptureItems item:list) {
+        for (CaptureItems item : list) {
             db.insertItem(String.valueOf(_id++), item.key, item.desc, item.file_path, "cap");
         }
     }

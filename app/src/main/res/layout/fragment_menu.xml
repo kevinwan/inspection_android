@@ -54,7 +54,7 @@
         style="@style/menu_button"/>
     <Button
         android:id="@+id/btn_fragment7"
-        android:text="   底盘检查"
+        android:text="   检查意见"
         style="@style/menu_button"/>
 
     <RelativeLayout

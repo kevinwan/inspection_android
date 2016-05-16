@@ -1,8 +1,5 @@
 package com.gongpingjia.gpjdetector.kZViews;
 
-import java.lang.reflect.Field;
-import java.util.Calendar;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+
+import java.lang.reflect.Field;
+import java.util.Calendar;
 
 public class kZDatePickerDialog extends DatePickerDialog {
 
@@ -76,10 +76,10 @@ public class kZDatePickerDialog extends DatePickerDialog {
 		if (sdk_int >= 11) {
 			datePicker = this.getDatePicker();
 			if (hasMinDate) {
-				datePicker.setMinDate(minDate.getTime().getTime());
+				datePicker.setMinDate(minDate.getTime().getTime()-1000);
 			}
 			if (hasMaxDate) {
-				datePicker.setMaxDate(maxDate.getTime().getTime());
+				datePicker.setMaxDate(maxDate.getTime().getTime()-1000);
 			}
 		} else {
 			isLowerSDK = true;

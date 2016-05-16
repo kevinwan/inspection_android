@@ -23,9 +23,23 @@ android {
         versionCode 3
         versionName "V1.9"
     }
+
+
+    signingConfigs {
+        myConfig {
+            //绝对路径和相对路径都可以
+            storeFile file("E:\\android.keystore")
+            storePassword "hahzyjk0328"
+            keyAlias "android"
+            keyPassword "hahzyjk0328"
+        }
+    }
+
+
+
     buildTypes {
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
 }
@@ -45,7 +59,7 @@ repositories {
 
 dependencies {
     apt "org.androidannotations:androidannotations:3.0+"
-    compile "org.androidannotations:androidannotations-api:3.0+"
+    compile 'org.androidannotations:androidannotations-api:3.0+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:SlidingMenu')
     compile project(':libraries:Enhanced-edittext')
@@ -54,5 +68,6 @@ dependencies {
     compile 'com.embarkmobile:zxing-android-minimal:1.2.1@aar'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile files('libs/umeng-analytics-v5.5.3.jar')
 }
 

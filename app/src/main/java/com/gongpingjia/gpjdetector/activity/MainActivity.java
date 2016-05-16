@@ -14,11 +14,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.data.CaptureItems;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
+import com.gongpingjia.gpjdetector.data.partItem;
 import com.gongpingjia.gpjdetector.fragment.Fragment0_;
 import com.gongpingjia.gpjdetector.fragment.Fragment1_;
 import com.gongpingjia.gpjdetector.fragment.Fragment2_;
@@ -41,7 +42,7 @@ import com.gongpingjia.gpjdetector.fragment.Fragment3_;
 import com.gongpingjia.gpjdetector.fragment.Fragment4_;
 import com.gongpingjia.gpjdetector.fragment.Fragment5_;
 import com.gongpingjia.gpjdetector.fragment.Fragment6_;
-import com.gongpingjia.gpjdetector.fragment.Fragment7_;
+import com.gongpingjia.gpjdetector.fragment.FragmentFeedBack;
 import com.gongpingjia.gpjdetector.fragment.MenuFragment_;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.kZViews.kZDatePickerDialog;
@@ -49,7 +50,7 @@ import com.gongpingjia.gpjdetector.utility.RequestUtils;
 import com.gongpingjia.gpjdetector.utility.Utils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.gongpingjia.gpjdetector.data.partItem;
+import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -65,6 +66,9 @@ import java.util.HashMap;
 
 @EActivity(R.layout.layout_content)
 public class MainActivity extends FragmentActivity {
+
+    //检测说明
+    public String content = "";
 
     Fragment menuFragment;
     SlidingMenu menu;
@@ -84,7 +88,7 @@ public class MainActivity extends FragmentActivity {
     private long exitTime = 0;
     private boolean pressTag = false;
 
-//    HashMap<String, String[]> optionMap;
+    //    HashMap<String, String[]> optionMap;
     JSONArray optionJsonArray;
 
     private boolean isPostivebutton = true;
@@ -119,12 +123,17 @@ public class MainActivity extends FragmentActivity {
     public Fragment4_ fragment4;
     public Fragment5_ fragment5;
     public Fragment6_ fragment6;
-    public Fragment7_ fragment7;
+
+    public FragmentFeedBack feedbackFragment;
 
 
     public SlidingMenu getSlidingMenu() {
         return menu;
     }
+
+
+    public int lastpart = 8;
+
 
     @AfterViews
     public void afterViews() {
@@ -142,7 +151,7 @@ public class MainActivity extends FragmentActivity {
         menu.setFadeDegree(0.5f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.layout_menu);
-        menu.setMode(SlidingMenu.RIGHT);
+        menu.setMode(SlidingMenu.LEFT);
 
         res = getResources();
 
@@ -169,6 +178,7 @@ public class MainActivity extends FragmentActivity {
                 optionJsonArray = new JSONArray(options);
             } else {
                 optionJsonArray = new JSONArray();
+
             }
 
             String times = database.getValue(Constant.getTableName(), "SPTimeArray");
@@ -176,7 +186,7 @@ public class MainActivity extends FragmentActivity {
                 shangpai_time = new int[4];
                 JSONArray time = new JSONArray(times);
                 if (time.length() == 4) {
-                    for (int i =0; i < 4; ++i) {
+                    for (int i = 0; i < 4; ++i) {
                         shangpai_time[i] = time.getInt(i);
                     }
                 }
@@ -202,28 +212,28 @@ public class MainActivity extends FragmentActivity {
             public void onOpen(int position) {
 
                 if (menu_status[0]) {
-                    ((MenuFragment_)menuFragment).btn_fragment0.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment0.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[1]) {
-                    ((MenuFragment_)menuFragment).btn_fragment1.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment1.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[2]) {
-                    ((MenuFragment_)menuFragment).btn_fragment2.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment2.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[3]) {
-                    ((MenuFragment_)menuFragment).btn_fragment3.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment3.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[4]) {
-                    ((MenuFragment_)menuFragment).btn_fragment4.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment4.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[5]) {
-                    ((MenuFragment_)menuFragment).btn_fragment5.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment5.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[6]) {
-                    ((MenuFragment_)menuFragment).btn_fragment6.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment6.setCompoundDrawables(left, null, right, null);
                 }
                 if (menu_status[7]) {
-                    ((MenuFragment_)menuFragment).btn_fragment7.setCompoundDrawables(left, null, right, null);
+                    ((MenuFragment_) menuFragment).btn_fragment7.setCompoundDrawables(left, null, right, null);
                 }
             }
 
@@ -321,7 +331,7 @@ public class MainActivity extends FragmentActivity {
         } else if (view instanceof CheckBox) {
             list.get(index).setValue(((CheckBox) view).isChecked() ? Constant.value_POS : Constant.value_NEU);
         }
-        for (kZDBItem item:list) {
+        for (kZDBItem item : list) {
             database.updateItem(item.getKey(), item.getValue());
         }
     }
@@ -355,7 +365,7 @@ public class MainActivity extends FragmentActivity {
         if (null != partMap) {
             return partMap;
         } else {
-            partMap =  new HashMap<String, partItem>();
+            partMap = new HashMap<String, partItem>();
             ArrayList<kZDBItem> list = getDB2Items();
             for (int i = 0; i < list.size(); ++i) {
 
@@ -369,7 +379,7 @@ public class MainActivity extends FragmentActivity {
                         part.setP_level(Integer.valueOf(rootJson.getString("p_level")));
                         JSONArray marks = rootJson.getJSONArray("marks");
                         ArrayList<String> marklist = new ArrayList<String>();
-                        for (int j=0; j < marks.length(); ++j) {
+                        for (int j = 0; j < marks.length(); ++j) {
                             marklist.add(marks.getString(j));
                         }
                         part.setMarks(marklist);
@@ -502,6 +512,7 @@ public class MainActivity extends FragmentActivity {
             return captureList;
         }
     }
+
     public ArrayList<kZDBItem> getDB2Items() {
         if (null != items2list) {
             return items2list;
@@ -520,6 +531,7 @@ public class MainActivity extends FragmentActivity {
             return items2list;
         }
     }
+
     public ArrayList<kZDBItem> getDB3Items() {
         if (null != items3list) {
             return items3list;
@@ -538,6 +550,7 @@ public class MainActivity extends FragmentActivity {
             return items3list;
         }
     }
+
     public ArrayList<kZDBItem> getDB4Items() {
         if (null != items4list) {
             return items4list;
@@ -556,6 +569,7 @@ public class MainActivity extends FragmentActivity {
             return items4list;
         }
     }
+
     public ArrayList<kZDBItem> getDB5Items() {
         if (null != items5list) {
             return items5list;
@@ -640,7 +654,7 @@ public class MainActivity extends FragmentActivity {
             if (pressTag) {
                 super.onBackPressed();
             } else {
-                if((System.currentTimeMillis() - exitTime) > 2000){
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
                     Toast.makeText(getApplicationContext(), "再按一次退出检测", Toast.LENGTH_SHORT).show();
                     exitTime = System.currentTimeMillis();
                 } else {
@@ -656,10 +670,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void showFragment(Fragment fragment) {
-        if(fragment == null) {
+        if (fragment == null) {
             return;
         }
-        if(!fragment.isVisible()) {
+        if (!fragment.isVisible()) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, fragment).commit();
         }
         menu.showContent(true);
@@ -697,12 +711,12 @@ public class MainActivity extends FragmentActivity {
                     break;
                 }
             } catch (JSONException e) {
+                Toast.makeText(MainActivity.this, "暂无数据,请更换车型", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 options = null;
                 continue;
             }
         }
-
 
 
     }
@@ -768,7 +782,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Background
-    void updateDate (String id, ArrayList<kZDBItem> list, JSONObject jsonObject) {
+    void updateDate(String id, ArrayList<kZDBItem> list, JSONObject jsonObject) {
         int index;
         index = searchIndex(id, list);
         try {
@@ -796,6 +810,9 @@ public class MainActivity extends FragmentActivity {
             itemJson.put("id", id);
             itemJson.put("array", jsonArray);
             optionJsonArray.put(itemJson);
+
+            database.updateItem("OPTIONS", optionJsonArray.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -817,6 +834,7 @@ public class MainActivity extends FragmentActivity {
         switch (requestCode) {
             case Constant.REQUEST_CODE_MODEL:
                 if (resultCode == Activity.RESULT_OK) {
+
                     Bundle bundle = data.getExtras();
 
                     String extraType = "kZextra";
@@ -836,54 +854,58 @@ public class MainActivity extends FragmentActivity {
 
                     requestUtils.getParams(modelDetailSlug, new RequestUtils.OngetParamsCallback() {
                         @Override
+
                         public void OngetParamsSuccess(JSONObject jsonObject) {
                             shangpai_time = new int[4];
                             try {
                                 JSONArray jsonArray = jsonObject.getJSONObject("baseinfo").getJSONArray("SCSPSJ");
-                                shangpai_time [0] = jsonArray.getInt(0);
-                                shangpai_time [1] = jsonArray.getInt(1);
-                                shangpai_time [2] = jsonArray.getInt(2);
-                                shangpai_time [3] = jsonArray.getInt(3);
+                                shangpai_time[0] = jsonArray.getInt(0);
+                                shangpai_time[1] = jsonArray.getInt(1);
+                                shangpai_time[2] = jsonArray.getInt(2);
+                                shangpai_time[3] = jsonArray.getInt(3);
+
 
                                 database.insertItem("4000", "SPTimeArray", "SPTimeArray", jsonArray.toString(), "option");
 
-                                JSONObject config = jsonObject.getJSONObject("configuration");
-                                updateDate("ABS", getDB03Items(), config);
-                                updateDate("DDZY", getDB03Items(), config);
-                                updateDate("DDHSJ", getDB03Items(), config);
+                                JSONObject config = jsonObject.getJSONObject("main_function");
+                                Log.d("mag", config.toString());
+                                updateDate("DCYX", getDB03Items(), config);
+                                updateDate("DSXH", getDB03Items(), config);
+                                updateDate("ESP", getDB03Items(), config);
+                                updateDate("TC", getDB03Items(), config);
+                                updateDate("ZDKT", getDB03Items(), config);
                                 updateDate("ZYJR", getDB03Items(), config);
-                                updateDate("WYSQD", getDB03Items(), config);
-                                updateDate("CDDVD", getDB03Items(), config);
-                                updateDate("QN", getDB03Items(), config);
-                                updateDate("DC", getDB03Items(), config);
-                                updateDate("DGNFXP", getDB03Items(), config);
-                                updateDate("GPSDH", getDB03Items(), config);
-                                updateDate("XH", getDB03Items(), config);
-                                updateDate("KT_", getDB03Items(), config);
-                                updateDate("DCLD_", getDB03Items(), config);
+                                updateDate("ZPZY", getDB03Items(), config);
                                 updateDate("JYZY", getDB03Items(), config);
-                                updateDate("ZP", getDB03Items(), config);
-                                updateDate("ZKS", getDB03Items(), config);
-                                updateDate("ZL", getDB03Items(), config);
-                                updateDate("TC_", getDB03Items(), config);
+                                updateDate("GPSDH", getDB03Items(), config);
+                                updateDate("YJQD", getDB03Items(), config);
+                                updateDate("DDZY", getDB03Items(), config);
+                                updateDate("YKYS", getDB03Items(), config);
+                                updateDate("DGNFXP", getDB03Items(), config);
+                                try {
+                                    optionJsonArray = new JSONArray("[]");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
 
                                 JSONObject attribute = jsonObject.getJSONObject("attribute");
                                 //车门数
-                                JSONArray attriArray = attribute.getJSONArray("CMS");
-                                updateDatewithString("CMS", attriArray.getString(0), getDB02Items());
-                                add2OptionMap(attriArray.getJSONArray(1), "CMS");
+//                                JSONArray attriArray = attribute.getJSONArray("CMS");
+//                                updateDatewithString("CMS", attriArray.getString(0), getDB02Items());
+//                                add2OptionMap(attriArray.getJSONArray(1), "CMS");
                                 //排量
-                                attriArray = attribute.getJSONArray("PL");
+                                JSONArray attriArray = attribute.getJSONArray("PL");
                                 updateDatewithString("PL", attriArray.getString(0), getDB02Items());
                                 add2OptionMap(attriArray.getJSONArray(1), "PL");
                                 //CSXS
-                                attriArray = attribute.getJSONArray("CSXS");
-                                updateDatewithString("CSXS", attriArray.getString(0), getDB02Items());
-                                add2OptionMap(attriArray.getJSONArray(1), "CSXS");
+//                                attriArray = attribute.getJSONArray("CSXS");
+//                                updateDatewithString("CSXS", attriArray.getString(0), getDB02Items());
+//                                add2OptionMap(attriArray.getJSONArray(1), "CSXS");
                                 //DY
-                                attriArray = attribute.getJSONArray("DY");
-                                updateDatewithString("DY", attriArray.getString(0), getDB02Items());
-                                add2OptionMap(attriArray.getJSONArray(1), "DY");
+//                                attriArray = attribute.getJSONArray("DY");
+//                                updateDatewithString("DY", attriArray.getString(0), getDB02Items());
+//                                add2OptionMap(attriArray.getJSONArray(1), "DY");
                                 //BSQ
                                 attriArray = attribute.getJSONArray("BSQ");
                                 updateDatewithString("BSQ", attriArray.getString(0), getDB02Items());
@@ -892,22 +914,29 @@ public class MainActivity extends FragmentActivity {
                                 attriArray = attribute.getJSONArray("QDFS");
                                 updateDatewithString("QDFS", attriArray.getString(0), getDB02Items());
                                 add2OptionMap(attriArray.getJSONArray(1), "QDFS");
-                                //CLLX
-                                attriArray = attribute.getJSONArray("CLLX");
-                                updateDatewithString("CLLX", attriArray.getString(0), getDB02Items());
-                                add2OptionMap(attriArray.getJSONArray(1), "CLLX");
-                                //RLLX
-                                attriArray = attribute.getJSONArray("RLLX");
-                                updateDatewithString("RLLX", attriArray.getString(0), getDB02Items());
-                                add2OptionMap(attriArray.getJSONArray(1), "RLLX");
+//                                //CLLX
+//                                attriArray = attribute.getJSONArray("CLLX");
+//                                updateDatewithString("CLLX", attriArray.getString(0), getDB02Items());
+//                                add2OptionMap(attriArray.getJSONArray(1), "CLLX");
+//                                //RLLX
+//                                attriArray = attribute.getJSONArray("RLLX");
+//                                updateDatewithString(
+//                                        "RLLX", attriArray.getString(0), getDB02Items());
+//                                add2OptionMap(attriArray.getJSONArray(1), "RLLX");
+
 
                                 saveOptions();
 
+
                                 fragment0.fragment0_1.initView();
+
+
                                 fragment0.fragment0_2.initView();
                                 fragment0.fragment0_3.initView();
 
+
                             } catch (JSONException e) {
+
                                 e.printStackTrace();
                             }
                         }
@@ -951,12 +980,15 @@ public class MainActivity extends FragmentActivity {
                 }
 
                 String value = items11list.get(index).getValue();
-                if (null == value || value.equals("")) {
-                    showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
-                    return null;
-                } else {
+                if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG")) {
 
+                } else {
+                    if (null == value || value.equals("")) {
+                        showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
+                        return null;
+                    }
                 }
+
                 rootJson.put(items11list.get(index).getKey(), value);
             }
             rootJson.put("CX", database.getValue(Constant.getTableName(), "brandSlug")
@@ -965,11 +997,17 @@ public class MainActivity extends FragmentActivity {
             //1-2(10)
             for (index = 0; index < items12list.size(); ++index) {
                 String value = items12list.get(index).getValue();
-                if (null == value || value.equals("")) {
-                    showToast("<车辆属性>有未填写的项目，无法提交。");
-                    return null;
+                if (items12list.get(index).getKey().equals("YS")
+                        || items12list.get(index).getKey().equals("LCS")
+                        || items12list.get(index).getKey().equals("PL")
+                        || items12list.get(index).getKey().equals("BSQ")) {
+
+                    if (null == value || value.equals("")) {
+                        showToast("<车辆属性>有未填写的项目，无法提交。");
+                        return null;
+                    }
+                    rootJson.put(items12list.get(index).getKey(), value);
                 }
-                rootJson.put(items12list.get(index).getKey(), value);
             }
             //1-3(20)
             for (index = 0; index < items13list.size(); ++index) {
@@ -1010,23 +1048,37 @@ public class MainActivity extends FragmentActivity {
                 value = null == value ? "" : value;
                 rootJson.put(items6list.get(index).getKey(), value);
             }
-            //7(30)
-            for (index = 0; index < items7list.size(); ++index) {
-                String value = items7list.get(index).getValue();
-                value = null == value ? "" : value;
-                rootJson.put(items7list.get(index).getKey(), value);
+
+//            if (TextUtils.isEmpty(content)) {
+//                showToast("检测说明未编写，无法提交。");
+//                return null;
+//            }
+            Cursor cursor;
+            cursor = database.getDBItems(8);
+            if (null != cursor) {
+                content = cursor.getString(2);
+
             }
+            cursor.close();
+            rootJson.put("comments", content);
+//            //7(30)
+//            for (index = 0; index < items7list.size(); ++index) {
+//                String value = items7list.get(index).getValue();
+//                value = null == value ? "" : value;
+//                rootJson.put(items7list.get(index).getKey(), value);
+//            }
             //(3)
             //添加三张图片Base64 编码字符串
             Bitmap[] bitmaps = drawPic();
             for (int i = 0; i < bitmaps.length; ++i) {
                 String value = Utils.bitmapToBase64(bitmaps[i]);
+                bitmaps[i].recycle();
                 value = null == value ? "" : value;
                 rootJson.put("extra_pic" + (i + 1), value);
             }
             //出险记录
             JSONArray jsonArray = new JSONArray();
-            for (HashMap<String, String> map:chuxian_list) {
+            for (HashMap<String, String> map : chuxian_list) {
                 jsonArray.put(map.get("money") + "," + map.get("note"));
             }
 
@@ -1058,6 +1110,7 @@ public class MainActivity extends FragmentActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -1070,10 +1123,10 @@ public class MainActivity extends FragmentActivity {
         return null;
     }
 
-    Bitmap[] drawPic () {
+    Bitmap[] drawPic() {
         Bitmap[] bitmaps = new Bitmap[3];
         Bitmap drawBitmap = Bitmap.createBitmap(Constant.CANVAS_WIDTH,
-                Constant.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888);
+                Constant.CANVAS_HEIGHT, Bitmap.Config.ARGB_4444);
         Canvas drawCanvas = new Canvas(drawBitmap);
         drawCanvas.drawColor(Color.WHITE);
         drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_bg), 0, 0, paint);
@@ -1085,7 +1138,7 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
-        bitmaps[0] = drawBitmap.copy(Bitmap.Config.ARGB_8888, false);
+        bitmaps[0] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
         //画做漆图
         drawBitmap.eraseColor(Color.WHITE);
 
@@ -1130,11 +1183,23 @@ public class MainActivity extends FragmentActivity {
         if (-1 != partMap.get("13").getP_level()) {
             drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_part_13_b), 0, 0, paint);
         }
-        bitmaps[1] = drawBitmap.copy(Bitmap.Config.ARGB_8888, false);
+        bitmaps[1] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
         drawCanvas.drawBitmap(baseBitmap, 0, 0, paint);
-        bitmaps[2] = drawBitmap.copy(Bitmap.Config.ARGB_8888, false);
-
+        bitmaps[2] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
+        drawBitmap.recycle();
         return bitmaps;
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

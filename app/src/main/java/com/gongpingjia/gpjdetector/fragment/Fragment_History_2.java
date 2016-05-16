@@ -2,7 +2,6 @@ package com.gongpingjia.gpjdetector.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,27 +24,18 @@ import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.HistoryActivity;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
-import com.gongpingjia.gpjdetector.activity.ModifyPasswordActivity_;
-import com.gongpingjia.gpjdetector.adapter.ItemListAdapter;
-import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
-import com.gongpingjia.gpjdetector.utility.RequestUtils;
-import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Handler;
 
 
 @EFragment(R.layout.fragment_history_2)
@@ -115,7 +104,7 @@ public class Fragment_History_2 extends Fragment {
         adapter.notifyDataSetChanged();
         wait.setVisibility(View.VISIBLE);
         Cursor c = db.getHistoryList();
-        if (c.getCount() > 0) {
+        if (c!=null&&c.getCount() > 0) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
                 if (c.getString(2).equals("0")) {

@@ -17,24 +17,24 @@ import java.util.Locale;
 
 public class kZDatabase extends SQLiteAssetHelper {
 
-	private static final String DATABASE_NAME = "detector.db";
-	private static final int DATABASE_VERSION = 13;
-	
-	public kZDatabase(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private static final String DATABASE_NAME = "detector.db";
+    private static final int DATABASE_VERSION = 57;
+
+    public kZDatabase(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade();
-		// you can use an alternate constructor to specify a database location 
-		// (such as a folder on the sd card)
-		// you must ensure that this folder is available and you have permission
-		// to write to it
-		//super(context, DATABASE_NAME, context.getExternalFilesDir(null).getAbsolutePath(), null, DATABASE_VERSION);
-		
-	}
+        // you can use an alternate constructor to specify a database location
+        // (such as a folder on the sd card)
+        // you must ensure that this folder is available and you have permission
+        // to write to it
+        //super(context, DATABASE_NAME, context.getExternalFilesDir(null).getAbsolutePath(), null, DATABASE_VERSION);
 
-	public Cursor getDBItems(int type) {
+    }
 
-		SQLiteDatabase db = getReadableDatabase();
-		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+    public Cursor getDBItems(int type) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String sqlSelection = "type = ?";
         String[] sqlSelectionArgs;
         switch (type) {
@@ -45,7 +45,7 @@ public class kZDatabase extends SQLiteAssetHelper {
                 sqlSelectionArgs = new String[]{"车辆属性"};
                 break;
             case 30:
-                sqlSelectionArgs = new String[]{"配置"};
+                sqlSelectionArgs = new String[]{"主要功能"};
                 break;
             case 1:
                 sqlSelectionArgs = new String[]{"cap"};
@@ -68,6 +68,10 @@ public class kZDatabase extends SQLiteAssetHelper {
             case 7:
                 sqlSelectionArgs = new String[]{"底盘"};
                 break;
+
+            case 8:
+                sqlSelectionArgs = new String[]{"检测报告"};
+                break;
             default:
                 sqlSelectionArgs = null;
                 break;
@@ -83,9 +87,9 @@ public class kZDatabase extends SQLiteAssetHelper {
         c.moveToFirst();
         return c;
 
-	}
+    }
 
-    public Cursor getBrandList () {
+    public Cursor getBrandList() {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String[] sqlSelect = {"slug", "name", "first_lett", "logo_img"};
@@ -97,7 +101,26 @@ public class kZDatabase extends SQLiteAssetHelper {
     }
 
 
-    public Cursor getModelList (String parentBrand) {
+    public Cursor getModelDetail(String[] global_slug) {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String sqlSelection = "global_slug = ?";
+
+
+        String[] sqlSelect = {"year", "detail_model_slug", "url", "detail_model"};
+        String sqlTables = "open_model_detail";
+        qb.setTables(sqlTables);
+
+        Cursor c = qb.query(db, sqlSelect, sqlSelection, global_slug,
+                null, null, "id", null);
+
+//        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
+        c.moveToFirst();
+        return c;
+    }
+
+
+    public Cursor getModelList(String parentBrand) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String[] sqlSelect = {"slug", "name", "parent", "keywords", "thumbnail", "logo_img"};
@@ -136,14 +159,16 @@ public class kZDatabase extends SQLiteAssetHelper {
                 "option TEXT," +
                 "description TEXT," +
                 "price_scale TEXT)");
+
         db.execSQL("INSERT INTO " + tableName + " SELECT * FROM detection");
+
         db.execSQL("CREATE TABLE IF NOT EXISTS history" +
                 " (tableName TEXT PRIMARY KEY, date TEXT, isFinish INTEGER)");
         db.execSQL("INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0')");
         return tableName;
     }
 
-    public void updateItem (String key, String value) {
+    public void updateItem(String key, String value) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL("UPDATE" + " " + Constant.getTableName() + " " + "SET value = '" + value + "' " + "WHERE key='" + key + "'");
@@ -161,7 +186,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         }
     }
 
-    public void insertItem (String _id, String key, String name, String value, String type) {
+    public void insertItem(String _id, String key, String name, String value, String type) {
         SQLiteDatabase db = getWritableDatabase();
         SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
         String[] sqlSelect = {"_id"};
@@ -171,7 +196,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         Cursor c = dq.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
         if (0 == c.getCount()) {
             db.execSQL("INSERT INTO " + Constant.getTableName() + "(_id, key, name, value, type)" +
-                    " values('" + _id + "', '" + key +"', '" + name + "', '" + value + "', '" + type + "')");
+                    " values('" + _id + "', '" + key + "', '" + name + "', '" + value + "', '" + type + "')");
         } else {
             ContentValues cv = new ContentValues();
             cv.put("key", key);
@@ -185,7 +210,7 @@ public class kZDatabase extends SQLiteAssetHelper {
 
     }
 
-    public String getValue (String tableName, String key) {
+    public String getValue(String tableName, String key) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String[] sqlSelect = {"value"};
@@ -201,18 +226,26 @@ public class kZDatabase extends SQLiteAssetHelper {
         }
     }
 
-    public Cursor getHistoryList () {
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        String[] sqlSelect = {"tableName", "date", "isFinish"};
-        String sqlTables = "history";
-        qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, "isFinish=?", new String[]{"0"}, null, null, null, null);
-        c.moveToFirst();
-        return c;
+    public Cursor getHistoryList() {
+
+//        if (tabbleIsExist("history")) {
+            SQLiteDatabase db = getReadableDatabase();
+            SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+            String[] sqlSelect = {"tableName", "date", "isFinish"};
+            String sqlTables = "history";
+            qb.setTables(sqlTables);
+            Cursor c = qb.query(db, sqlSelect, "isFinish=?", new String[]{"0"}, null, null, null, null);
+            c.moveToFirst();
+            return c;
+//        } else {
+//            return null;
+//        } } else {
+//            return null;
+//        }
+
     }
 
-    public void deleteHistory (String tableName) {
+    public void deleteHistory(String tableName) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL("DELETE FROM history WHERE tableName='" + tableName + "'");
@@ -224,7 +257,36 @@ public class kZDatabase extends SQLiteAssetHelper {
 
     public int getHistorySize() {
         Cursor c = getHistoryList();
-        return c.getCount();
+        if (c != null) {
+            return c.getCount();
+        } else {
+            return 0;
+        }
+    }
+
+
+    public boolean tabbleIsExist(String tableName) {
+        boolean result = false;
+        if (tableName == null) {
+            return false;
+        }
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            db = this.getReadableDatabase();
+            String sql = "select count(*) as c from " + "detector.db" + " where type ='table' and name ='" + tableName.trim() + "' ";
+            cursor = db.rawQuery(sql, null);
+            if (cursor.moveToNext()) {
+                int count = cursor.getInt(0);
+                if (count > 0) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return result;
     }
 
 }

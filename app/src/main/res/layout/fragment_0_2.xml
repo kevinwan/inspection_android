@@ -23,8 +23,8 @@
                     android:id="@+id/edittext1"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
-            <include layout="@layout/tablelayout_color" />
+            <include layout="@layout/split_line"/>
+            <include layout="@layout/tablelayout_color"/>
 
             <LinearLayout style="@style/item_layout">
                 <TextView
@@ -52,7 +52,8 @@
             </LinearLayout>
             <include layout="@layout/split_line" />
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -62,9 +63,10 @@
                     android:id="@+id/edittext4"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"/>
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -74,9 +76,11 @@
                     android:id="@+id/edittext5"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                android:visibility="gone"/>
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -86,9 +90,11 @@
                     android:id="@+id/edittext6"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                android:visibility="gone"/>
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -99,21 +105,24 @@
                     android:id="@+id/edittext7"
                     style="@style/edittext_edit"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                android:visibility="gone"/>
 
             <LinearLayout style="@style/item_layout">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
                     android:layout_height="wrap_content"
-                    android:text="变速箱"/>
+                    android:text="变速器"/>
                 <EditText
                     android:id="@+id/edittext8"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                android:visibility="gone"/>
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -123,9 +132,11 @@
                     android:id="@+id/edittext9"
                     style="@style/edittext_selector"/>
             </LinearLayout>
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                android:visibility="gone"/>
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"

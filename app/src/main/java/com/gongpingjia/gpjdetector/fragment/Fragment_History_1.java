@@ -2,7 +2,6 @@ package com.gongpingjia.gpjdetector.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
@@ -34,9 +33,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.HistoryActivity;
-import com.gongpingjia.gpjdetector.activity.MainActivity_;
-import com.gongpingjia.gpjdetector.adapter.ItemListAdapter;
-import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
@@ -45,7 +41,6 @@ import com.gongpingjia.gpjdetector.utility.RequestUtils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
@@ -92,12 +87,21 @@ public class Fragment_History_1 extends Fragment {
     public void afterViews() {
         parentActivity = getActivity();
         requestUtils = new RequestUtils(parentActivity);
-        db = ((HistoryActivity)getActivity()).getDatabase();
+        db = ((HistoryActivity) getActivity()).getDatabase();
 
         RequestQueue mQueue = Volley.newRequestQueue(parentActivity);
         imageLoader = new ImageLoader(mQueue, new BitmapCache());
 
         final View popupView = parentActivity.getLayoutInflater().inflate(R.layout.popup_web, null);
+        popupView.findViewById(R.id.msg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.putExtra("sms_body", url);
+                sendIntent.setType("vnd.android-dir/mms-sms");
+                startActivity(sendIntent);
+            }
+        });
         final ProgressBar progressBar = (ProgressBar) popupView.findViewById(R.id.progressbar);
         webView = (WebView) popupView.findViewById(R.id.webview);
         final Button close = (Button) popupView.findViewById(R.id.extra);
@@ -284,9 +288,20 @@ public class Fragment_History_1 extends Fragment {
 
             HashMap<String, String> map = list.get(position);
             viewHoler.title.setText(map.get("model") + " " + map.get("d_model"));
-            viewHoler.accident.setText("历史车况：" + map.get("accident"));
-            viewHoler.condition.setText("车辆现况：" + map.get("condition"));
-            viewHoler.score.setText(map.get("condition") + map.get("accident"));
+//            viewHoler.accident.setText("历史车况：" + map.get("accident"));
+
+            String result;
+            if ("excellent".equals(map.get("condition"))) {
+                result = "优秀";
+            } else if ("good".equals(map.get("condition"))) {
+                result = "较好";
+            } else if ("fair".equals(map.get("condition"))) {
+                result = "一般";
+            } else {
+                result = "较差";
+            }
+            viewHoler.condition.setText("车辆现况：" + result);
+            viewHoler.score.setText(result);
             viewHoler.time.setText("检测时间：" + map.get("time"));
 
             viewHoler.thumbnail.setImageUrl(getThumbnailUrl(map.get("model")), imageLoader);
@@ -330,6 +345,7 @@ public class Fragment_History_1 extends Fragment {
             return 0;
         }
     }
+
     class ViewHoler {
 
         NetworkImageView thumbnail;
@@ -357,7 +373,7 @@ public class Fragment_History_1 extends Fragment {
 
     String getThumbnailUrl(String name) {
         Cursor cursor = db.getModelThumbnail(name);
-        if (null == cursor) return null;
+        if (null == cursor || cursor.getCount() == 0) return null;
         String thumb = cursor.getString(0);
         return "http://gongpingjia.qiniudn.com"
                 + GPJApplication.getInstance().getApiUrlFromMeta("brand_model_logo_img")

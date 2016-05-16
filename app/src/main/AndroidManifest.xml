@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gongpingjia.gpjdetector" >
+    package="com.gongpingjia.gpjdetector">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:name=".global.GPJApplication_"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
 
-        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57060f2167e58e94a60026ec" />
+
         <activity
             android:name=".activity.SplashActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,39 +30,42 @@
         </activity>
         <activity
             android:name=".activity.BaseActivity"
-            android:label="@string/title_activity_base" >
-        </activity>
+            android:label="@string/title_activity_base"></activity>
         <activity
             android:name=".activity.MainActivity_"
-            android:label="@string/title_activity_main" >
-        </activity>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.HomeActivity_"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.CategoryActivity"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
+
             android:name=".activity.GalleryFileActivity_"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.LoginActivity_"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.ModifyPasswordActivity_"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.HistoryActivity_"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
 
-        <service android:name=".utility.UpdateService"
-            android:enabled="true"/>
+        <service
+            android:name=".utility.UpdateService"
+            android:enabled="true" />
     </application>
 
 </manifest>

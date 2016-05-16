@@ -356,7 +356,7 @@ public class Utils {
         try {
             if (bitmap != null) {
                 baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
 
                 baos.flush();
                 baos.close();

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,8 +41,9 @@ import com.gongpingjia.gpjdetector.activity.GalleryFileActivity_;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.activity.SplashActivity;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
-import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.data.partItem;
+import com.gongpingjia.gpjdetector.global.Constant;
+import com.gongpingjia.gpjdetector.util.PhotoUtil;
 import com.gongpingjia.gpjdetector.utility.FileUtils;
 import com.gongpingjia.gpjdetector.utility.Utils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
@@ -71,7 +72,7 @@ import java.util.Locale;
 public class Fragment2 extends Fragment {
 
     MainActivity_ mainActivity;
-	@ViewById
+    @ViewById
     TextView banner_title, part_title;
     @ViewById
     Button slidingmenu_toggler, known;
@@ -119,6 +120,7 @@ public class Fragment2 extends Fragment {
     void known() {
         known_layout.setVisibility(View.GONE);
     }
+
     @Click
     void known_layout() {
 
@@ -180,6 +182,7 @@ public class Fragment2 extends Fragment {
                     default:
                         cur_part = 0;
                         break;
+
                 }
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -204,7 +207,8 @@ public class Fragment2 extends Fragment {
                     default:
                         break;
                 }
-
+                MainActivity_ activity = (MainActivity_) getActivity();
+                activity.lastpart = cur_part;
                 return true;
             }
         }
@@ -240,7 +244,7 @@ public class Fragment2 extends Fragment {
         }
 
         banner_title.setText("钣金修复漆面检查");
-        mainActivity = (MainActivity_)getActivity();
+        mainActivity = (MainActivity_) getActivity();
         db = mainActivity.getDatabase();
         res = getResources();
         paint = new Paint();
@@ -251,7 +255,7 @@ public class Fragment2 extends Fragment {
                 car_part_6, car_part_7, car_part_8, car_part_9, car_part_10, car_part_11, car_part_12,
                 car_part_13};
 
-        for (View thisImageView:car_parts) {
+        for (View thisImageView : car_parts) {
             thisImageView.setOnTouchListener(touchListener);
         }
 
@@ -296,7 +300,8 @@ public class Fragment2 extends Fragment {
                 if (!Utils.isFileExist(str[2])) {
                     Toast.makeText(mainActivity, "访问的图片不存在。", Toast.LENGTH_SHORT).show();
                     return;
-                };
+                }
+                ;
                 Intent intent = new Intent();
                 intent.setClass(mainActivity, GalleryFileActivity_.class);
                 intent.putExtra("url", str[2]);
@@ -320,8 +325,10 @@ public class Fragment2 extends Fragment {
 
         adapter = new ListAdapter(mainActivity, partMap);
         mark_list.setAdapter(adapter);
+        MainActivity_ activity = (MainActivity_) getActivity();
 
-        switchPart(cur_part);
+        cur_part = activity.lastpart;
+        switchPart(activity.lastpart);
 
         if (baseBitmap == null) {
             baseBitmap = Bitmap.createBitmap(Constant.CANVAS_WIDTH,
@@ -345,7 +352,7 @@ public class Fragment2 extends Fragment {
                 JSONArray markArray = new JSONArray();
                 partItem cur_part = partMap.get(String.valueOf(i));
                 ArrayList<String> mark_list = cur_part.getMarks();
-                for (String mark:mark_list) {
+                for (String mark : mark_list) {
                     markArray.put(mark);
                 }
                 rootJson.accumulate("part_no", cur_part.getPart_no());
@@ -356,7 +363,7 @@ public class Fragment2 extends Fragment {
                 if (-1 == index) return;
                 list.get(index).setValue(rootJson.toString());
 
-                for (kZDBItem item:list) {
+                for (kZDBItem item : list) {
                     db.updateItem(item.getKey(), item.getValue());
                 }
             }
@@ -404,8 +411,8 @@ public class Fragment2 extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
-                        || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)){
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+                        || Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED)) {
                     last_capture_path = Constant.sdcard + "/GPJImages/"
                             + new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                     Uri uri = Uri.fromFile(new File(last_capture_path));
@@ -426,11 +433,10 @@ public class Fragment2 extends Fragment {
         });
         WindowManager windowManager = (WindowManager) mainActivity.getSystemService(Context.WINDOW_SERVICE);
         if (x > 600) {
-            popupWindow.showAtLocation(parent, Gravity.LEFT|Gravity.TOP, x - 436, y + 8);
+            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x - 436, y + 8);
         } else {
-            popupWindow.showAtLocation(parent, Gravity.LEFT|Gravity.TOP, x, y + 8);
+            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x, y + 8);
         }
-
 
 
     }
@@ -439,16 +445,24 @@ public class Fragment2 extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            String sdStatus = Environment.getExternalStorageState();
-            if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-                Toast.makeText(mainActivity, "SD卡不可用，无法存储照片。", Toast.LENGTH_SHORT).show();
-            } else {
-                partMap.get(String.valueOf(cur_part)).addMarks(last_pointer_xy + "," + (last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg"));
-                compressImage(last_capture_path, Constant.MAX_IMAGE_HEIGHT);
 
+            if (requestCode == 10086) {
+                Log.d("msg", "10086");
                 adapter.notifyDataSetChanged();
+            } else {
+                String sdStatus = Environment.getExternalStorageState();
+                if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+                    Toast.makeText(mainActivity, "SD卡不可用，无法存储照片。", Toast.LENGTH_SHORT).show();
+                } else {
+                    partMap.get(String.valueOf(cur_part)).addMarks(last_pointer_xy + "," + (last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg"));
+                    compressImage(last_capture_path, Constant.MAX_IMAGE_HEIGHT);
+
+//                    adapter.notifyDataSetChanged();
+                }
+                popupWindow.dismiss();
             }
-            popupWindow.dismiss();
+
+
         }
     }
 
@@ -468,24 +482,30 @@ public class Fragment2 extends Fragment {
 
 
     @Background
-    void compressImage(String imagePath, int maxHeight){
+    void compressImage(String imagePath, int maxHeight) {
         Bitmap bitmap;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        bitmap = BitmapFactory.decodeFile(imagePath, options); //此时返回bm为空
-        int scale = (int)(options.outHeight / (float) maxHeight);
-        int ys = options.outHeight % maxHeight;//求余数
-        float fe = ys / (float) maxHeight;
-        if(fe >= 0.5) {
-            scale = scale + 1;
-        }
-        if (scale <= 0) {
-            scale = 1;
-        }
-        options.inSampleSize = scale;
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        bitmap = BitmapFactory.decodeFile(imagePath, options); //此时返回bm为空
+//        int scale = (int)(options.outHeight / (float) maxHeight);
+//        int ys = options.outHeight % maxHeight;//求余数
+//        float fe = ys / (float) maxHeight;
+//        if(fe >= 0.5) {
+//            scale = scale + 1;
+//        }
+//        if (scale <= 0) {
+//            scale = 1;
+//        }
+//        options.inSampleSize = scale;
+//
+//        options.inJustDecodeBounds = false;
+//        bitmap = BitmapFactory.decodeFile(imagePath, options);
 
-        options.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFile(imagePath, options);
+        bitmap = PhotoUtil.getLocalImage(new File(imagePath));
+        int degree = PhotoUtil.getBitmapDegree(imagePath);
+        if (degree != 0) {
+            bitmap = PhotoUtil.rotateBitmapByDegree(bitmap, degree);
+        }
 
         String fileName = last_capture_path.substring(0, last_capture_path.length() - 4) + "_compressed.jpg";
 
@@ -504,6 +524,11 @@ public class Fragment2 extends Fragment {
                 e.printStackTrace();
             }
         }
+        bitmap.recycle();
+
+        PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
+                Uri.fromFile(new File(fileName)), 10086, 3, 2,
+                1000, this);
     }
 
     void setImageVisibility(int part, boolean isVisible) {
@@ -581,8 +606,8 @@ public class Fragment2 extends Fragment {
             ViewHolder viewHolder;
             if (null == view) {
                 view = LayoutInflater.from(context).inflate(R.layout.mark_list_item, null);
-                viewHolder = new ViewHolder((TextView)view.findViewById(R.id.text),
-                        (ImageButton)view.findViewById(R.id.delete));
+                viewHolder = new ViewHolder((TextView) view.findViewById(R.id.text),
+                        (ImageButton) view.findViewById(R.id.delete));
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();

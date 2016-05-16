@@ -3,138 +3,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
+
+                <CheckBox
+                    android:id="@+id/checkbox1"
+                    style="@style/checkBox_Style"
                     android:layout_marginLeft="12dp"
-                    android:text="助力"
-                    android:id="@+id/checkbox1"/>
-                <CheckBox style="@style/checkBox_Style"
+                    android:checked="false"
+                    android:text="真皮座椅" />
+
+                <CheckBox
                     android:id="@+id/checkbox2"
-                    android:text="中控锁"/>
+                    style="@style/checkBox_Style"
+                    android:text="天窗" />
             </LinearLayout>
-            <include layout="@layout/split_line"/>
+
+            <include layout="@layout/split_line" />
 
             <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="记忆座椅"
-                    android:id="@+id/checkbox3"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="电窗"
-                    android:id="@+id/checkbox4"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
 
-            <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
+                <CheckBox
+                    android:id="@+id/checkbox3"
+                    style="@style/checkBox_Style"
                     android:layout_marginLeft="12dp"
-                    android:text="CD/DVD"
-                    android:id="@+id/checkbox5"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="铝合金轮毂"
-                    android:id="@+id/checkbox6"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
+                    android:text="多功能方向盘" />
 
-            <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="电动后视镜"
-                    android:id="@+id/checkbox7"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="空调"
-                    android:id="@+id/checkbox8"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
-
-            <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="真皮座椅"
-                    android:id="@+id/checkbox9"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="无钥匙启动"
-                    android:id="@+id/checkbox10"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
-
-            <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="天窗"
-                    android:id="@+id/checkbox11"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="GPS导航"
-                    android:id="@+id/checkbox12"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
-
-            <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="多功能方向盘"
-                    android:id="@+id/checkbox13"/>
-                <CheckBox style="@style/checkBox_Style"
+                <CheckBox
+                    android:id="@+id/checkbox4"
+                    style="@style/checkBox_Style"
                     android:text="定速巡航"
-                    android:id="@+id/checkbox14"/>
+                    android:checked="false" />
             </LinearLayout>
-            <include layout="@layout/split_line"/>
+
+            <include layout="@layout/split_line" />
 
             <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
+
+                <CheckBox
+                    android:id="@+id/checkbox5"
+                    style="@style/checkBox_Style"
                     android:layout_marginLeft="12dp"
-                    android:text="ABS"
-                    android:id="@+id/checkbox15"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="倒车雷达"
-                    android:id="@+id/checkbox16"/>
+                    android:text="电动座椅" />
+
+                <CheckBox
+                    android:id="@+id/checkbox6"
+                    style="@style/checkBox_Style"
+                    android:text="记忆座椅" />
             </LinearLayout>
-            <include layout="@layout/split_line"/>
+
+            <include layout="@layout/split_line" />
 
             <LinearLayout style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:layout_marginLeft="12dp"
-                    android:text="座椅加热"
-                    android:id="@+id/checkbox17"/>
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="电动座椅"
-                    android:id="@+id/checkbox18"/>
-            </LinearLayout>
-            <include layout="@layout/split_line"/>
 
-            <LinearLayout
-                style="@style/checkbox_item_layout">
-                <CheckBox style="@style/checkBox_Style"
-                    android:text="气囊"
+                <CheckBox
+                    android:id="@+id/checkbox7"
+                    style="@style/checkBox_Style"
                     android:layout_marginLeft="12dp"
-                    android:id="@+id/checkbox19"/>
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            <LinearLayout
-                style="@style/item_layout">
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/item_text_size"
-                    android:text="其他"/>
-                <EditText
-                    android:id="@+id/edittext20"
-                    style="@style/edittext_edit" />
-            </LinearLayout>
-            <include layout="@layout/split_line" />
-            </LinearLayout>
-        </ScrollView>
+                    android:text="座椅加热" />
 
+                <CheckBox
+                    android:id="@+id/checkbox8"
+                    style="@style/checkBox_Style"
+                    android:text="ESP" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/checkbox_item_layout">
+
+                <CheckBox
+                    android:id="@+id/checkbox9"
+                    style="@style/checkBox_Style"
+                    android:layout_marginLeft="12dp"
+                    android:text="自动空调" />
+
+                <CheckBox
+                    android:id="@+id/checkbox10"
+                    style="@style/checkBox_Style"
+                    android:text="遥控钥匙" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/checkbox_item_layout">
+
+                <CheckBox
+                    android:id="@+id/checkbox11"
+                    style="@style/checkBox_Style"
+                    android:layout_marginLeft="12dp"
+                    android:text="倒车影像" />
+
+                <CheckBox
+                    android:id="@+id/checkbox12"
+                    style="@style/checkBox_Style"
+                    android:text="GPS导航" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+            <LinearLayout style="@style/checkbox_item_layout">
+
+                <CheckBox
+                    android:id="@+id/checkbox13"
+                    style="@style/checkBox_Style"
+                    android:layout_marginLeft="12dp"
+                    android:text="一键启动" />
+            </LinearLayout>
+
+            <include layout="@layout/split_line" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Environment;
 
-import com.gongpingjia.gpjdetector.utility.PreferenceUtils;
+
+
+
 
 
 /**
@@ -15,20 +17,22 @@ public class Constant {
     public static int RESULT_EMPTY = 0;
 
     //test SERVER_DOMAIN
-//    public static String SERVER_DOMAIN = "http://nj.eyelee.cn";
+//    public static String SERVER_DOMAIN = "http://pad.eyelee.cn";
 
     //test 2
-//    public static String SERVER_DOMAIN = "http://192.168.1.105:8000";
+//    public static String SERVER_DOMAIN = "http://192.168.1.40:8000";
 
-    public static String SERVER_DOMAIN = "http://www.gongpingjia.com";
-
+    public static String SERVER_DOMAIN = "http://pad.gongpingjia.com";
+//
     public static  String TAG = "Detector_Logs";
+
 
     public static String value_POS = "-1";
 
     public static String value_NEG = "-3";
 
     public static String value_NEU = "-2";
+
 
     private static ProgressDialog progressDialog = null;
 

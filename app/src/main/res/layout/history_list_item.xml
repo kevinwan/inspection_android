@@ -61,7 +61,8 @@
                         android:layout_weight="1"
                         android:text="历史车况：B"
                         android:textSize="12sp"
-                        android:id="@+id/accident" />
+                        android:id="@+id/accident"
+                        android:visibility="invisible"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"

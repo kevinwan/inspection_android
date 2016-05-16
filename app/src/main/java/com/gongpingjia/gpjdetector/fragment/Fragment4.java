@@ -44,6 +44,7 @@ public class Fragment4 extends Fragment {
         item_list.setAdapter(new ItemListAdapter(mainActivity, list));
 
         db = mainActivity.getDatabase();
+
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {

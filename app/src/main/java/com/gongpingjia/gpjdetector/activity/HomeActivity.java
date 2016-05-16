@@ -46,6 +46,8 @@ public class HomeActivity extends Activity {
 
     UpdateHelper updateHelper;
 
+    ProgressDialog progressDialog;
+
     @Click
     public void act_start() {
 
@@ -71,13 +73,19 @@ public class HomeActivity extends Activity {
                     .setNegativeButton("创建新检测", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            progressDialog = ProgressDialog.show(HomeActivity.this, "提示", "数据初始化中...", true, false);
                             Constant.setTableName(db.createTable());
+                            progressDialog.dismiss();
                             startActivity(new Intent().setClass(HomeActivity.this, MainActivity_.class));
                         }
                     }).create();
             dialog.show();
         } else {
+
+            progressDialog = ProgressDialog.show(HomeActivity.this, "提示", "数据初始化中...", true, false);
+
             Constant.setTableName(db.createTable());
+            progressDialog.dismiss();
             startActivity(new Intent().setClass(HomeActivity.this, MainActivity_.class));
         }
 
@@ -103,7 +111,7 @@ public class HomeActivity extends Activity {
     }
 
     @AfterViews
-    void afterViews () {
+    void afterViews() {
 
         db = new kZDatabase(HomeActivity.this);
         updateHelper = new UpdateHelper(HomeActivity.this);

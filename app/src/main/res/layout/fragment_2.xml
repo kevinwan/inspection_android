@@ -112,12 +112,12 @@
                     style="@style/Radio_Style"
                     android:textSize="12sp"
                     android:id="@+id/p2"
-                    android:text="有腻子"/>
+                    android:text="有色差"/>
                 <RadioButton
                     style="@style/Radio_Style"
                     android:textSize="12sp"
                     android:id="@+id/p3"
-                    android:text="有色差"/>
+                    android:text="钣金"/>
             </RadioGroup>
         </LinearLayout>
 

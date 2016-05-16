@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.adapter.TabsFragmentPagerAdapter;
-import com.gongpingjia.gpjdetector.utility.Logger;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.androidannotations.annotations.AfterViews;
@@ -124,7 +123,7 @@ public class Fragment0 extends Fragment {
                         tab_2.setTextColor(resources.getColor(R.color.tab_text_off));
                         tab_2.setBackgroundResource(R.drawable.right_off_bg);
                     }
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
                     tab_0.setTextColor(resources.getColor(R.color.white));
                     tab_0.setBackgroundResource(R.drawable.left_on_bg);
                     break;
@@ -136,9 +135,10 @@ public class Fragment0 extends Fragment {
                         tab_2.setTextColor(resources.getColor(R.color.tab_text_off));
                         tab_2.setBackgroundResource(R.drawable.right_off_bg);
                     }
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
                     tab_1.setTextColor(resources.getColor(R.color.white));
-                    tab_1.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.tab_button_on)));
+                    tab_1.setBackgroundResource(R.drawable.right_on_bg);
+                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                    mainActivity.menu_status[0] = true;
                     break;
                 case 2:
                     if (currIndex == 0) {
@@ -148,7 +148,7 @@ public class Fragment0 extends Fragment {
                         tab_1.setTextColor(resources.getColor(R.color.tab_text_off));
                         tab_1.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.white)));
                     }
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
                     tab_2.setTextColor(resources.getColor(R.color.white));
                     tab_2.setBackgroundResource(R.drawable.right_on_bg);
                     mainActivity.menu_status[0] = true;

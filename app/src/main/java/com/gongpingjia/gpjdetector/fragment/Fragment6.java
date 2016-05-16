@@ -36,7 +36,7 @@ public class Fragment6 extends Fragment {
 
     @AfterViews
     public void afterViews() {
-        banner_title.setText("发动机仓检查");
+        banner_title.setText("发动机舱检查");
         mainActivity = (MainActivity_)getActivity();
         list = mainActivity.getDB6Items();
 
