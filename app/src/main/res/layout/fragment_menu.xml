@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="36dp"
-            android:text="退出检测"
+            android:text="退出"
             android:textSize="18sp"
             android:textColor="#ffffffff"
             android:gravity="center"

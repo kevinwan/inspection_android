@@ -62,7 +62,9 @@
             android:name=".activity.HistoryActivity_"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name=".activity.UserCenterActivity_"
+            android:screenOrientation="portrait"></activity>
         <service
             android:name=".utility.UpdateService"
             android:enabled="true" />

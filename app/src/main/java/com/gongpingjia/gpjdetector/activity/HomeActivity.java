@@ -107,7 +107,8 @@ public class HomeActivity extends Activity {
             startActivityForResult(new Intent().setClass(HomeActivity.this, LoginActivity_.class), Constant.REQUEST_CODE_LOGIN);
             return;
         }
-        showSelectDialog();
+        startActivity(new Intent(HomeActivity.this,UserCenterActivity_.class));
+//        showSelectDialog();
     }
 
     @AfterViews

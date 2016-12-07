@@ -8,6 +8,14 @@ buildscript {
     }
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.4"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 apply plugin: 'android'
 apply plugin: 'android-apt'
 apply plugin: 'com.android.application'
