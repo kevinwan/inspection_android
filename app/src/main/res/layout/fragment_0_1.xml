@@ -7,6 +7,8 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <include layout="@layout/banner_layout" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,7 +32,41 @@
             </LinearLayout>
 
             <include layout="@layout/split_line" />
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="排量"/>
+                <EditText
+                    android:id="@+id/edittext15"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="变速器"/>
+                <EditText
+                    android:id="@+id/edittext14"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line" />
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="颜色"/>
+                <EditText
+                    android:id="@+id/edittext16"
+                    style="@style/edittext_selector"/>
+            </LinearLayout>
+            <include layout="@layout/split_line"/>
 
+            <include layout="@layout/tablelayout_color"/>
             <LinearLayout style="@style/item_layout">
 
                 <TextView
@@ -158,7 +194,8 @@
 
             <include layout="@layout/split_line" />
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,7 +213,8 @@
 
             <include layout="@layout/split_line" />
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                          android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -450,9 +450,10 @@ public class MainActivity extends FragmentActivity {
                 return null;
             }
             do {
-                items11list.add(new kZDBItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                items11list.add(new kZDBItem(cursor.getString(0).replace("\\r","").replace("\\n","").replace("\r","").replace("\n", ""), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             } while (cursor.moveToNext());
             cursor.close();
+            menu_status[0] = true;
             return items11list;
         }
     }
@@ -927,14 +928,7 @@ public class MainActivity extends FragmentActivity {
 
                                 saveOptions();
 
-
-                                fragment0.fragment0_1.initView();
-
-
-                                fragment0.fragment0_2.initView();
-                                fragment0.fragment0_3.initView();
-
-
+                                fragment0.initView();
                             } catch (JSONException e) {
 
                                 e.printStackTrace();

@@ -1,177 +1,461 @@
 package com.gongpingjia.gpjdetector.fragment;
 
-import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.EnhancedEditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
+import com.gongpingjia.gpjdetector.activity.CategoryActivity;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
-import com.gongpingjia.gpjdetector.adapter.TabsFragmentPagerAdapter;
+import com.gongpingjia.gpjdetector.data.kZDBItem;
+import com.gongpingjia.gpjdetector.global.Constant;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 
 
-@EFragment(R.layout.fragment_0)
+@EFragment(R.layout.fragment_0_1)
 public class Fragment0 extends Fragment {
-
-    private ArrayList<Fragment> fragmentList;
-    MainActivity_ mainActivity;
     SlidingMenu menu;
+    MainActivity_ mainActivity;
+    ArrayList<kZDBItem> list;
 
     @ViewById
-    public ViewPager vPager;
+    TableLayout colorTable;
     @ViewById
-    TextView tab_0, tab_1, tab_2;
+    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext14,edittext15
+            ,edittext16;
     @ViewById
-    Button slidingmenu_toggler, extra;
+    EnhancedEditText edittext9, edittext7;
+    @ViewById
+    RadioGroup radiogroup8;
+
     @ViewById
     TextView banner_title;
 
-    public Fragment0_1_ fragment0_1;
-    public Fragment0_2_ fragment0_2;
-    public Fragment0_3_ fragment0_3;
+    @ViewById
+    Button slidingmenu_toggler, extra;
 
+    View views[];
+
+    PopupWindow mPopupWindow;
+
+    Calendar curCal = Calendar.getInstance();
+
+    ArrayList<HashMap<String, String>> chuxian_list;
+
+    View.OnTouchListener listener;
+
+    LinearLayout[] colors;
+
+    @ViewById
+    LinearLayout baise, heise, yinse, huise, hongse, zongse, hese, lanse,
+            jinse, chengse, mise, huangse, zise, qingse, lvse, otherse;
 
     @Click
     public void slidingmenu_toggler() {
         mainActivity.getSlidingMenu().toggle();
     }
 
-    private int currIndex = 0;
-    private Resources resources;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @AfterViews
-    public void afterViews () {
-        tab_0.setOnClickListener(new TabsOnClickListener(0));
-        tab_1.setOnClickListener(new TabsOnClickListener(1));
-        tab_2.setOnClickListener(new TabsOnClickListener(2));
-
+    public void afterViews() {
+        edittext1.requestFocus();
         mainActivity = (MainActivity_) getActivity();
+        list = mainActivity.getDB01Items();
+        chuxian_list = mainActivity.getchuxian_list();
         menu = mainActivity.getSlidingMenu();
-        resources = mainActivity.getResources();
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-
+        colors = new LinearLayout[] {baise, heise, yinse, huise, hongse, zongse, hese, lanse,
+                jinse, chengse, mise, huangse, zise, qingse, lvse, otherse};
         banner_title.setText("车辆信息");
+        final View popupView = mainActivity.getLayoutInflater().inflate(R.layout.popupview, null);
+        final Button btnComplete = (Button) popupView.findViewById(R.id.complete);
+        final Button add = (Button) popupView.findViewById(R.id.add);
+        final EnhancedEditText money = (EnhancedEditText) popupView.findViewById(R.id.money);
+        final EditText note = (EditText) popupView.findViewById(R.id.note);
 
-        initViewPager();
-    }
+        final ListView listView = (ListView) popupView.findViewById(R.id.list);
 
-    private void initViewPager() {
-        fragmentList = new ArrayList<Fragment>();
-        fragment0_1 = new Fragment0_1_();
-        fragment0_2 = new Fragment0_2_();
-        fragment0_3 = new Fragment0_3_();
+        final chuxianListAdapter adapter = new chuxianListAdapter();
 
-        fragmentList.add(fragment0_1);
-        fragmentList.add(fragment0_2);
-        fragmentList.add(fragment0_3);
+        listView.setAdapter(adapter);
 
-        currIndex = 0;
-        vPager.setAdapter(new TabsFragmentPagerAdapter(getChildFragmentManager(), fragmentList));
-        vPager.setCurrentItem(0);
-        vPager.setOnPageChangeListener(new TabsOnPageChangeListener());
-        vPager.setOffscreenPageLimit(2);
+        mPopupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources()));
 
+        mPopupWindow.getContentView().setFocusable(true);
+        mPopupWindow.getContentView().setFocusableInTouchMode(true);
+        mPopupWindow.setAnimationStyle(R.style.anim_menu_bottombar);
+
+        edittext1.setTag("CX");
+        edittext2.setTag("SCSPSJ");
+        edittext3.setTag("BGCS");
+        edittext4.setTag("JQX");
+        edittext5.setTag("SYX");
+//        edittext6.setTag("NJDQSJ");
+        edittext7.setTag("FPJG");
+        radiogroup8.setTag("SYXZ");
+        edittext9.setTag("XCZDJ");
+        edittext10.setTag("CLGSD");
+
+        edittext11.setTag("CJH");
+
+        edittext12.setTag("CPH");
+
+        edittext13.setTag("FDJH");
+
+        edittext14.setTag("BSQ");
+        edittext15.setTag("PL");
+        edittext16.setTag("YS");
+        views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7, edittext9,
+                radiogroup8, edittext10, edittext11, edittext12, edittext13,edittext14,edittext15,edittext16};
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
                 saveData();
             }
         });
+        edittext16.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                colorTable.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        edittext7.setSuffixText("万元");
+        edittext7.setSuffixColor(Color.parseColor("#ff585858"));
+
+
+        edittext9.setSuffixText("万元");
+        edittext9.setSuffixColor(Color.parseColor("#ff585858"));
+
+        edittext2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
+
+                Calendar minCal = Calendar.getInstance();
+                Calendar maxCal = Calendar.getInstance();
+
+
+                if (null != mainActivity.shangpai_time && !TextUtils.isEmpty(edittext1.getText().toString())) {
+                    minCal.set(Calendar.YEAR, mainActivity.shangpai_time[2]);
+                    minCal.set(Calendar.MONTH, mainActivity.shangpai_time[3] - 1);
+
+                    maxCal.set(Calendar.YEAR, mainActivity.shangpai_time[0]);
+                    maxCal.set(Calendar.MONTH, mainActivity.shangpai_time[1] - 1);
+
+                    //首次上牌时间选择
+                    mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, false);
+                } else {
+                    Toast.makeText(mainActivity, "请先选择车型", Toast.LENGTH_SHORT).show();
+                }
+
+                return false;
+            }
+        });
+
+        listener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(final View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
+                mainActivity.showSelectDialog(view);
+                return false;
+            }
+        };
+        edittext14.setOnTouchListener(listener);
+        edittext15.setOnTouchListener(listener);
+        Calendar maxCal = Calendar.getInstance();
+
+
+        //出厂时间
+//        getDate(edittext3, null, curCal, false);
+        //最近变更时间
+        getDate(edittext5, null, curCal, false);
+        //交强险到期时间
+        maxCal = Calendar.getInstance();
+        maxCal.add(Calendar.YEAR, 3);
+        getDate(edittext4, curCal, maxCal, true);
+        //商业险到期时间
+        getDate(edittext5, curCal, maxCal, true);
+        //年检到期时间
+        maxCal = Calendar.getInstance();
+        maxCal.add(Calendar.YEAR, 6);
+        getDate(edittext6, curCal, maxCal, true);
+
+        edittext1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
+                mainActivity.startActivityForResult(new Intent().setClass(mainActivity, CategoryActivity.class), Constant.REQUEST_CODE_MODEL);
+                return false;
+            }
+        });
+
+
+
+        edittext7.addTextChangedListener(new DoubleTextWatcher(edittext7));
+        edittext9.addTextChangedListener(new DoubleTextWatcher(edittext9));
+        for (int i = 0; i < colors.length; ++i) {
+            colors[i].setOnClickListener(colorCilck);
+        }
     }
 
-    public class TabsOnClickListener implements View.OnClickListener {
-        private int index = 0;
+    void setColor(String name, int value) {
+        edittext16.setText(name);
+    }
 
-        public TabsOnClickListener(int i) {
-            index = i;
-        }
+    View.OnClickListener colorCilck = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            vPager.setCurrentItem(index);
+            colorTable.setVisibility(View.GONE);
+            switch (v.getId()) {
+                case R.id.baise:
+                    setColor("白色", 0xffffffff);
+                    break;
+                case R.id.heise:
+                    setColor("黑色", 0xff000000);
+                    break;
+                case R.id.yinse:
+                    setColor("银色", 0xffEDECEA);
+                    break;
+                case R.id.huise:
+                    setColor("灰色", 0xffC5C2BC);
+                    break;
+                case R.id.hongse:
+                    setColor("红色", 0xffff0000);
+                    break;
+                case R.id.zongse:
+                    setColor("棕色", 0xffA87247);
+                    break;
+                case R.id.hese:
+                    setColor("褐色", 0xff7B422B);
+                    break;
+                case R.id.lanse:
+                    setColor("蓝色", 0xff003C66);
+                    break;
+                case R.id.lise:
+                    setColor("栗色", 0xff6A2823);
+                    break;
+                case R.id.jinse:
+                    setColor("金色", 0xffFF9A00);
+                    break;
+                case R.id.chengse:
+                    setColor("橙色", 0xffFF8000);
+                    break;
+                case R.id.mise:
+                    setColor("米色", 0xffEFDFA3);
+                    break;
+                case R.id.huangse:
+                    setColor("黄色", 0xffFEC757);
+                    break;
+                case R.id.zise:
+                    setColor("紫色", 0xffAB00C4);
+                    break;
+                case R.id.qingse:
+                    setColor("青色", 0xff006354);
+                    break;
+                case R.id.lvse:
+                    setColor("绿色", 0xff008830);
+                    break;
+                case R.id.otherse:
+                    setColor("其他", 0xffffffff);
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
-    public class TabsOnPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageSelected(int arg0) {
-            switch (arg0) {
-                case 0:
-                    if (currIndex == 1) {
-                        tab_1.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_1.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.white)));
-                    } else if (currIndex == 2) {
-                        tab_2.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_2.setBackgroundResource(R.drawable.right_off_bg);
-                    }
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                    tab_0.setTextColor(resources.getColor(R.color.white));
-                    tab_0.setBackgroundResource(R.drawable.left_on_bg);
-                    break;
-                case 1:
-                    if (currIndex == 0) {
-                        tab_0.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_0.setBackgroundResource(R.drawable.left_off_bg);
-                    } else if (currIndex == 2) {
-                        tab_2.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_2.setBackgroundResource(R.drawable.right_off_bg);
-                    }
-                    tab_1.setTextColor(resources.getColor(R.color.white));
-                    tab_1.setBackgroundResource(R.drawable.right_on_bg);
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                    mainActivity.menu_status[0] = true;
-                    break;
-                case 2:
-                    if (currIndex == 0) {
-                        tab_0.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_0.setBackgroundResource(R.drawable.left_off_bg);
-                    } else if (currIndex == 1) {
-                        tab_1.setTextColor(resources.getColor(R.color.tab_text_off));
-                        tab_1.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.white)));
-                    }
-                    menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-                    tab_2.setTextColor(resources.getColor(R.color.white));
-                    tab_2.setBackgroundResource(R.drawable.right_on_bg);
-                    mainActivity.menu_status[0] = true;
-                    break;
+    private void getDate(final View view, final Calendar minCal, final Calendar maxCal, final boolean negButton) {
+        View.OnTouchListener dateListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
+                mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, negButton);
+                return false;
             }
-            currIndex = arg0;
+        };
+        ((EditText) view).setOnTouchListener(dateListener);
+    }
+
+    @UiThread
+    public void initView() {
+        for (int i = 0; i < views.length; ++i) {
+            mainActivity.loadDatatoView(list, views[i]);
+        }
+
+        int index = mainActivity.searchIndex("CXZK", list);
+        if (-1 != index) {
+            if (null != list.get(index).getValue() && !list.get(index).getValue().equals("")) {
+                try {
+                    chuxian_list = new ArrayList<HashMap<String, String>>();
+                    JSONArray jsonArray = new JSONArray(list.get(index).getValue());
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        String[] item = jsonArray.getString(i).split(",");
+                        if (item.length == 2) {
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("money", item[0]);
+                            map.put("note", item[1]);
+                            chuxian_list.add(map);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+    private class DoubleTextWatcher implements TextWatcher {
+        private EditText mEditText;
+
+        public DoubleTextWatcher(EditText e) {
+            mEditText = e;
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+            String text = s.toString();
+            if (text.contains(".")) {
+                int index = text.indexOf(".");
+                if (index + 3 < text.length()) {
+                    text = text.substring(0, index + 3);
+                    mEditText.setText(text);
+                    mEditText.setSelection(text.length());
+                }
+            }
         }
 
         @Override
-        public void onPageScrollStateChanged(int arg0) {
+        //主要是重置文本改变事件,判断当前输入的内容
+        public void afterTextChanged(Editable s) {
+            // TODO Auto-generated method stub
+
         }
+    }
+    @Background
+    public void saveData() {
+       saveDatafromView();
     }
 
 
     @Background
-    public void saveData() {
-        fragment0_1.saveDatafromView();
-        fragment0_2.saveDatafromView();
-        fragment0_3.saveDatafromView();
+    public void saveDatafromView() {
+        for (int i = 0; i < views.length; ++i) {
+            mainActivity.saveDatafromView(list, views[i]);
+        }
+
+        //出险记录
+        JSONArray jsonArray = new JSONArray();
+        for (HashMap<String, String> map : chuxian_list) {
+            jsonArray.put(map.get("money") + "," + map.get("note"));
+        }
+        mainActivity.updateDatewithString("CXZK", jsonArray.toString(), list);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
+
+    class chuxianListAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return chuxian_list.size();
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup viewGroup) {
+            ViewHolder viewHolder;
+            if (null == view) {
+                view = LayoutInflater.from(mainActivity).inflate(R.layout.chuxian_list_item, null);
+                viewHolder = new ViewHolder((TextView) view.findViewById(R.id.money),
+                        (TextView) view.findViewById(R.id.note),
+                        (ImageButton) view.findViewById(R.id.delete));
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            viewHolder.money.setText("￥" + chuxian_list.get(position).get("money"));
+            viewHolder.note.setText(chuxian_list.get(position).get("note"));
+            viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    chuxian_list.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+            return view;
+        }
+    }
+
+    class ViewHolder {
+
+        public ViewHolder(TextView money, TextView note, ImageButton delete) {
+            this.delete = delete;
+            this.money = money;
+            this.note = note;
+        }
+
+        public ImageButton delete;
+        public TextView money;
+        public TextView note;
     }
 
 }

@@ -36,7 +36,7 @@ public class MenuFragment extends Fragment {
 
             if (lastMenuID == view.getId()) {
                 mainActivity.getSlidingMenu().showContent();
-                if (view.getId() == R.id.btn_fragment0 && mainActivity.fragment0.vPager.getCurrentItem() != 2) {
+                if (view.getId() == R.id.btn_fragment0 ) {
                     mainActivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
                 }
                 return;
@@ -47,9 +47,7 @@ public class MenuFragment extends Fragment {
 
             switch (view.getId()) {
                 case R.id.btn_fragment0:
-                    if (mainActivity.fragment0.vPager.getCurrentItem() != 2) {
-                        mainActivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-                    }
+                    mainActivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 
                     mainActivity.showFragment(mainActivity.fragment0 = new Fragment0_());
                     break;
