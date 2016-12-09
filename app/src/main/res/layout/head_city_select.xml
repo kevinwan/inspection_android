@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+
+    <com.gongpingjia.gpjdetector.kZViews.MyGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#F6F6F6"
+        android:horizontalSpacing="10dp"
+        android:numColumns="8"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp" />
+
+
+    <LinearLayout
+        android:id="@+id/location_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="46dp"
+        android:layout_marginLeft="12dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="城市:"
+            android:textSize="@dimen/text_small"
+            android:textColor="@color/text_title_color" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/city_location_new" />
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="江苏南京"
+            android:textColor="@color/new_color"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+</LinearLayout>

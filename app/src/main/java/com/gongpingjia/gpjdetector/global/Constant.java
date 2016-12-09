@@ -23,6 +23,8 @@ public class Constant {
 //    public static String SERVER_DOMAIN = "http://192.168.1.40:8000";
 
     public static String SERVER_DOMAIN = "http://pad.gongpingjia.com";
+
+    public static String CITY_SERVER_DOMAIN = "http://m.gongpingjia.com";
 //
     public static  String TAG = "Detector_Logs";
 

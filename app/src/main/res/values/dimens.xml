@@ -7,4 +7,8 @@
     <dimen name="item_text_size">16sp</dimen>
     <dimen name="popupwindow_width">500px</dimen>
     <dimen name="popupwindow_height">36px</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_smaller">12sp</dimen>
+    <dimen name="text_smallest">10sp</dimen>
 </resources>

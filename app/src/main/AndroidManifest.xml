@@ -3,8 +3,41 @@
     package="com.gongpingjia.gpjdetector">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FIND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+
+
+    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+
+    <!-- 不是SDK需要的权限，是示例中的后台唤醒定位需要的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--读取缓存数据-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- 更改设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- 3.2.0版本增加 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 3.2.0版本增加-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".global.GPJApplication_"
@@ -14,6 +47,10 @@
         android:largeHeap="true"
         android:persistent="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e9025e966141eea2869c45869c6036d3" />
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -65,9 +102,15 @@
         <activity
             android:name=".activity.UserCenterActivity_"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CityActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <service
             android:name=".utility.UpdateService"
             android:enabled="true" />
+
+
     </application>
 
 </manifest>

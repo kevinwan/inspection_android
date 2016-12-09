@@ -57,7 +57,7 @@ public class HistoryActivity extends FragmentActivity {
 
     @AfterViews
     void afterViews() {
-        banner_title.setText("检测记录");
+        banner_title.setText("检测定价记录");
         extra.setBackgroundResource(R.drawable.back);
         slidingmenu_toggler.setVisibility(View.INVISIBLE);
         resources = getResources();

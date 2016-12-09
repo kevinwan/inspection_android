@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -46,6 +47,7 @@ import com.gongpingjia.gpjdetector.fragment.FragmentFeedBack;
 import com.gongpingjia.gpjdetector.fragment.MenuFragment_;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.kZViews.kZDatePickerDialog;
+import com.gongpingjia.gpjdetector.receiver.NetReceiver;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
 import com.gongpingjia.gpjdetector.utility.Utils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
@@ -74,6 +76,7 @@ public class MainActivity extends FragmentActivity {
     SlidingMenu menu;
 
     kZDatabase database;
+    private NetReceiver netReceiver;
 
     public kZDatabase getDatabase() {
         return database;
@@ -126,6 +129,8 @@ public class MainActivity extends FragmentActivity {
 
     public FragmentFeedBack feedbackFragment;
 
+    private static final String NET_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
+
 
     public SlidingMenu getSlidingMenu() {
         return menu;
@@ -157,6 +162,11 @@ public class MainActivity extends FragmentActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.layout_menu, menuFragment).commit();
+
+        netReceiver = new NetReceiver();
+        IntentFilter filter = new IntentFilter();//生成一个IntentFilter对象
+        filter.addAction(NET_CHANGE);//为IntentFilter添加一个Action
+        getApplicationContext().registerReceiver(netReceiver, filter);//将BroadcastReceiver对象注册到系统当中
 
         fragment0 = new Fragment0_();
         showFragment(fragment0);
@@ -778,7 +788,9 @@ public class MainActivity extends FragmentActivity {
                 database.deleteHistory(Constant.getTableName());
             }
         }
-
+        if (netReceiver != null) {
+            getApplicationContext().unregisterReceiver(netReceiver);
+        }
         database.close();
     }
 

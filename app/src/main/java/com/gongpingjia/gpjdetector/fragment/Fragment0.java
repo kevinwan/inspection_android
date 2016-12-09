@@ -1,8 +1,11 @@
 package com.gongpingjia.gpjdetector.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.CategoryActivity;
+import com.gongpingjia.gpjdetector.activity.CityActivity;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.global.Constant;
@@ -55,7 +59,7 @@ public class Fragment0 extends Fragment {
     @ViewById
     TableLayout colorTable;
     @ViewById
-    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext14,edittext15
+    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15
             ,edittext16;
     @ViewById
     EnhancedEditText edittext9, edittext7;
@@ -80,14 +84,34 @@ public class Fragment0 extends Fragment {
 
     LinearLayout[] colors;
 
+    private final int REQUEST_CITY_FRAGMENT1 = 10;
+
+    private final int CHANGE_CITY = 101;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case CHANGE_CITY:
+                    String city = msg.obj.toString();
+                    edittext17.setText(city);
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
     @ViewById
     LinearLayout baise, heise, yinse, huise, hongse, zongse, hese, lanse,
             jinse, chengse, mise, huangse, zise, qingse, lvse, otherse;
+
 
     @Click
     public void slidingmenu_toggler() {
         mainActivity.getSlidingMenu().toggle();
     }
+
 
     @AfterViews
     public void afterViews() {
@@ -141,8 +165,9 @@ public class Fragment0 extends Fragment {
         edittext14.setTag("BSQ");
         edittext15.setTag("PL");
         edittext16.setTag("YS");
+        edittext17.setTag("SZCS");
         views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7, edittext9,
-                radiogroup8, edittext10, edittext11, edittext12, edittext13,edittext14,edittext15,edittext16};
+                radiogroup8, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15,edittext16};
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
@@ -154,6 +179,16 @@ public class Fragment0 extends Fragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 colorTable.setVisibility(View.VISIBLE);
                 return false;
+            }
+        });
+
+        edittext17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("needProvince", false);
+                intent.setClass(getActivity(), CityActivity.class);
+                startActivityForResult(intent, REQUEST_CITY_FRAGMENT1);
             }
         });
 
@@ -190,16 +225,20 @@ public class Fragment0 extends Fragment {
             }
         });
 
-        listener = new View.OnTouchListener() {
+
+        edittext14.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(final View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
+            public void onClick(final View view) {
                 mainActivity.showSelectDialog(view);
-                return false;
             }
-        };
-        edittext14.setOnTouchListener(listener);
-        edittext15.setOnTouchListener(listener);
+        });
+
+        edittext15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                mainActivity.showSelectDialog(view);
+            }
+        });
         Calendar maxCal = Calendar.getInstance();
 
 
@@ -233,6 +272,26 @@ public class Fragment0 extends Fragment {
         edittext9.addTextChangedListener(new DoubleTextWatcher(edittext9));
         for (int i = 0; i < colors.length; ++i) {
             colors[i].setOnClickListener(colorCilck);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CITY_FRAGMENT1:
+                    String city1 = data.getExtras().getString("city");
+                    if(city1 != null){
+                        Message msg = Message.obtain();
+                        msg.what = CHANGE_CITY;
+                        msg.obj = city1;
+                        mHandler.sendMessage(msg);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -457,5 +516,6 @@ public class Fragment0 extends Fragment {
         public TextView money;
         public TextView note;
     }
+
 
 }

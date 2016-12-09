@@ -16,4 +16,11 @@
     <color name="home_button_history_off">#ff3a93bb</color>
     <color name="split_line_color">#ffd0d0d0</color>
     <color name="edittext_bg">#ffefefef</color>
+    <color name="nothing">#00000000</color>
+    <color name="discount_title">#333333</color>
+    <color name="line_grey">#e7e7e7</color>
+    <color name="text_title_color">#333333</color>
+    <color name="new_color">#18A0E0</color>
+    <color name="bg_grey">#F0F0F0</color>
+    <color name="text_desc_color">#cccccc</color>
 </resources>

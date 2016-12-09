@@ -194,14 +194,18 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
         <Button
             android:id="@+id/logout"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
-            android:layout_marginTop="25dp"
             android:background="#FEBA00"
             android:text="退出登陆"
             android:textColor="@color/white"/>

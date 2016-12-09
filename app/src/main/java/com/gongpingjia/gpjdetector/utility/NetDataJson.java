@@ -181,7 +181,9 @@ public class NetDataJson {
 
     public void requestData(String... args) {
         mTask = new GetJsonTask();
-        if (args.length > 1) {
+        if(args.length > 2){
+            mTask.execute(args[2] + args[0], args[1]);
+        }else if (args.length > 1) {
             mTask.execute(SERVER_DOMAIN + args[0], args[1]);
         } else {
             mTask.execute(SERVER_DOMAIN + args[0]);

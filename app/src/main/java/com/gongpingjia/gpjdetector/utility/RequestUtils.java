@@ -1,7 +1,6 @@
 package com.gongpingjia.gpjdetector.utility;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.gongpingjia.gpjdetector.global.Constant;
 
@@ -34,7 +33,7 @@ public class RequestUtils {
         String url = "/inspection/account/login/";
         String params = "?account=" + account
                 + "&password=" + password;
-        netDataJson.requestData(url + params, "post");
+        netDataJson.requestData(url + params, "post",Constant.SERVER_DOMAIN);
     }
 
     public void getParams(final String modelDetailSlug, final OngetParamsCallback ongetParamsCallback) {
@@ -51,7 +50,7 @@ public class RequestUtils {
         });
         String url = "/inspection/category/parameters/";
         String params = "?d_model=" + modelDetailSlug;
-        netDataJson.requestData(url + params, "get");
+        netDataJson.requestData(url + params, "get",Constant.SERVER_DOMAIN);
     }
 
     public void PostItems (final JSONObject jsonObject, final OnPostItemsCallback onPostItemsCallback) {
@@ -87,7 +86,7 @@ public class RequestUtils {
         String params = "?old_password=" + oldPassword
                 + "&new_password1=" + newPassword
                 + "&new_password2=" + newPassword;
-        netDataJson.requestData(url + params, "post");
+        netDataJson.requestData(url + params, "post",Constant.SERVER_DOMAIN);
     }
 
     public void Logout (final OnLogoutCallback onLogoutCallback) {
@@ -103,7 +102,7 @@ public class RequestUtils {
             }
         });
         String url = "/inspection/account/logout/";
-        netDataJson.requestData(url, "get");
+        netDataJson.requestData(url, "get",Constant.SERVER_DOMAIN);
     }
 
     public void getHistory (final String page, final OngetHistoryCallback ongetHistoryCallback) {
@@ -120,7 +119,7 @@ public class RequestUtils {
         });
         String url = "/inspection/record/list/";
         String params = "?page=" + page;
-        netDataJson.requestData(url + params, "get");
+        netDataJson.requestData(url + params, "get",Constant.SERVER_DOMAIN);
     }
 
     public void getUpdateInfo(final OngetUpdateInfoCallback ongetUpdateInfoCallback) {
@@ -137,7 +136,7 @@ public class RequestUtils {
             }
         });
         String url = "/inspection/meta-data/";
-        netDataJson.requestData(url, "get");
+        netDataJson.requestData(url, "get",Constant.SERVER_DOMAIN);
 
 
 //        //test
