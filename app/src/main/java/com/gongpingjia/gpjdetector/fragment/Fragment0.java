@@ -87,8 +87,7 @@ public class Fragment0 extends Fragment {
     private final int REQUEST_CITY_FRAGMENT1 = 10;
 
     private final int CHANGE_CITY = 101;
-
-    private Handler mHandler = new Handler(){
+    Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -105,6 +104,7 @@ public class Fragment0 extends Fragment {
     @ViewById
     LinearLayout baise, heise, yinse, huise, hongse, zongse, hese, lanse,
             jinse, chengse, mise, huangse, zise, qingse, lvse, otherse;
+    private boolean isChangCity = false;
 
 
     @Click
@@ -281,6 +281,7 @@ public class Fragment0 extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CITY_FRAGMENT1:
+                    isChangCity = true;
                     String city1 = data.getExtras().getString("city");
                     if(city1 != null){
                         Message msg = Message.obtain();
@@ -458,7 +459,12 @@ public class Fragment0 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initView();
+        if(isChangCity){
+            isChangCity = false;
+        }else{
+            initView();
+        }
+
     }
 
     class chuxianListAdapter extends BaseAdapter {
