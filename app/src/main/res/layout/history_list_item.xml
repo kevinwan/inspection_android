@@ -54,6 +54,7 @@
                         android:layout_weight="1"
                         android:textSize="12sp"
                         android:id="@+id/condition"
+                        android:visibility="gone"
                         android:text="车辆现况：90"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -63,26 +64,30 @@
                         android:textSize="12sp"
                         android:id="@+id/accident"
                         android:visibility="invisible"/>
-                    <TextView
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:id="@+id/time"
-                        android:textSize="12sp"
-                        android:text="检测时间：2014-9-11 17:28:15"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
-                        android:id="@+id/score"
-                        android:textColor="@android:color/holo_red_light"
-                        android:text="90B"/>
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/time"
+                            android:textSize="12sp"
+                            android:text="检测时间：2014-9-11 17:28:15"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:textSize="12sp"
+                            android:id="@+id/report_status"
+                            android:textColor="@android:color/holo_red_light"
+                            android:text="定价中..."/>
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

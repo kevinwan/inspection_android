@@ -38,7 +38,11 @@ public class UserCenterActivity extends Activity {
     @ViewById
     LinearLayout modify_psw;
 
+    @ViewById
+    TextView nick, phone, company_name, user_type;
+
     RequestUtils requestUtils;
+
     @Click
     void extra() {
         onBackPressed();
@@ -82,11 +86,18 @@ public class UserCenterActivity extends Activity {
     @AfterViews
     void afterViews() {
         banner_title.setText("个人中心");
+        nick.setText(SharedPreUtil.getInstance().getUser().getUser());
+        phone.setText(SharedPreUtil.getInstance().getUser().getPhone());
+        company_name.setText(SharedPreUtil.getInstance().getUser().getCompany());
+        if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+            user_type.setText("车况检测");
+        }else{
+            user_type.setText("图片采集");
+        }
         extra.setBackgroundResource(R.drawable.back);
         slidingmenu_toggler.setVisibility(View.INVISIBLE);
         requestUtils = new RequestUtils(UserCenterActivity.this);
     }
-
 
 
     @Override

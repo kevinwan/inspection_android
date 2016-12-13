@@ -10,14 +10,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
+import com.gongpingjia.gpjdetector.data.UserInfo;
 import com.gongpingjia.gpjdetector.global.Constant;
+import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
+import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -72,6 +76,17 @@ public class LoginActivity extends Activity {
                 intent.putExtra("password", password.getText().toString());
                 setResult(RESULT_OK, intent);
                 LoginActivity.this.finish();
+                JSONObject json1;
+                String password;
+
+                try {
+                    json1 = new JSONObject(jsonObject.getString("json"));
+                    password = jsonObject.getString("password");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                afterLogin(json1, password);
             }
 
             @Override
@@ -80,5 +95,30 @@ public class LoginActivity extends Activity {
                 Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    void afterLogin(JSONObject jsonObject, String password) {
+        UserInfo userInfo = SharedPreUtil.getInstance().getUser();
+        if (null == userInfo) userInfo = new UserInfo();
+        if (null != password) {
+            userInfo.setPassword(password);
+        }
+
+        if (jsonObject == null) {
+            return;
+        } else {
+            try {
+                userInfo.setUser(jsonObject.getString("user"));
+                userInfo.setCompany(jsonObject.getString("company_name"));
+                userInfo.setEmail(jsonObject.getString("email"));
+                userInfo.setPhone(jsonObject.getString("phone"));
+                userInfo.setUser_type(jsonObject.getString("user_type"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        GPJApplication.getInstance().setLogin(true);
     }
 }

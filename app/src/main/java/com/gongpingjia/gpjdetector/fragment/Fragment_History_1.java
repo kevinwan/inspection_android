@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -33,7 +34,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.HistoryActivity;
-import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
 import com.gongpingjia.gpjdetector.utility.QRHelper;
@@ -71,9 +71,6 @@ public class Fragment_History_1 extends Fragment {
     historyAdapter adapter;
 
     ArrayList<HashMap<String, String>> list;
-
-    String report_url;
-
 
     kZDatabase db;
 
@@ -162,19 +159,18 @@ public class Fragment_History_1 extends Fragment {
             @Override
             public void OnHistorySuccess(JSONObject jsonObject) {
                 try {
-                    report_url = jsonObject.getString("report_url");
                     has_next = jsonObject.getInt("has_next");
                     if (1 == has_next) ++page;
                     JSONArray data = jsonObject.getJSONArray("data");
                     for (int i = 0; i < data.length(); ++i) {
                         JSONObject item = data.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("accident", item.getString("accident"));
                         map.put("model", item.getString("model"));
                         map.put("d_model", item.getString("d_model"));
-                        map.put("condition", item.getString("condition"));
+                        map.put("report_status", item.getString("report_status"));
                         map.put("time", item.getString("time"));
                         map.put("id", item.getString("id"));
+                        map.put("report_url", item.getString("report_url"));
 
                         list.add(map);
                     }
@@ -201,7 +197,7 @@ public class Fragment_History_1 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HashMap<String, String> map = list.get(i);
-                url = Constant.SERVER_DOMAIN + report_url + "?rid=" + map.get("id");
+                url = map.get("report_url");
                 webView.loadUrl(url);
                 LinearLayout qr_view = (LinearLayout) LayoutInflater.from(parentActivity).inflate(R.layout.qr_view, null);
                 ImageView qr_img = (ImageView) qr_view.findViewById(R.id.qr_img);
@@ -230,20 +226,18 @@ public class Fragment_History_1 extends Fragment {
             @Override
             public void OnHistorySuccess(JSONObject jsonObject) {
                 try {
-                    report_url = jsonObject.getString("report_url");
                     has_next = jsonObject.getInt("has_next");
                     if (0 != has_next) ++page;
                     JSONArray data = jsonObject.getJSONArray("data");
                     for (int i = 0; i < data.length(); ++i) {
                         JSONObject item = data.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("accident", item.getString("accident"));
                         map.put("model", item.getString("model"));
                         map.put("d_model", item.getString("d_model"));
-                        map.put("condition", item.getString("condition"));
                         map.put("time", item.getString("time"));
                         map.put("id", item.getString("id"));
-
+                        map.put("report_url", item.getString("report_url"));
+                        map.put("report_status", item.getString("report_status"));
                         list.add(map);
                     }
                     adapter.notifyDataSetChanged();
@@ -280,7 +274,7 @@ public class Fragment_History_1 extends Fragment {
                         (TextView) view.findViewById(R.id.accident),
                         (TextView) view.findViewById(R.id.condition),
                         (TextView) view.findViewById(R.id.time),
-                        (TextView) view.findViewById(R.id.score));
+                        (TextView) view.findViewById(R.id.report_status));
                 view.setTag(viewHoler);
             } else {
                 viewHoler = (ViewHoler) view.getTag();
@@ -288,20 +282,16 @@ public class Fragment_History_1 extends Fragment {
 
             HashMap<String, String> map = list.get(position);
             viewHoler.title.setText(map.get("model") + " " + map.get("d_model"));
-//            viewHoler.accident.setText("历史车况：" + map.get("accident"));
 
-            String result;
-            if ("excellent".equals(map.get("condition"))) {
-                result = "优秀";
-            } else if ("good".equals(map.get("condition"))) {
-                result = "较好";
-            } else if ("fair".equals(map.get("condition"))) {
-                result = "一般";
-            } else {
-                result = "较差";
+            String report_status = "";
+            if ("1".equals(map.get("report_status"))) {
+                report_status = "定价中...";
+                viewHoler.report_status.setTextColor(Color.RED);
+            } else if ("0".equals(map.get("report_status"))) {
+                report_status = "已定价";
+                viewHoler.report_status.setTextColor(Color.GREEN);
             }
-            viewHoler.condition.setText("车辆现况：" + result);
-            viewHoler.score.setText(result);
+            viewHoler.report_status.setText(report_status);
             viewHoler.time.setText("检测时间：" + map.get("time"));
 
             viewHoler.thumbnail.setImageUrl(getThumbnailUrl(map.get("model")), imageLoader);
@@ -353,20 +343,20 @@ public class Fragment_History_1 extends Fragment {
         TextView accident;
         TextView condition;
         TextView time;
-        TextView score;
+        TextView report_status;
 
         public ViewHoler(NetworkImageView thumbnail,
                          TextView title,
                          TextView accident,
                          TextView condition,
                          TextView time,
-                         TextView score) {
+                         TextView report_status) {
             this.thumbnail = thumbnail;
             this.title = title;
             this.accident = accident;
             this.condition = condition;
             this.time = time;
-            this.score = score;
+            this.report_status = report_status;
 
         }
     }
