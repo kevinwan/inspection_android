@@ -158,7 +158,9 @@ public class kZDatabase extends SQLiteAssetHelper {
                 "priority TEXT," +
                 "option TEXT," +
                 "description TEXT," +
-                "price_scale TEXT)");
+                "price_scale TEXT," +
+                "checker TEXT," +
+                "pic_collector TEXT)");
 
         db.execSQL("INSERT INTO " + tableName + " SELECT * FROM detection");
 

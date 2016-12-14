@@ -986,14 +986,14 @@ public class MainActivity extends FragmentActivity {
                 }
 
                 String value = items11list.get(index).getValue();
-                if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG")) {
+               /* if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG")) {
 
                 } else {
                     if (null == value || value.equals("")) {
                         showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
                         return null;
                     }
-                }
+                }*/
 
                 rootJson.put(items11list.get(index).getKey(), value);
             }
@@ -1001,7 +1001,7 @@ public class MainActivity extends FragmentActivity {
                     + "," + database.getValue(Constant.getTableName(), "modelSlug")
                     + "," + database.getValue(Constant.getTableName(), "modelDetailSlug"));
             //1-2(10)
-            for (index = 0; index < items12list.size(); ++index) {
+      /*      for (index = 0; index < items12list.size(); ++index) {
                 String value = items12list.get(index).getValue();
                 if (items12list.get(index).getKey().equals("YS")
                         || items12list.get(index).getKey().equals("LCS")
@@ -1014,13 +1014,13 @@ public class MainActivity extends FragmentActivity {
                     }
                     rootJson.put(items12list.get(index).getKey(), value);
                 }
-            }
+            }*/
             //1-3(20)
-            for (index = 0; index < items13list.size(); ++index) {
+        /*    for (index = 0; index < items13list.size(); ++index) {
                 String value = items13list.get(index).getValue();
                 value = null == value ? "" : value;
                 rootJson.put(items13list.get(index).getKey(), value);
-            }
+            }*/
             //2(13)
             for (index = 0; index < items2list.size(); ++index) {
                 JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
@@ -1108,7 +1108,6 @@ public class MainActivity extends FragmentActivity {
                     }
                 }
             }
-
             rootJson.put("extra_capture", extraCaptureArray);
 
             //总计 220个字段

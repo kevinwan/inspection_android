@@ -147,7 +147,7 @@ public class Fragment0 extends Fragment {
 
         edittext1.setTag("CX");
         edittext2.setTag("SCSPSJ");
-        edittext3.setTag("BGCS");
+        edittext3.setTag("GHCS");
         edittext4.setTag("JQX");
         edittext5.setTag("SYX");
 //        edittext6.setTag("NJDQSJ");
