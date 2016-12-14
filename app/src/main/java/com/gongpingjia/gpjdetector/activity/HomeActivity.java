@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,10 +34,10 @@ import org.json.JSONObject;
 public class HomeActivity extends Activity {
 
     @ViewById
-    LinearLayout act_start, act_history, action_login;
+    LinearLayout act_start, act_history, action_login,login_layout;
 
     @ViewById
-    TextView user;
+    TextView user,username,company_name;
 
     RequestUtils requestUtils;
 
@@ -47,6 +48,8 @@ public class HomeActivity extends Activity {
     UpdateHelper updateHelper;
 
     ProgressDialog progressDialog;
+
+
 
     @Click
     public void act_start() {
@@ -103,17 +106,16 @@ public class HomeActivity extends Activity {
 
     @Click
     public void action_login() {
-        if (!GPJApplication.getInstance().isLogin()) {
+        if (GPJApplication.getInstance().isLogin()) {
+            startActivityForResult(new Intent().setClass(HomeActivity.this, UserCenterActivity_.class), Constant.REQUEST_CODE_TO_USER);
+        }else{
             startActivityForResult(new Intent().setClass(HomeActivity.this, LoginActivity_.class), Constant.REQUEST_CODE_LOGIN);
-            return;
         }
-        startActivity(new Intent(HomeActivity.this,UserCenterActivity_.class));
-//        showSelectDialog();
     }
 
     @AfterViews
     void afterViews() {
-
+        initUserView();
         db = new kZDatabase(HomeActivity.this);
         updateHelper = new UpdateHelper(HomeActivity.this);
         updateHelper.checkUpdate();
@@ -178,29 +180,40 @@ public class HomeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            JSONObject json;
-            String password;
-            try {
-                json = new JSONObject(data.getExtras().getString("json"));
-                password = data.getExtras().getString("password");
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
+            switch (requestCode) {
+                case Constant.REQUEST_CODE_LOGIN:
+                    if (initLoginData(data)) return;
+                    break;
+                case Constant.REQUEST_CODE_TO_USER:
+                    break;
+                case Constant.REQUEST_CODE_LOGIN_TO_START:
+                    if (initLoginData(data)) return;
+                    act_start.performClick();
+                    break;
+                case Constant.REQUEST_CODE_LOGIN_TO_HISTORY:
+                    if (initLoginData(data)) return;
+                    act_history.performClick();
+                    break;
+                default:
+                    break;
             }
-            afterLogin(json, password);
-        } else {
-            return;
+            initUserView();
         }
-        switch (requestCode) {
-            case Constant.REQUEST_CODE_LOGIN:
-                break;
-            case Constant.REQUEST_CODE_LOGIN_TO_START:
-                act_start.performClick();
-                break;
-            case Constant.REQUEST_CODE_LOGIN_TO_HISTORY:
-                act_history.performClick();
 
+    }
+
+    private boolean initLoginData(Intent data) {
+        JSONObject json;
+        String password;
+        try {
+            json = new JSONObject(data.getExtras().getString("json"));
+            password = data.getExtras().getString("password");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return true;
         }
+        afterLogin(json, password);
+        return false;
     }
 
     void afterLogin(JSONObject jsonObject, String password) {
@@ -210,7 +223,6 @@ public class HomeActivity extends Activity {
             userInfo.setPassword(password);
         }
         if (jsonObject == null) {
-            this.user.setText(userInfo.getUser());
             return;
         } else {
             try {
@@ -224,7 +236,6 @@ public class HomeActivity extends Activity {
             }
         }
 
-        this.user.setText(userInfo.getUser());
         GPJApplication.getInstance().setLogin(true);
         Toast.makeText(HomeActivity.this, "登录成功。", Toast.LENGTH_SHORT).show();
     }
@@ -249,7 +260,6 @@ public class HomeActivity extends Activity {
                                     progressDialog.dismiss();
                                     Toast.makeText(HomeActivity.this, "退出登录成功。", Toast.LENGTH_SHORT).show();
                                     GPJApplication.getInstance().setLogin(false);
-                                    user.setText("点击登录");
                                     SharedPreUtil.getInstance().DeleteUser();
                                 }
 
@@ -269,5 +279,18 @@ public class HomeActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         db.close();
+    }
+
+
+    private void initUserView(){
+        if(GPJApplication.getInstance().isLogin()){
+            user.setVisibility(View.GONE);
+            login_layout.setVisibility(View.VISIBLE);
+            username.setText(SharedPreUtil.getInstance().getUser().getUser());
+            company_name.setText(SharedPreUtil.getInstance().getUser().getCompany());
+        }else{
+            user.setVisibility(View.VISIBLE);
+            login_layout.setVisibility(View.GONE);
+        }
     }
 }

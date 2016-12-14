@@ -4,17 +4,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.os.Handler;
-
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
+import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -164,6 +164,22 @@ public class MenuFragment extends Fragment {
     public void afterViews() {
         mainActivity = (MainActivity_) getActivity();
         db = mainActivity.getDatabase();
+        if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+
+            btn_fragment2.setVisibility(View.VISIBLE);
+            btn_fragment3.setVisibility(View.VISIBLE);
+            btn_fragment4.setVisibility(View.VISIBLE);
+            btn_fragment5.setVisibility(View.VISIBLE);
+            btn_fragment6.setVisibility(View.VISIBLE);
+            btn_fragment7.setVisibility(View.VISIBLE);
+        }else{
+            btn_fragment2.setVisibility(View.GONE);
+            btn_fragment3.setVisibility(View.GONE);
+            btn_fragment4.setVisibility(View.GONE);
+            btn_fragment5.setVisibility(View.GONE);
+            btn_fragment6.setVisibility(View.GONE);
+            btn_fragment7.setVisibility(View.GONE);
+        }
 
         btn_fragment0.setOnClickListener(buttonListener);
         btn_fragment1.setOnClickListener(buttonListener);

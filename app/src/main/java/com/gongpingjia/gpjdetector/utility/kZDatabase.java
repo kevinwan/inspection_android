@@ -48,7 +48,13 @@ public class kZDatabase extends SQLiteAssetHelper {
                 sqlSelectionArgs = new String[]{"主要功能"};
                 break;
             case 1:
-                sqlSelectionArgs = new String[]{"cap"};
+                if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                    sqlSelection = "type = ? AND checker = ?";
+
+                }else{
+                    sqlSelection = "type = ? AND pic_collector = ?";
+                }
+                sqlSelectionArgs = new String[]{"cap","1"};
                 break;
             case 2:
                 sqlSelectionArgs = new String[]{"钣金"};
@@ -82,7 +88,8 @@ public class kZDatabase extends SQLiteAssetHelper {
 
 
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
+
+            Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
                 null, null, "_id", null);
         c.moveToFirst();
         return c;

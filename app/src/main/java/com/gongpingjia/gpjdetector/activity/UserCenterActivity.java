@@ -67,6 +67,7 @@ public class UserCenterActivity extends Activity {
                 GPJApplication.getInstance().setLogin(false);
                 logout.setVisibility(View.GONE);
                 SharedPreUtil.getInstance().DeleteUser();
+                setResult(RESULT_OK);
                 finish();
             }
 
