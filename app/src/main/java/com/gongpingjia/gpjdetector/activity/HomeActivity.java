@@ -128,23 +128,28 @@ public class HomeActivity extends Activity {
             if (GPJApplication.getInstance().isLogin()) {
                 afterLogin(null, null);
             } else {
-                final ProgressDialog progressDialog = Constant.showProgress(HomeActivity.this, null, "正在登录...");
-                requestUtils.Login(userinfo.getPhone(), userinfo.getPassword(), new RequestUtils.OnLoginCallback() {
-                    @Override
-                    public void OnLoginSuccess(JSONObject jsonObject) {
-                        progressDialog.dismiss();
-                        afterLogin(jsonObject, null);
-                    }
+                login(userinfo);
+            }
+        }else {
+            initUserView();
+        }
+    }
 
-                    @Override
-                    public void OnLoginError(String errorMessage) {
-                        progressDialog.dismiss();
-                        Toast.makeText(HomeActivity.this, errorMessage + "，请点击头像重新登录。", Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void login(UserInfo userinfo) {
+        final ProgressDialog progressDialog = Constant.showProgress(HomeActivity.this, null, "正在登录...");
+        requestUtils.Login(userinfo.getPhone(), userinfo.getPassword(), new RequestUtils.OnLoginCallback() {
+            @Override
+            public void OnLoginSuccess(JSONObject jsonObject) {
+                progressDialog.dismiss();
+                afterLogin(jsonObject, null);
             }
 
-        }
+            @Override
+            public void OnLoginError(String errorMessage) {
+                progressDialog.dismiss();
+                Toast.makeText(HomeActivity.this, errorMessage + "，请点击头像重新登录。", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

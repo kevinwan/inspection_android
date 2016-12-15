@@ -56,7 +56,7 @@ public class SplashActivity extends Activity {
         SharedPreUtil.initSharedPreference(SplashActivity.this);
         UserInfo userInfo = SharedPreUtil.getInstance().getUser();
         Date expires = userInfo.getExpiryDate();
-        if (null != expires) {
+        if (null != expires && null != userInfo.getPhone() && null != userInfo.getPassword()) {
             if (expires.after(new Date(Calendar.getInstance().getTimeInMillis()))) {
                 GPJApplication.getInstance().setLogin(true);
             }

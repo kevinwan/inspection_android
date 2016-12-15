@@ -155,7 +155,13 @@ public class MenuFragment extends Fragment {
             public void run() {
                 progressDialog.dismiss();
                 mainActivity.finish();
-                Toast.makeText(mainActivity, "检测数据已保存，可以再检测记录-未完成中继续检测。", Toast.LENGTH_LONG).show();
+                String msg;
+                if (Constant.PHOTO_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                    msg = "采集的信息已保存，可以在检测定价记录-未提交中，继续完成信息采集";
+                }else{
+                    msg = "检测记录已保存，可以在检测定价记录-未提交中，继续检测";
+                }
+                Toast.makeText(mainActivity, msg, Toast.LENGTH_LONG).show();
             }
         }, 3000);
     }
@@ -164,7 +170,7 @@ public class MenuFragment extends Fragment {
     public void afterViews() {
         mainActivity = (MainActivity_) getActivity();
         db = mainActivity.getDatabase();
-        if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
 
             btn_fragment2.setVisibility(View.VISIBLE);
             btn_fragment3.setVisibility(View.VISIBLE);

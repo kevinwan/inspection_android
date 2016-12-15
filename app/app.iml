@@ -90,8 +90,8 @@
     <orderEntry type="library" exported="" name="getPinYinSZM" level="project" />
     <orderEntry type="library" exported="" name="android-iconify-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v5.5.3" level="project" />
-    <orderEntry type="library" exported="" name="androidannotations-api-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="core-2.2" level="project" />
+    <orderEntry type="library" exported="" name="androidannotations-api-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="Android_Location_V1.3.1" level="project" />
     <orderEntry type="module" module-name="Enhanced-edittext" exported="" />
     <orderEntry type="module" module-name="SlidingMenu" exported="" />

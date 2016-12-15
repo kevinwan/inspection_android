@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <com.gongpingjia.gpjdetector.kZViews.TouchImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff000000"/>
+
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/item_text_size"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:text="返回"/>
+
+    <TextView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_above="@id/back"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/item_text_size"
+        android:textColor="#000000"
+        android:background="@drawable/camera_bg"
+        android:text="去拍照"/>
+
+
+</RelativeLayout>
