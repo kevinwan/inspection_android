@@ -43,7 +43,8 @@
                     style="@style/edittext_selector"/>
             </LinearLayout>
             <include layout="@layout/split_line" />
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"
@@ -54,7 +55,8 @@
                     style="@style/edittext_selector"/>
             </LinearLayout>
             <include layout="@layout/split_line" />
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                          android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/item_text_size"

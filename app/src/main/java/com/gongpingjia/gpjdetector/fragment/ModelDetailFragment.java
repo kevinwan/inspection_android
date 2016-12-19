@@ -94,8 +94,8 @@ public class ModelDetailFragment extends Fragment implements
 
             getData(mModelSlug);
 
-//			mNetModelDetail = new NetDataJson(this);
-//			mNetModelDetail.requestData(url + params);
+		/*	mNetModelDetail = new NetDataJson(this);
+			mNetModelDetail.requestData(url + params);*/
         }
         return view;
     }
@@ -272,7 +272,8 @@ public class ModelDetailFragment extends Fragment implements
                         .findViewById(R.id.modelText);
                 holder.modelYear = (TextView) convertView
                         .findViewById(R.id.title);
-
+                holder.price = (TextView) convertView
+                        .findViewById(R.id.price);
                 convertView.setTag(holder);
             } else {
                 holder = (ModelViewHolder) convertView.getTag();
@@ -288,7 +289,7 @@ public class ModelDetailFragment extends Fragment implements
             } else {
                 holder.modelYear.setVisibility(View.GONE);
             }
-
+            holder.price.setText(mModelDetailList.get(position).get("price"));
             return convertView;
 
         }
@@ -370,6 +371,7 @@ public class ModelDetailFragment extends Fragment implements
         public final class ModelViewHolder {
             public TextView modelText;
             public TextView modelYear;
+            public TextView price;
         }
 
     }

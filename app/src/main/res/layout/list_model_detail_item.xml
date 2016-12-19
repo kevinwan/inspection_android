@@ -7,7 +7,8 @@
 
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
                 android:id="@+id/title"
@@ -20,22 +21,33 @@
                 android:textColor="#FF636363"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
+
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:minHeight="48dp"
+            android:gravity="center">
 
         <TextView
                 android:id="@+id/modelText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:gravity="center_vertical"
                 android:textSize="18sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"/>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="0dp"
+            android:textColor="#Fbb05a"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
 </LinearLayout>

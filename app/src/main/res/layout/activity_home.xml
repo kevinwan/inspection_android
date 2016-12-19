@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffcee4ee"
                 android:textSize="18sp"
-                android:text="车辆检测系统"/>
+                android:text="车辆检测定价系统"/>
             </LinearLayout>
         </LinearLayout>
     <RelativeLayout
@@ -108,6 +108,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/info_collect"/>
                 <TextView
+                    android:id="@+id/car_check_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"

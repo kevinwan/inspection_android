@@ -48,7 +48,7 @@ public class kZDatabase extends SQLiteAssetHelper {
                 sqlSelectionArgs = new String[]{"主要功能"};
                 break;
             case 1:
-                if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                     sqlSelection = "type = ? AND checker = ?";
 
                 }else{
