@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:maxWidth="220dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"/>
 
@@ -44,10 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:paddingRight="0dp"
+            android:paddingRight="20dp"
             android:textColor="#Fbb05a"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textSize="18sp"/>
     </RelativeLayout>
 
 </LinearLayout>

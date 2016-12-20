@@ -214,6 +214,7 @@ public class ModelDetailFragment extends Fragment implements
                 map.put("slug", cursor.getString(1));
                 map.put("url", cursor.getString(2));
                 map.put("name", cursor.getString(3));
+                map.put("price", cursor.getString(4));
 
                 if (null != map.get("slug")
                         && !map.get("slug").equals("null")) {
@@ -289,7 +290,7 @@ public class ModelDetailFragment extends Fragment implements
             } else {
                 holder.modelYear.setVisibility(View.GONE);
             }
-            holder.price.setText(mModelDetailList.get(position).get("price"));
+            holder.price.setText(mModelDetailList.get(position).get("price")+"万元");
             return convertView;
 
         }

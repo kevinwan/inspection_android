@@ -114,7 +114,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String sqlSelection = "global_slug = ?";
 
 
-        String[] sqlSelect = {"year", "detail_model_slug", "url", "detail_model"};
+        String[] sqlSelect = {"year", "detail_model_slug", "url", "detail_model","price_bn"};
         String sqlTables = "open_model_detail";
         qb.setTables(sqlTables);
 
