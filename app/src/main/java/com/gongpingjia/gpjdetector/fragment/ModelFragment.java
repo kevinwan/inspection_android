@@ -1,10 +1,5 @@
 package com.gongpingjia.gpjdetector.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,9 +20,13 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.CategoryActivity;
-import com.gongpingjia.gpjdetector.activity.HistoryActivity;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ModelFragment extends Fragment implements
         AbsListView.OnItemClickListener {
@@ -59,9 +58,8 @@ public class ModelFragment extends Fragment implements
             map.put("slug", cursor.getString(0));
             map.put("name", cursor.getString(1));
             map.put("parent", cursor.getString(2));
-            map.put("keywords", cursor.getString(3));
-            map.put("thumbnail", cursor.getString(4));
-            map.put("logo_img", cursor.getString(5));
+            map.put("thumbnail", cursor.getString(3));
+            map.put("logo_img", cursor.getString(4));
 
             mModelUnderBrand.add(map);
         } while (cursor.moveToNext());

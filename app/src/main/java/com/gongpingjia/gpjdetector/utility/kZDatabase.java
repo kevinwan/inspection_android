@@ -114,12 +114,12 @@ public class kZDatabase extends SQLiteAssetHelper {
         String sqlSelection = "global_slug = ?";
 
 
-        String[] sqlSelect = {"year", "detail_model_slug", "url", "detail_model","price_bn"};
+        String[] sqlSelect = {"year", "detail_model_slug", "detail_model","price_bn"};
         String sqlTables = "open_model_detail";
         qb.setTables(sqlTables);
 
         Cursor c = qb.query(db, sqlSelect, sqlSelection, global_slug,
-                null, null, "id", null);
+                null, null, "", null);
 
 //        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
         c.moveToFirst();
@@ -130,7 +130,7 @@ public class kZDatabase extends SQLiteAssetHelper {
     public Cursor getModelList(String parentBrand) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        String[] sqlSelect = {"slug", "name", "parent", "keywords", "thumbnail", "logo_img"};
+        String[] sqlSelect = {"slug", "name", "parent", "thumbnail", "logo_img"};
         String sqlSelection = "parent=?";
         String[] sqlSelectionArgs = new String[]{parentBrand};
         String sqlTables = "model";

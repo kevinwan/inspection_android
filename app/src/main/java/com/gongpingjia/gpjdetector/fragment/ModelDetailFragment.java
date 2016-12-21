@@ -212,9 +212,8 @@ public class ModelDetailFragment extends Fragment implements
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("year", cursor.getString(0));
                 map.put("slug", cursor.getString(1));
-                map.put("url", cursor.getString(2));
-                map.put("name", cursor.getString(3));
-                map.put("price", cursor.getString(4));
+                map.put("name", cursor.getString(2));
+                map.put("price", cursor.getString(3));
 
                 if (null != map.get("slug")
                         && !map.get("slug").equals("null")) {

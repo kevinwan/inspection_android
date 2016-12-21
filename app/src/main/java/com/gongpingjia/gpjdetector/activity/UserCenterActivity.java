@@ -90,7 +90,7 @@ public class UserCenterActivity extends Activity {
         nick.setText(SharedPreUtil.getInstance().getUser().getUser());
         phone.setText(SharedPreUtil.getInstance().getUser().getPhone());
         company_name.setText(SharedPreUtil.getInstance().getUser().getCompany());
-        if("3".equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
             user_type.setText("车况检测");
         }else{
             user_type.setText("图片采集");
