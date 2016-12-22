@@ -224,7 +224,7 @@ public class Fragment1 extends Fragment {
             }
             final int count;
             if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
-                count = 7;
+                count = 14;
             } else {
                 count = 31;
             }

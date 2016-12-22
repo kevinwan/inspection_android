@@ -204,8 +204,8 @@ public class kZDatabase extends SQLiteAssetHelper {
         dq.setTables(Constant.getTableName());
         Cursor c = dq.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
         if (0 == c.getCount()) {
-            db.execSQL("INSERT INTO " + Constant.getTableName() + "(_id, key, name, value, type)" +
-                    " values('" + _id + "', '" + key + "', '" + name + "', '" + value + "', '" + type + "')");
+            db.execSQL("INSERT INTO " + Constant.getTableName() + "(_id, key, name, value, type,checker,pic_collector)" +
+                    " values('" + _id + "', '" + key + "', '" + name + "', '" + value + "', '" + type + "1,1')");
         } else {
             ContentValues cv = new ContentValues();
             cv.put("key", key);
