@@ -49,6 +49,7 @@ import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.kZViews.kZDatePickerDialog;
 import com.gongpingjia.gpjdetector.receiver.NetReceiver;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
+import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.Utils;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -1092,16 +1093,21 @@ public class MainActivity extends FragmentActivity {
 
 
             //照片采集
-
-            for (int i = 0; i < 14; ++i) {
+            int count;
+            if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                count = 7;
+            } else {
+                count = 31;
+            }
+            for (int i = 0; i < count; ++i) {
                 CaptureItems item = captureList.get(i);
                 rootJson.put(item.key, item.desc + "|"
                         + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
             }
             JSONArray extraCaptureArray = new JSONArray();
 
-            if (captureList.size() > 14) {
-                for (int i = 14; i < captureList.size(); ++i) {
+            if (captureList.size() > count) {
+                for (int i = count; i < captureList.size(); ++i) {
                     CaptureItems item = captureList.get(i);
                     if (null != item.file_path) {
                         extraCaptureArray.put(item.desc + "|" + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));

@@ -411,7 +411,7 @@ public class Fragment1 extends Fragment {
 
     @Background
     public void saveData2DB() {
-        int _id = 2000;
+        int _id = 10129;
         for (CaptureItems item : list) {
             db.insertItem(String.valueOf(_id++), item.key, item.desc, item.file_path, "cap");
         }
