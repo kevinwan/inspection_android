@@ -234,7 +234,7 @@ public class Fragment1 extends Fragment {
             viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (list.get(position).file_path == null) {
+                    if (list.get(position).file_path == null || list.get(position).file_path.equals("null")) {
                         if (Constant.PHOTO_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                             for (Map.Entry<String, Integer> entry : picMap.entrySet()) {
                                 if (entry.getKey().equals(list.get(position).desc)) {
@@ -412,8 +412,14 @@ public class Fragment1 extends Fragment {
     @Background
     public void saveData2DB() {
         int _id = 10129;
+        int _id2 = 10167;
         for (CaptureItems item : list) {
-            db.insertItem(String.valueOf(_id++), item.key, item.desc, item.file_path, "cap");
+            if(item.key.contains("extra_cap_")){
+                db.insertItem(String.valueOf(_id2++), item.key, item.desc, item.file_path, "cap");
+            }else{
+                db.insertItem(String.valueOf(_id++), item.key, item.desc, item.file_path, "cap");
+            }
+
         }
     }
 
