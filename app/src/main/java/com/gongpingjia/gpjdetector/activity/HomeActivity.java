@@ -148,12 +148,14 @@ public class HomeActivity extends Activity {
             public void OnLoginSuccess(JSONObject jsonObject) {
                 progressDialog.dismiss();
                 afterLogin(jsonObject, null);
+                initUserView();
             }
 
             @Override
             public void OnLoginError(String errorMessage) {
                 progressDialog.dismiss();
                 Toast.makeText(HomeActivity.this, errorMessage + "，请点击头像重新登录。", Toast.LENGTH_SHORT).show();
+                initUserView();
             }
         });
     }
