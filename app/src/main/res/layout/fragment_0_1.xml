@@ -78,6 +78,20 @@
                     style="@style/edittext_selector"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
+            <LinearLayout style="@style/item_layout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/item_text_size"
+                    android:layout_height="wrap_content"
+                    android:text="里程数"/>
+                <EnhancedEditText
+                    android:paddingRight="4dp"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/edittext18"
+                    style="@style/edittext_edit"/>
+            </LinearLayout>
+
+            <include layout="@layout/split_line"/>
 
             <include layout="@layout/tablelayout_color"/>
             <LinearLayout style="@style/item_layout">
@@ -207,22 +221,6 @@
 
             <include layout="@layout/split_line" />
 
-            <LinearLayout style="@style/item_layout"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="新车指导价"
-                    android:textSize="@dimen/item_text_size" />
-
-                <EnhancedEditText
-                    android:id="@+id/edittext9"
-                    style="@style/edittext_edit"
-                    android:inputType="numberDecimal"
-                    android:paddingRight="4dp"
-                    custom:suffixText="万元" />
-            </LinearLayout>
 
             <include layout="@layout/split_line" />
 

@@ -461,7 +461,7 @@ public class MainActivity extends FragmentActivity {
                 return null;
             }
             do {
-                items11list.add(new kZDBItem(cursor.getString(0).replace("\\r","").replace("\\n","").replace("\r","").replace("\n", ""), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                items11list.add(new kZDBItem(cursor.getString(0).replace("\\r", "").replace("\\n", "").replace("\r", "").replace("\n", ""), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             } while (cursor.moveToNext());
             cursor.close();
             menu_status[0] = true;
@@ -975,28 +975,30 @@ public class MainActivity extends FragmentActivity {
         int index;
         try {
             //1-1(15)
-            for (index = 0; index < items11list.size(); ++index) {
-                if (items11list.get(index).getKey().equals("CXZK")) continue; //跳过出现状况检测
-                if (items11list.get(index).getKey().equals("ZJBGRQ")) {
-                    if (items11list.get(index).getValue().equals("") || null == items11list.get(index).getValue()) {
-                        rootJson.put("ZJBGRQ", "");
-                    } else {
-                        rootJson.put("ZJBGRQ", items11list.get(index).getValue());
-                    }
-                    continue;
-                }
+            if (items11list != null) {
+                for (index = 0; index < items11list.size(); ++index) {
+                   /* if (items11list.get(index).getKey().equals("CXZK")) continue; //跳过出现状况检测
+                    if (items11list.get(index).getKey().equals("ZJBGRQ")) {
+                        if (items11list.get(index).getValue().equals("") || null == items11list.get(index).getValue()) {
+                            rootJson.put("ZJBGRQ", "");
+                        } else {
+                            rootJson.put("ZJBGRQ", items11list.get(index).getValue());
+                        }
+                        continue;
+                    }*/
 
-                String value = items11list.get(index).getValue();
-               /* if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG")) {
+                    String value = items11list.get(index).getValue();
+                if (items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
                 } else {
                     if (null == value || value.equals("")) {
                         showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
                         return null;
                     }
-                }*/
+                }
 
-                rootJson.put(items11list.get(index).getKey(), value);
+                    rootJson.put(items11list.get(index).getKey(), value);
+                }
             }
             rootJson.put("CX", database.getValue(Constant.getTableName(), "brandSlug")
                     + "," + database.getValue(Constant.getTableName(), "modelSlug")
@@ -1023,73 +1025,88 @@ public class MainActivity extends FragmentActivity {
                 rootJson.put(items13list.get(index).getKey(), value);
             }*/
             //2(13)
-            for (index = 0; index < items2list.size(); ++index) {
-                JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
-                JSONArray marks = itemJson.getJSONArray("marks");
-                for (int i = 0; i < marks.length(); ++i) {
-                    marks.put(i, getBase64Img(marks.getString(i)));
+            if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+                if (items2list != null) {
+                    for (index = 0; index < items2list.size(); ++index) {
+                        JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
+                        JSONArray marks = itemJson.getJSONArray("marks");
+                        for (int i = 0; i < marks.length(); ++i) {
+                            marks.put(i, getBase64Img(marks.getString(i)));
+                        }
+                        rootJson.put(items2list.get(index).getKey(), itemJson);
+                    }
                 }
-                rootJson.put(items2list.get(index).getKey(), itemJson);
+                if (items3list != null) {
+                    //3(12)
+                    for (index = 0; index < items3list.size(); ++index) {
+                        String value = items3list.get(index).getValue();
+                        value = null == value ? "" : value;
+                        rootJson.put(items3list.get(index).getKey(), value);
+                    }
+                }
+                if (items4list != null) {
+                    //4(33)
+                    for (index = 0; index < items4list.size(); ++index) {
+                        String value = items4list.get(index).getValue();
+                        value = null == value ? "" : value;
+                        rootJson.put(items4list.get(index).getKey(), value);
+                    }
+                }
+                if (items5list != null) {
+                    //5(57)
+                    for (index = 0; index < items5list.size(); ++index) {
+                        String value = items5list.get(index).getValue();
+                        value = null == value ? "" : value;
+                        rootJson.put(items5list.get(index).getKey(), value);
+                    }
+                }
+                if (items6list != null) {
+                    //6(27)
+                    for (index = 0; index < items6list.size(); ++index) {
+                        String value = items6list.get(index).getValue();
+                        value = null == value ? "" : value;
+                        rootJson.put(items6list.get(index).getKey(), value);
+                    }
+                }
+                Cursor cursor;
+                cursor = database.getDBItems(8);
+                if (null != cursor) {
+                    content = cursor.getString(2);
+
+                }
+                cursor.close();
+                rootJson.put("comments", content);
+
+                //添加三张图片Base64 编码字符串
+                Bitmap[] bitmaps = drawPic();
+                for (int i = 0; i < bitmaps.length; ++i) {
+                    String value = Utils.bitmapToBase64(bitmaps[i]);
+                    bitmaps[i].recycle();
+                    value = null == value ? "" : value;
+                    rootJson.put("extra_pic" + (i + 1), value);
+                }
+                //出险记录
+                JSONArray jsonArray = new JSONArray();
+                for (HashMap<String, String> map : chuxian_list) {
+                    jsonArray.put(map.get("money") + "," + map.get("note"));
+                }
+
+                rootJson.put("CXZK", jsonArray);
             }
-            //3(12)
-            for (index = 0; index < items3list.size(); ++index) {
-                String value = items3list.get(index).getValue();
-                value = null == value ? "" : value;
-                rootJson.put(items3list.get(index).getKey(), value);
-            }
-            //4(33)
-            for (index = 0; index < items4list.size(); ++index) {
-                String value = items4list.get(index).getValue();
-                value = null == value ? "" : value;
-                rootJson.put(items4list.get(index).getKey(), value);
-            }
-            //5(57)
-            for (index = 0; index < items5list.size(); ++index) {
-                String value = items5list.get(index).getValue();
-                value = null == value ? "" : value;
-                rootJson.put(items5list.get(index).getKey(), value);
-            }
-            //6(27)
-            for (index = 0; index < items6list.size(); ++index) {
-                String value = items6list.get(index).getValue();
-                value = null == value ? "" : value;
-                rootJson.put(items6list.get(index).getKey(), value);
-            }
+
+
 
 //            if (TextUtils.isEmpty(content)) {
 //                showToast("检测说明未编写，无法提交。");
 //                return null;
 //            }
-            Cursor cursor;
-            cursor = database.getDBItems(8);
-            if (null != cursor) {
-                content = cursor.getString(2);
 
-            }
-            cursor.close();
-            rootJson.put("comments", content);
 //            //7(30)
 //            for (index = 0; index < items7list.size(); ++index) {
 //                String value = items7list.get(index).getValue();
 //                value = null == value ? "" : value;
 //                rootJson.put(items7list.get(index).getKey(), value);
 //            }
-            //(3)
-            //添加三张图片Base64 编码字符串
-            Bitmap[] bitmaps = drawPic();
-            for (int i = 0; i < bitmaps.length; ++i) {
-                String value = Utils.bitmapToBase64(bitmaps[i]);
-                bitmaps[i].recycle();
-                value = null == value ? "" : value;
-                rootJson.put("extra_pic" + (i + 1), value);
-            }
-            //出险记录
-            JSONArray jsonArray = new JSONArray();
-            for (HashMap<String, String> map : chuxian_list) {
-                jsonArray.put(map.get("money") + "," + map.get("note"));
-            }
-
-            rootJson.put("CXZK", jsonArray);
 
 
             //照片采集
@@ -1141,13 +1158,16 @@ public class MainActivity extends FragmentActivity {
         Canvas drawCanvas = new Canvas(drawBitmap);
         drawCanvas.drawColor(Color.WHITE);
         drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_bg), 0, 0, paint);
-        for (int i = 1; i <= 13; ++i) {
-            ArrayList<String> list = partMap.get(String.valueOf(i)).getMarks();
-            for (int j = 0; j < list.size(); ++j) {
-                String[] xy = list.get(j).split(",");
-                drawCanvas.drawCircle(Float.parseFloat(xy[0]), Float.parseFloat(xy[1]), 12, paint);
+        if(partMap != null){
+            for (int i = 1; i <= 13; ++i) {
+                ArrayList<String> list = partMap.get(String.valueOf(i)).getMarks();
+                for (int j = 0; j < list.size(); ++j) {
+                    String[] xy = list.get(j).split(",");
+                    drawCanvas.drawCircle(Float.parseFloat(xy[0]), Float.parseFloat(xy[1]), 12, paint);
+                }
             }
         }
+
 
         bitmaps[0] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
         //画做漆图

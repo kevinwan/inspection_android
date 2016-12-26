@@ -62,7 +62,7 @@ public class Fragment0 extends Fragment {
     EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15
             ,edittext16;
     @ViewById
-    EnhancedEditText edittext9, edittext7;
+    EnhancedEditText edittext7,edittext18;
     @ViewById
     RadioGroup radiogroup8;
 
@@ -153,7 +153,6 @@ public class Fragment0 extends Fragment {
 //        edittext6.setTag("NJDQSJ");
         edittext7.setTag("FPJG");
         radiogroup8.setTag("SYXZ");
-        edittext9.setTag("XCZDJ");
         edittext10.setTag("CLGSD");
 
         edittext11.setTag("CJH");
@@ -165,9 +164,12 @@ public class Fragment0 extends Fragment {
         edittext14.setTag("BSQ");
         edittext15.setTag("PL");
         edittext16.setTag("YS");
-        edittext17.setTag("SZCS");
-        views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7, edittext9,
-                radiogroup8, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15,edittext16};
+        edittext17.setTag("CLGSD");
+        edittext18.setTag("LCS");
+        edittext18.setSuffixColor(Color.parseColor("#ff585858"));
+        edittext18.setSuffixText("万公里");
+        views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7,
+                radiogroup8, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15,edittext16,edittext18};
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
@@ -195,9 +197,6 @@ public class Fragment0 extends Fragment {
         edittext7.setSuffixText("万元");
         edittext7.setSuffixColor(Color.parseColor("#ff585858"));
 
-
-        edittext9.setSuffixText("万元");
-        edittext9.setSuffixColor(Color.parseColor("#ff585858"));
 
         edittext2.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -269,7 +268,6 @@ public class Fragment0 extends Fragment {
 
 
         edittext7.addTextChangedListener(new DoubleTextWatcher(edittext7));
-        edittext9.addTextChangedListener(new DoubleTextWatcher(edittext9));
         for (int i = 0; i < colors.length; ++i) {
             colors[i].setOnClickListener(colorCilck);
         }

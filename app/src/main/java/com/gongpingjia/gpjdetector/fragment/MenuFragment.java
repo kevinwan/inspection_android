@@ -92,7 +92,13 @@ public class MenuFragment extends Fragment {
     public void submitButton() {
 
         final int index[] = new int[1];
-        for (index[0] = 0; index[0] < mainActivity.menu_status.length-1; ++index[0]) {
+        int size;
+        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+            size = mainActivity.menu_status.length-1;
+        }else{
+            size = 1;
+        }
+        for (index[0] = 0; index[0] < size; ++index[0]) {
             if (mainActivity.menu_status[index[0]]) continue;
             AlertDialog dialog = new AlertDialog.Builder(mainActivity)
                     .setMessage("仍有未完成的检测项，请继续完成全部检测项后再尝试提交。")
