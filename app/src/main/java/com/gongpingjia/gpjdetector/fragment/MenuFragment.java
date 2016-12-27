@@ -91,33 +91,35 @@ public class MenuFragment extends Fragment {
     @Click
     public void submitButton() {
 
-        final int index[] = new int[1];
+        int index0 = 0;
         int size;
         if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
             size = mainActivity.menu_status.length-1;
         }else{
             size = 1;
         }
-        for (index[0] = 0; index[0] < size; ++index[0]) {
-            if (mainActivity.menu_status[index[0]]) continue;
+        for (index0 = 0; index0 < size; ++index0) {
+            final int index = index0;
+            if (mainActivity.menu_status[index0]) continue;
             AlertDialog dialog = new AlertDialog.Builder(mainActivity)
                     .setMessage("仍有未完成的检测项，请继续完成全部检测项后再尝试提交。")
                     .setPositiveButton("现在去完善", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            if (0 == index[0]) {
+
+                            if (0 == index) {
                                 btn_fragment0.performClick();
-                            } else if (1 == index[0]) {
+                            } else if (1 == index) {
                                 btn_fragment1.performClick();
-                            } else if (2 == index[0]) {
+                            } else if (2 == index) {
                                 btn_fragment2.performClick();
-                            } else if (3 == index[0]) {
+                            } else if (3 == index) {
                                 btn_fragment3.performClick();
-                            } else if (4 == index[0]) {
+                            } else if (4 == index) {
                                 btn_fragment4.performClick();
-                            } else if (5 == index[0]) {
+                            } else if (5 == index) {
                                 btn_fragment5.performClick();
-                            } else if (6 == index[0]) {
+                            } else if (6 == index) {
                                 btn_fragment6.performClick();
                             }
 //                            else if (7 == index[0]) {
@@ -144,16 +146,16 @@ public class MenuFragment extends Fragment {
     void saveButton() {
         int index = mainActivity.searchIndex("CX", mainActivity.getDB01Items());
         String modelName = null;
-        if (index != 0) {
+//        if (index != 0) {
             modelName = mainActivity.getDB01Items().get(index).getValue();
             if (null == modelName || modelName.equals("") || modelName.equals("null") || modelName.equals("NULL")) {
                 Toast.makeText(mainActivity, "请先选定车型后再保存。", Toast.LENGTH_LONG).show();
                 return;
             }
-        } else {
+      /*  } else {
             Toast.makeText(mainActivity, "保存失败，请重试。", Toast.LENGTH_LONG).show();
             return;
-        }
+        }*/
 
         final ProgressDialog progressDialog = Constant.showProgress(mainActivity, null, "正在保存...");
         new Handler().postDelayed(new Runnable() {

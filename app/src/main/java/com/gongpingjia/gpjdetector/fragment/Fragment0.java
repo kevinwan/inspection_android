@@ -59,8 +59,7 @@ public class Fragment0 extends Fragment {
     @ViewById
     TableLayout colorTable;
     @ViewById
-    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15
-            ,edittext16;
+    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext10, edittext11, edittext12, edittext13,edittext17,edittext14,edittext15,edittext16;
     @ViewById
     EnhancedEditText edittext7,edittext18;
     @ViewById
