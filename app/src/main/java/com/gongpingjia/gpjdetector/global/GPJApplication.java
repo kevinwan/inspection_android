@@ -56,11 +56,13 @@ public class GPJApplication extends Application {
             mCityData.LoadCityData1(mCityJson);
             DataManager.getInstance().setCitySuccess(true);
             DataManager.getInstance().setIsCitylaoding(false);
+        }else{
+            DataManager.getInstance().getCityData(mCityData,
+                    getRootPath(),
+                    getApplicationContext(),
+                    0);
         }
-        DataManager.getInstance().getCityData(mCityData,
-                getRootPath(),
-                getApplicationContext(),
-                0);
+
 
     }
 
