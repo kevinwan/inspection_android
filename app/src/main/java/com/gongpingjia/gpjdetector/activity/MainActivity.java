@@ -315,33 +315,38 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Background
-    public void saveDatafromView(ArrayList<kZDBItem> list, View view) {
-        if (null == list || null == view) return;
-        int index = searchIndex((String) view.getTag(), list);
-        if (-1 == index) return;
-        if (view instanceof EditText) {
-            list.get(index).setValue(((TextView) view).getText().toString());
-        } else if (view instanceof EnhancedEditText) {
-            list.get(index).setValue(((EnhancedEditText) view).getText().toString());
-        } else if (view instanceof RadioGroup) {
-            String value = null;
-            switch (((RadioGroup) view).getCheckedRadioButtonId()) {
-                case R.id.radio_pos:
-                    value = Constant.value_POS;
-                    break;
-                case R.id.radio_neg:
-                    value = Constant.value_NEG;
-                    break;
-                case R.id.radio_neu:
-                    value = Constant.value_NEU;
-                    break;
-                default:
-                    break;
+    public void saveDatafromView(ArrayList<kZDBItem> list, View[] views) {
+        for (int i = 0; i < views.length; ++i) {
+            View view = views[i];
+            if (null == list || null == view) return;
+            int index = searchIndex((String) view.getTag(), list);
+            if (-1 == index) return;
+            if (view instanceof EditText) {
+                Log.d("hhhhhh", ((TextView) view).getText().toString());
+                list.get(index).setValue(((TextView) view).getText().toString());
+            } else if (view instanceof EnhancedEditText) {
+                list.get(index).setValue(((EnhancedEditText) view).getText().toString());
+            } else if (view instanceof RadioGroup) {
+                String value = null;
+                switch (((RadioGroup) view).getCheckedRadioButtonId()) {
+                    case R.id.radio_pos:
+                        value = Constant.value_POS;
+                        break;
+                    case R.id.radio_neg:
+                        value = Constant.value_NEG;
+                        break;
+                    case R.id.radio_neu:
+                        value = Constant.value_NEU;
+                        break;
+                    default:
+                        break;
+                }
+                list.get(index).setValue(value);
+            } else if (view instanceof CheckBox) {
+                list.get(index).setValue(((CheckBox) view).isChecked() ? Constant.value_POS : Constant.value_NEU);
             }
-            list.get(index).setValue(value);
-        } else if (view instanceof CheckBox) {
-            list.get(index).setValue(((CheckBox) view).isChecked() ? Constant.value_POS : Constant.value_NEU);
         }
+
         for (kZDBItem item : list) {
             database.updateItem(item.getKey(), item.getValue());
         }

@@ -323,7 +323,7 @@ public class Fragment0_1 extends Fragment {
     @Background
     public void saveDatafromView() {
         for (int i = 0; i < views.length; ++i) {
-            mainActivity.saveDatafromView(list, views[i]);
+            mainActivity.saveDatafromView(list, views);
         }
 
         //出险记录

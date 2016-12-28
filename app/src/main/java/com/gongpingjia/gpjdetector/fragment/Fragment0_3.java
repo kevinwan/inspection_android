@@ -60,7 +60,7 @@ public class Fragment0_3 extends Fragment {
     @Background
     void saveDatafromView() {
         for (int i = 0; i < views.length; ++i) {
-            mainActivity.saveDatafromView(list, views[i]);
+            mainActivity.saveDatafromView(list, views);
         }
     }
 

@@ -175,7 +175,7 @@ public class Fragment0_2 extends Fragment {
 
     public void saveDatafromView() {
         for (int i = 0; i < views.length; ++i) {
-            mainActivity.saveDatafromView(list, views[i]);
+            mainActivity.saveDatafromView(list, views);
         }
     }
 
