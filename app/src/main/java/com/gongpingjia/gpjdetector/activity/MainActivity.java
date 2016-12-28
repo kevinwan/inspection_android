@@ -992,7 +992,7 @@ public class MainActivity extends FragmentActivity {
 
                 } else {
                     if (null == value || value.equals("")) {
-                        showToast("<基本信息>有未填写的项目，无法提交。" + ":" + items11list.get(index).getKey());
+                        showToast("基本信息有未填写的项目，无法提交。");
                         return null;
                     }
                 }

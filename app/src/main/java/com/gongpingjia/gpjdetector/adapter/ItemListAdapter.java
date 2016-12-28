@@ -119,11 +119,7 @@ public class ItemListAdapter extends BaseAdapter {
             }
         });
 
-        if (list.get(position).getPriority().equals("0")) {
-            view.setBackgroundColor(Color.parseColor("#fff3f3f3"));
-        } else {
-            view.setBackgroundColor(Color.WHITE);
-        }
+        view.setBackgroundColor(Color.WHITE);
 
         return view;
     }
