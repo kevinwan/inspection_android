@@ -119,7 +119,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         qb.setTables(sqlTables);
 
         Cursor c = qb.query(db, sqlSelect, sqlSelection, global_slug,
-                null, null, "", null);
+                null, null,"year desc", null);
 
 //        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
         c.moveToFirst();

@@ -118,11 +118,6 @@ public class HomeActivity extends Activity {
     @AfterViews
     void afterViews() {
         car_check_tv = (TextView) findViewById(R.id.car_check_tv);
-        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
-            car_check_tv.setText("开始检测");
-        }else{
-            car_check_tv.setText("车辆信息采集");
-        }
         db = new kZDatabase(HomeActivity.this);
         updateHelper = new UpdateHelper(HomeActivity.this);
         updateHelper.checkUpdate();
@@ -137,6 +132,11 @@ public class HomeActivity extends Activity {
             } else {
                 login(userinfo);
             }
+        }
+        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+            car_check_tv.setText("开始检测");
+        }else{
+            car_check_tv.setText("车辆信息采集");
         }
         initUserView();
     }
