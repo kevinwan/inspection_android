@@ -68,6 +68,9 @@ public class Fragment_History_1 extends Fragment {
     @ViewById
     ListView listView;
 
+    @ViewById
+    ImageView no_info;
+
     historyAdapter adapter;
 
     ArrayList<HashMap<String, String>> list;
@@ -173,6 +176,11 @@ public class Fragment_History_1 extends Fragment {
                         map.put("report_url", item.getString("report_url"));
 
                         list.add(map);
+                    }
+                    if(list.size() == 0){
+                        no_info.setVisibility(View.VISIBLE);
+                    }else{
+                        no_info.setVisibility(View.GONE);
                     }
                     wait.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();

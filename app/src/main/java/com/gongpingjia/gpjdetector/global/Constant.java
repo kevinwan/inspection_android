@@ -20,7 +20,7 @@ public class Constant {
     public static String SERVER_DOMAIN = "http://pad.eyelee.cn";
 
     //test 2
-//   public static String SERVER_DOMAIN = "http://192.168.1.42:8000";
+//   public static String SERVER_DOMAIN = "http://192.168.1.43:8000";
 
 //    public static String SERVER_DOMAIN = "http://pad.gongpingjia.com";
 

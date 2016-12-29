@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,6 +52,9 @@ public class Fragment_History_2 extends Fragment {
     kZDatabase db;
 
     ImageLoader imageLoader;
+
+    @ViewById
+    ImageView no_info;
 
     ArrayList<HashMap<String, String>> historyList;
 
@@ -115,7 +119,6 @@ public class Fragment_History_2 extends Fragment {
                     historyList.add(map);
                 }
             } while (c.moveToNext());
-
             for (int i = 0; i < historyList.size(); ++i) {
                 if (null == db.getValue(historyList.get(i).get("tableName"), "brandSlug")) {
                     db.deleteHistory(historyList.get(i).get("tableName"));
@@ -128,6 +131,11 @@ public class Fragment_History_2 extends Fragment {
                 }
 
             }
+        }
+        if(historyList.size() == 0){
+            no_info.setVisibility(View.VISIBLE);
+        }else{
+            no_info.setVisibility(View.GONE);
         }
         wait.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();

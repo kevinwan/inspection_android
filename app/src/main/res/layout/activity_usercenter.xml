@@ -208,7 +208,7 @@
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
             android:background="#FEBA00"
-            android:text="退出登陆"
+            android:text="退出登录"
             android:textColor="@color/white"/>
     </LinearLayout>
 

@@ -31,6 +31,6 @@
         android:background="@drawable/slidingmenu_toggler"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"/>
 
 </RelativeLayout>

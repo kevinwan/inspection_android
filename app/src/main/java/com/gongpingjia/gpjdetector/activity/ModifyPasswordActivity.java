@@ -30,7 +30,7 @@ public class ModifyPasswordActivity extends Activity {
     @ViewById
     EditText oldpassword, newpassword1, newpassword2;
     @ViewById
-    Button modify;
+    Button modify,extra;
     @ViewById
     TextView banner_title;
 
@@ -41,9 +41,17 @@ public class ModifyPasswordActivity extends Activity {
 
     RequestUtils requestUtils;
 
+
+    @Click
+    void extra() {
+        onBackPressed();
+    }
+
+
     @AfterViews
     void afterViews() {
         requestUtils = new RequestUtils(ModifyPasswordActivity.this);
+        extra.setBackgroundResource(R.drawable.back);
         slidingmenu_toggler.setVisibility(View.INVISIBLE);
         banner_title.setText("修改密码");
         SharedPreUtil.initSharedPreference(ModifyPasswordActivity.this);
