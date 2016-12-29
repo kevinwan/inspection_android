@@ -228,7 +228,7 @@ public class Fragment1 extends Fragment {
             } else {
                 count = 31;
             }
-            if (position > count && position != list.size() - 1) {
+            if (position >= count && position != list.size() - 1) {
                 list.get(position).key = "extra_cap_" + (position - count);
             }
             viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
