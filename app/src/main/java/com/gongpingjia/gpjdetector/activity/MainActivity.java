@@ -466,7 +466,7 @@ public class MainActivity extends FragmentActivity {
                 return null;
             }
             do {
-                items11list.add(new kZDBItem(cursor.getString(0).replace("\\r", "").replace("\\n", "").replace("\r", "").replace("\n", ""), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                items11list.add(new kZDBItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             } while (cursor.moveToNext());
             cursor.close();
             menu_status[0] = true;

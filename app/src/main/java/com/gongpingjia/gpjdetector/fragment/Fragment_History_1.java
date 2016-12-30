@@ -205,7 +205,7 @@ public class Fragment_History_1 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HashMap<String, String> map = list.get(i);
-                if ("0".equals(map.get("report_status"))){
+                if ("1".equals(map.get("report_status"))){
                     url = map.get("report_url");
                     webView.loadUrl(url);
                     LinearLayout qr_view = (LinearLayout) LayoutInflater.from(parentActivity).inflate(R.layout.qr_view, null);
@@ -295,10 +295,10 @@ public class Fragment_History_1 extends Fragment {
             viewHoler.title.setText(map.get("model") + " " + map.get("d_model"));
 
             String report_status = "";
-            if ("1".equals(map.get("report_status"))) {
+            if ("0".equals(map.get("report_status"))) {
                 report_status = "定价中...";
                 viewHoler.report_status.setTextColor(Color.RED);
-            } else if ("0".equals(map.get("report_status"))) {
+            } else if ("1".equals(map.get("report_status"))) {
                 report_status = "已定价";
                 viewHoler.report_status.setTextColor(Color.GREEN);
             }

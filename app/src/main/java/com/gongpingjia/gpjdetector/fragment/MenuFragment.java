@@ -225,7 +225,6 @@ public class MenuFragment extends Fragment {
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             if (null == jsonObject) {
-                Toast.makeText(mainActivity, "数据异常，无法提交。", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 return;
             }
