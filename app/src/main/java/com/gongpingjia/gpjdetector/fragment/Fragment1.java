@@ -327,11 +327,16 @@ public class Fragment1 extends Fragment {
                             .setPositiveButton("添加备注", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    list.get(requestCode).desc = editText.getText().toString();
-                                    adapter.notifyDataSetChanged();
                                 }
                             }).create();
                     dialog.show();
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            list.get(requestCode).desc = editText.getText().toString();
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
                     list.add(new CaptureItems("ADD", "点击添加", null));
                     adapter.notifyDataSetChanged();
                 }
