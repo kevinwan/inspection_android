@@ -322,7 +322,6 @@ public class MainActivity extends FragmentActivity {
             int index = searchIndex((String) view.getTag(), list);
             if (-1 == index) return;
             if (view instanceof EditText) {
-                Log.d("hhhhhh", ((TextView) view).getText().toString());
                 list.get(index).setValue(((TextView) view).getText().toString());
             } else if (view instanceof EnhancedEditText) {
                 list.get(index).setValue(((EnhancedEditText) view).getText().toString());
