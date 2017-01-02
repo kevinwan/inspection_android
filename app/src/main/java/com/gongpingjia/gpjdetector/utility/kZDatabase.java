@@ -48,13 +48,13 @@ public class kZDatabase extends SQLiteAssetHelper {
                 sqlSelectionArgs = new String[]{"主要功能"};
                 break;
             case 1:
-                if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                     sqlSelection = "type = ? AND checker = ?";
 
-                }else{
+                } else {
                     sqlSelection = "type = ? AND pic_collector = ?";
                 }
-                sqlSelectionArgs = new String[]{"cap","1"};
+                sqlSelectionArgs = new String[]{"cap", "1"};
                 break;
             case 2:
                 sqlSelectionArgs = new String[]{"钣金"};
@@ -89,8 +89,26 @@ public class kZDatabase extends SQLiteAssetHelper {
 
         qb.setTables(sqlTables);
 
-            Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
+        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
                 null, null, "_id", null);
+        c.moveToFirst();
+        return c;
+
+    }
+
+    public Cursor getDB1Items(String pic_collector_sub_cate) {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String sqlSelection = "type = ? AND pic_collector = ? AND pic_collector_sub_cate = ?";
+        String[] sqlSelectionArgs;
+        sqlSelectionArgs = new String[]{"cap", "1",pic_collector_sub_cate};
+
+        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id"};
+        String sqlTables = Constant.getTableName();
+
+        qb.setTables(sqlTables);
+        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
+                null, null, "pic_collector_order", null);
         c.moveToFirst();
         return c;
 
@@ -114,12 +132,12 @@ public class kZDatabase extends SQLiteAssetHelper {
         String sqlSelection = "global_slug = ?";
 
 
-        String[] sqlSelect = {"year", "detail_model_slug", "detail_model","price_bn"};
+        String[] sqlSelect = {"year", "detail_model_slug", "detail_model", "price_bn"};
         String sqlTables = "open_model_detail";
         qb.setTables(sqlTables);
 
         Cursor c = qb.query(db, sqlSelect, sqlSelection, global_slug,
-                null, null,"year desc", null);
+                null, null, "year desc", null);
 
 //        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
         c.moveToFirst();
@@ -167,7 +185,10 @@ public class kZDatabase extends SQLiteAssetHelper {
                 "description TEXT," +
                 "price_scale TEXT," +
                 "checker TEXT," +
-                "pic_collector TEXT)");
+                "pic_collector TEXT,"+
+                "pic_collector_sub_cate TEXT,"+
+                "checker_order TEXT,"+
+                "pic_collector_order TEXT)");
 
         db.execSQL("INSERT INTO " + tableName + " SELECT * FROM detection");
 
@@ -194,7 +215,6 @@ public class kZDatabase extends SQLiteAssetHelper {
             Log.e("SQLiteException", e.toString());
         }
     }
-
     public void insertItem(String _id, String key, String name, String value, String type) {
         SQLiteDatabase db = getWritableDatabase();
         SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
@@ -206,6 +226,30 @@ public class kZDatabase extends SQLiteAssetHelper {
         if (0 == c.getCount()) {
             db.execSQL("INSERT INTO " + Constant.getTableName() + "(_id, key, name, value, type,checker,pic_collector)" +
                     " values('" + _id + "', '" + key + "', '" + name + "', '" + value + "', '" + type + "','1','1')");
+        } else {
+            ContentValues cv = new ContentValues();
+            cv.put("key", key);
+            cv.put("name", name);
+            cv.put("value", value);
+            cv.put("type", type);
+
+            db.update(Constant.getTableName(), cv, "_id=?", new String[]{_id});
+
+        }
+
+    }
+
+    public void insertItem(String _id, String key, String name, String value, String type,String pic_collector_sub_cate,String checker_order,String pic_collector_order){
+        SQLiteDatabase db = getWritableDatabase();
+        SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
+        String[] sqlSelect = {"_id"};
+        String sqlSelection = "_id=?";
+        String[] sqlSelectionArgs = new String[]{_id};
+        dq.setTables(Constant.getTableName());
+        Cursor c = dq.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
+        if (0 == c.getCount()) {
+            db.execSQL("INSERT INTO " + Constant.getTableName() + "(_id, key, name, value, type,checker,pic_collector,pic_collector_sub_cate,checker_order,pic_collector_order)" +
+                    " values('" + _id + "', '" + key + "', '" + name + "', '" + value + "', '" + type + "','1','1','" + pic_collector_sub_cate+"', '" + checker_order+"', '" + pic_collector_order +" ')");
         } else {
             ContentValues cv = new ContentValues();
             cv.put("key", key);
@@ -238,14 +282,14 @@ public class kZDatabase extends SQLiteAssetHelper {
     public Cursor getHistoryList() {
 
 //        if (tabbleIsExist("history")) {
-            SQLiteDatabase db = getReadableDatabase();
-            SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-            String[] sqlSelect = {"tableName", "date", "isFinish"};
-            String sqlTables = "history";
-            qb.setTables(sqlTables);
-            Cursor c = qb.query(db, sqlSelect, "isFinish=?", new String[]{"0"}, null, null, null, null);
-            c.moveToFirst();
-            return c;
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String[] sqlSelect = {"tableName", "date", "isFinish"};
+        String sqlTables = "history";
+        qb.setTables(sqlTables);
+        Cursor c = qb.query(db, sqlSelect, "isFinish=?", new String[]{"0"}, null, null, null, null);
+        c.moveToFirst();
+        return c;
 //        } else {
 //            return null;
 //        } } else {

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/root_layout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
+
+    <include layout="@layout/banner_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24px"
+                android:paddingTop="24px"
+                android:text="车辆信息"/>
+
+            <com.gongpingjia.gpjdetector.kZViews.MyGridView
+                android:id="@+id/gridView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="24px"
+                android:numColumns="3"
+                android:padding="24px"
+                android:verticalSpacing="24px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24px"
+                android:text="发动机舱"/>
+
+            <com.gongpingjia.gpjdetector.kZViews.MyGridView
+                android:id="@+id/gridView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="24px"
+                android:numColumns="3"
+                android:padding="24px"
+                android:verticalSpacing="24px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24px"
+                android:text="细节"/>
+
+            <com.gongpingjia.gpjdetector.kZViews.MyGridView
+                android:id="@+id/gridView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="24px"
+                android:numColumns="3"
+                android:padding="24px"
+                android:verticalSpacing="24px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24px"
+                android:text="内饰"/>
+
+            <com.gongpingjia.gpjdetector.kZViews.MyGridView
+                android:id="@+id/gridView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="24px"
+                android:numColumns="3"
+                android:padding="24px"
+                android:verticalSpacing="24px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24px"
+                android:text="其他"/>
+
+            <com.gongpingjia.gpjdetector.kZViews.MyGridView
+                android:id="@+id/gridView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="24px"
+                android:numColumns="3"
+                android:padding="24px"
+                android:verticalSpacing="24px"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

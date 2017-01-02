@@ -38,6 +38,7 @@ import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.data.partItem;
 import com.gongpingjia.gpjdetector.fragment.Fragment0_;
 import com.gongpingjia.gpjdetector.fragment.Fragment1_;
+import com.gongpingjia.gpjdetector.fragment.Fragment1_1_;
 import com.gongpingjia.gpjdetector.fragment.Fragment2_;
 import com.gongpingjia.gpjdetector.fragment.Fragment3_;
 import com.gongpingjia.gpjdetector.fragment.Fragment4_;
@@ -122,6 +123,7 @@ public class MainActivity extends FragmentActivity {
 
     public Fragment0_ fragment0;
     public Fragment1_ fragment1;
+    public Fragment1_1_ fragment1_1;
     public Fragment2_ fragment2;
     public Fragment3_ fragment3;
     public Fragment4_ fragment4;
@@ -527,6 +529,21 @@ public class MainActivity extends FragmentActivity {
             menu_status[1] = true;
             return captureList;
         }
+    }
+
+    public ArrayList<CaptureItems> getDB11Items(String pic_collector_sub_cate) {
+            Cursor cursor;
+            captureList = new ArrayList<CaptureItems>();
+            cursor = database.getDB1Items(pic_collector_sub_cate);
+            if (null == cursor) {
+                return null;
+            }
+            do {
+                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5)));
+            } while (cursor.moveToNext());
+            cursor.close();
+            menu_status[1] = true;
+            return captureList;
     }
 
     public ArrayList<kZDBItem> getDB2Items() {

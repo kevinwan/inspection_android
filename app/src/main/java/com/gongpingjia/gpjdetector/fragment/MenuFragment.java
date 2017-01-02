@@ -52,7 +52,11 @@ public class MenuFragment extends Fragment {
                     mainActivity.showFragment(mainActivity.fragment0 = new Fragment0_());
                     break;
                 case R.id.btn_fragment1:
-                    mainActivity.showFragment(mainActivity.fragment1 = new Fragment1_());
+                   if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                       mainActivity.showFragment(mainActivity.fragment1 = new Fragment1_());
+                   }else{
+                       mainActivity.showFragment(mainActivity.fragment1_1 = new Fragment1_1_());
+                   }
                     break;
                 case R.id.btn_fragment2:
                     mainActivity.showFragment(mainActivity.fragment2 = new Fragment2_());
