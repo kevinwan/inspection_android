@@ -518,12 +518,12 @@ public class MainActivity extends FragmentActivity {
         } else {
             Cursor cursor;
             captureList = new ArrayList<CaptureItems>();
-            cursor = database.getDBItems(1);
+            cursor = database.getDB1Items();
             if (null == cursor) {
                 return null;
             }
             do {
-                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5)));
             } while (cursor.moveToNext());
             cursor.close();
             menu_status[1] = true;

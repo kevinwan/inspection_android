@@ -38,7 +38,11 @@ import com.gongpingjia.gpjdetector.utility.BitmapCache;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BrandFragment extends Fragment implements
         AbsListView.OnItemClickListener {
@@ -55,6 +59,7 @@ public class BrandFragment extends Fragment implements
     private BrandListAdapter mAdapter;
     kZDatabase db;
     private int mCurrentPosition = -1;
+    private List<String> letters;
 
 
     private ArrayList<HashMap<String, String>> brandList;
@@ -80,6 +85,15 @@ public class BrandFragment extends Fragment implements
             brandList.add(map);
         } while (cursor.moveToNext());
         cursor.close();
+
+        letters = new ArrayList<String>();
+        Set<String> sets = new HashSet<String>();
+        for (int i = 1; i < brandList.size(); i++) {
+            sets.add(brandList.get(i).get("first_letter"));
+        }
+        letters.addAll(sets);
+        Collections.sort(letters);
+        letters.add(0, "#");
     }
 
     @Override
@@ -380,8 +394,8 @@ public class BrandFragment extends Fragment implements
     public class FirstLetterListView extends View {
 
         OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-        String[] b = {"#", "A", "B", "C", "D", "F", "G", "H", "J", "K", "L",
-                "M", "N", "O", "Q", "R", "S", "T", "W", "X", "Y", "Z"};
+     /*   String[] b = {"#", "A", "B", "C", "D", "F", "G", "H", "J", "K", "L",
+                "M", "N", "O", "Q", "R", "S", "T", "W", "X", "Y", "Z"};*/
         int choose = -1;
         Paint paint = new Paint();
         boolean showBkg = false;
@@ -408,8 +422,8 @@ public class BrandFragment extends Fragment implements
 
             int height = getHeight();
             int width = getWidth();
-            int singleHeight = height / b.length;
-            for (int i = 0; i < b.length; i++) {
+            int singleHeight = height / letters.size();
+            for (int i = 0; i < letters.size(); i++) {
                 paint.setColor(Color.parseColor("#ff336699"));
                 paint.setTypeface(Typeface.DEFAULT_BOLD);
                 paint.setAntiAlias(true);
@@ -418,9 +432,9 @@ public class BrandFragment extends Fragment implements
                     paint.setColor(Color.WHITE);
                     paint.setFakeBoldText(true);
                 }
-                float xPos = width / 2 - paint.measureText(b[i]) / 2;
+                float xPos = width / 2 - paint.measureText(letters.get(i)) / 2;
                 float yPos = singleHeight * i + singleHeight;
-                canvas.drawText(b[i], xPos, yPos, paint);
+                canvas.drawText(letters.get(i), xPos, yPos, paint);
                 paint.reset();
             }
 
@@ -432,14 +446,14 @@ public class BrandFragment extends Fragment implements
             final float y = event.getY();
             final int oldChoose = choose;
             final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
-            final int c = (int) (y / getHeight() * b.length);
+            final int c = (int) (y / getHeight() * letters.size());
 
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     showBkg = true;
                     if (oldChoose != c && listener != null) {
-                        if (c > 0 && c < b.length) {
-                            listener.onTouchingLetterChanged(b[c]);
+                        if (c > 0 && c < letters.size()) {
+                            listener.onTouchingLetterChanged(letters.get(c));
                             choose = c;
                             invalidate();
                         }
@@ -448,8 +462,8 @@ public class BrandFragment extends Fragment implements
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (oldChoose != c && listener != null) {
-                        if (c > 0 && c < b.length) {
-                            listener.onTouchingLetterChanged(b[c]);
+                        if (c > 0 && c <letters.size()) {
+                            listener.onTouchingLetterChanged(letters.get(c));
                             choose = c;
                             invalidate();
                         }

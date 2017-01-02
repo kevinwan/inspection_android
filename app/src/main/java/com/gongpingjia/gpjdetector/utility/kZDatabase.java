@@ -96,6 +96,24 @@ public class kZDatabase extends SQLiteAssetHelper {
 
     }
 
+    public Cursor getDB1Items() {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String sqlSelection = "type = ? AND checker = ?";
+        String[] sqlSelectionArgs;
+        sqlSelectionArgs = new String[]{"cap", "1"};
+
+        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id"};
+        String sqlTables = Constant.getTableName();
+
+        qb.setTables(sqlTables);
+        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
+                null, null, "checker_order", null);
+        c.moveToFirst();
+        return c;
+
+    }
+
     public Cursor getDB1Items(String pic_collector_sub_cate) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -120,7 +138,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelect = {"slug", "name", "first_lett", "logo_img"};
         String sqlTables = "brand";
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null, null);
+        Cursor c = qb.query(db, sqlSelect, null, null, null, null, "first_lett", null);
         c.moveToFirst();
         return c;
     }
