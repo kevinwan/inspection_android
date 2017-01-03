@@ -241,7 +241,8 @@
 
             <include layout="@layout/split_line" />
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -254,10 +255,12 @@
                     style="@style/edittext_edit" />
             </LinearLayout>
 
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                     android:visibility="gone"/>
 
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                          android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -270,10 +273,12 @@
                     style="@style/edittext_edit" />
             </LinearLayout>
 
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                     android:visibility="gone"/>
 
 
-            <LinearLayout style="@style/item_layout">
+            <LinearLayout style="@style/item_layout"
+                          android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -286,7 +291,8 @@
                     style="@style/edittext_edit" />
             </LinearLayout>
 
-            <include layout="@layout/split_line" />
+            <include layout="@layout/split_line"
+                     android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 

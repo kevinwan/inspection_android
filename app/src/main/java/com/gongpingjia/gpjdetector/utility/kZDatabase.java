@@ -103,12 +103,12 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelectionArgs;
         sqlSelectionArgs = new String[]{"cap", "1"};
 
-        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id"};
+        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id","checker_order"};
         String sqlTables = Constant.getTableName();
 
         qb.setTables(sqlTables);
         Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs,
-                null, null, "checker_order", null);
+                null, null, "ABS(`checker_order`)", null);
         c.moveToFirst();
         return c;
 

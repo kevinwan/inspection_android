@@ -416,13 +416,15 @@ public class Fragment1 extends Fragment {
 
     @Background
     public void saveData2DB() {
-        int _id = 10129;
+//        int _id = 10129;
         int _id2 = 10167;
+        int count = 15;
         for (CaptureItems item : list) {
             if(item.key.contains("extra_cap_")){
-                db.insertItem(String.valueOf(_id2++), item.key, item.desc, item.file_path, "cap");
+                db.insertItem(String.valueOf(_id2++), item.key, item.desc, item.file_path, "cap","",String.valueOf(count++),"");
             }else{
-                db.insertItem(String.valueOf(_id++), item.key, item.desc, item.file_path, "cap");
+                if(item.id == null)return;
+                db.insertItem(item.id, item.key, item.desc, item.file_path, "cap","","","");
             }
 
         }

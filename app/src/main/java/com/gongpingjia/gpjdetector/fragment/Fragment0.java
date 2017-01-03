@@ -59,7 +59,7 @@ public class Fragment0 extends Fragment {
     @ViewById
     TableLayout colorTable;
     @ViewById
-    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext11, edittext12, edittext13,edittext14,edittext15,edittext16,edittext17;
+    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6,edittext14,edittext15,edittext16,edittext17;
     @ViewById
     EnhancedEditText edittext7,edittext18;
     @ViewById
@@ -151,18 +151,13 @@ public class Fragment0 extends Fragment {
         edittext5.setTag("SYX");
         edittext7.setTag("FPJG");
         radiogroup8.setTag("SYXZ");
-        edittext11.setTag("CJH");
-
-        edittext12.setTag("CPH");
-
-        edittext13.setTag("FDJH");
         edittext16.setTag("YS");
         edittext17.setTag("CLGSD");
         edittext18.setTag("LCS");
         edittext18.setSuffixColor(Color.parseColor("#ff585858"));
         edittext18.setSuffixText("万公里");
         views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7,
-                radiogroup8, edittext11, edittext12, edittext13,edittext17,edittext16,edittext18};
+                radiogroup8,edittext17,edittext16,edittext18};
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {

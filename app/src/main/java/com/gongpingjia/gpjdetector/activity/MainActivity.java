@@ -523,7 +523,7 @@ public class MainActivity extends FragmentActivity {
                 return null;
             }
             do {
-                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5)));
+                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5),cursor.getString(6)));
             } while (cursor.moveToNext());
             cursor.close();
             menu_status[1] = true;
@@ -1009,7 +1009,7 @@ public class MainActivity extends FragmentActivity {
                     }*/
 
                     String value = items11list.get(index).getValue();
-                if (items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
+                if (items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
                 } else {
                     if (null == value || value.equals("")) {
