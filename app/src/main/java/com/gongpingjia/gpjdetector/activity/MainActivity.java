@@ -121,6 +121,8 @@ public class MainActivity extends FragmentActivity {
 
     ArrayList<CaptureItems> captureList;
 
+    HashMap<String, ArrayList<CaptureItems>> captureListMap;
+
     public Fragment0_ fragment0;
     public Fragment1_ fragment1;
     public Fragment1_1_ fragment1_1;
@@ -523,7 +525,7 @@ public class MainActivity extends FragmentActivity {
                 return null;
             }
             do {
-                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5),cursor.getString(6)));
+                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(5), cursor.getString(6)));
             } while (cursor.moveToNext());
             cursor.close();
             menu_status[1] = true;
@@ -532,18 +534,26 @@ public class MainActivity extends FragmentActivity {
     }
 
     public ArrayList<CaptureItems> getDB11Items(String pic_collector_sub_cate) {
-            Cursor cursor;
-            captureList = new ArrayList<CaptureItems>();
-            cursor = database.getDB1Items(pic_collector_sub_cate);
-            if (null == cursor) {
-                return null;
+        Cursor cursor;
+        captureList = new ArrayList<CaptureItems>();
+        cursor = database.getDB1Items(pic_collector_sub_cate);
+        if (null == cursor) {
+            return null;
+        }
+        do {
+            captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(5)));
+        } while (cursor.moveToNext());
+        cursor.close();
+        if (captureListMap == null) {
+            captureListMap = new HashMap<String, ArrayList<CaptureItems>>();
+        } else {
+            if (captureListMap.get(pic_collector_sub_cate) != null) {
+                captureListMap.remove(pic_collector_sub_cate);
             }
-            do {
-                captureList.add(new CaptureItems(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(5)));
-            } while (cursor.moveToNext());
-            cursor.close();
-            menu_status[1] = true;
-            return captureList;
+        }
+        captureListMap.put(pic_collector_sub_cate, captureList);
+        menu_status[1] = true;
+        return captureList;
     }
 
     public ArrayList<kZDBItem> getDB2Items() {
@@ -1009,14 +1019,14 @@ public class MainActivity extends FragmentActivity {
                     }*/
 
                     String value = items11list.get(index).getValue();
-                if (items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
+                    if (items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
-                } else {
-                    if (null == value || value.equals("")) {
-                        showToast("基本信息有未填写的项目，无法提交。");
-                        return null;
+                    } else {
+                        if (null == value || value.equals("")) {
+                            showToast("基本信息有未填写的项目，无法提交。");
+                            return null;
+                        }
                     }
-                }
 
                     rootJson.put(items11list.get(index).getKey(), value);
                 }
@@ -1046,7 +1056,7 @@ public class MainActivity extends FragmentActivity {
                 rootJson.put(items13list.get(index).getKey(), value);
             }*/
             //2(13)
-            if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+            if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                 if (items2list != null) {
                     for (index = 0; index < items2list.size(); ++index) {
                         JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
@@ -1116,7 +1126,6 @@ public class MainActivity extends FragmentActivity {
             }
 
 
-
 //            if (TextUtils.isEmpty(content)) {
 //                showToast("检测说明未编写，无法提交。");
 //                return null;
@@ -1134,25 +1143,101 @@ public class MainActivity extends FragmentActivity {
             int count;
             if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                 count = 14;
-            } else {
-                count = 31;
-            }
-            for (int i = 0; i < count; ++i) {
-                CaptureItems item = captureList.get(i);
-                rootJson.put(item.key, item.desc + "|"
-                        + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
-            }
-            JSONArray extraCaptureArray = new JSONArray();
-
-            if (captureList.size() > count) {
-                for (int i = count; i < captureList.size(); ++i) {
+                for (int i = 0; i < count; ++i) {
                     CaptureItems item = captureList.get(i);
-                    if (null != item.file_path) {
-                        extraCaptureArray.put(item.desc + "|" + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    if (item.file_path == null || item.file_path.equals("null")) {
+                        showToast("车辆照片采集中有未填写的项目，无法提交。");
+                        return null;
+                    }
+                    rootJson.put(item.key, item.desc + "|"
+                            + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                }
+                JSONArray extraCaptureArray = new JSONArray();
+
+                if (captureList.size() > count) {
+                    for (int i = count; i < captureList.size(); ++i) {
+                        CaptureItems item = captureList.get(i);
+                        if (null != item.file_path) {
+                            extraCaptureArray.put(item.desc + "|" + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                        }
                     }
                 }
+                rootJson.put("extra_capture", extraCaptureArray);
+            } else {
+                if(captureListMap == null){
+                    return null;
+                }else{
+                    ArrayList<CaptureItems> list1 = captureListMap.get("基本信息");
+                    ArrayList<CaptureItems> list2 = captureListMap.get("发动机舱");
+                    ArrayList<CaptureItems> list3 = captureListMap.get("细节");
+                    ArrayList<CaptureItems> list4 = captureListMap.get("内饰");
+                    ArrayList<CaptureItems> list5 = captureListMap.get("其他");
+                    int size1 = list1.size();
+                    for (int i = 0; i < size1; ++i) {
+                        CaptureItems item = list1.get(i);
+                        if (item.file_path == null || item.file_path.equals("null")) {
+                            showToast("车辆照片采集中有未填写的项目，无法提交。");
+                            return null;
+                        }
+                        rootJson.put(item.key, item.desc + "|"
+                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    }
+
+                    int size2 = list2.size();
+                    for (int i = 0; i < size2; ++i) {
+                        CaptureItems item = list2.get(i);
+                        if (item.file_path == null || item.file_path.equals("null")) {
+                            showToast("车辆照片采集中有未填写的项目，无法提交。");
+                            return null;
+                        }
+                        rootJson.put(item.key, item.desc + "|"
+                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    }
+
+                    int size3 = list3.size();
+                    for (int i = 0; i < size3; ++i) {
+                        CaptureItems item = list3.get(i);
+                        if (item.file_path == null || item.file_path.equals("null")) {
+                            showToast("车辆照片采集中有未填写的项目，无法提交。");
+                            return null;
+                        }
+                        rootJson.put(item.key, item.desc + "|"
+                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    }
+
+                    int size4 = list1.size();
+                    for (int i = 0; i < size4; ++i) {
+                        CaptureItems item = list1.get(i);
+                        if (item.file_path == null || item.file_path.equals("null")) {
+                            showToast("车辆照片采集中有未填写的项目，无法提交。");
+                            return null;
+                        }
+                        rootJson.put(item.key, item.desc + "|"
+                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    }
+                    int size5 = 6;
+                    for (int i = 0; i < size5; ++i) {
+                        CaptureItems item = list5.get(i);
+                        if (item.file_path == null || item.file_path.equals("null")) {
+                            showToast("车辆照片采集中有未填写的项目，无法提交。");
+                            return null;
+                        }
+                        rootJson.put(item.key, item.desc + "|"
+                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                    }
+                    JSONArray extraCaptureArray = new JSONArray();
+                    if (list5.size() > size5) {
+                        for (int i = size5; i < list5.size(); ++i) {
+                            CaptureItems item = captureList.get(i);
+                            if (null != item.file_path) {
+                                extraCaptureArray.put(item.desc + "|" + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+                            }
+                        }
+                    }
+                    rootJson.put("extra_capture", extraCaptureArray);
+                }
             }
-            rootJson.put("extra_capture", extraCaptureArray);
+
 
             //总计 220个字段
             return rootJson;
@@ -1179,7 +1264,7 @@ public class MainActivity extends FragmentActivity {
         Canvas drawCanvas = new Canvas(drawBitmap);
         drawCanvas.drawColor(Color.WHITE);
         drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_bg), 0, 0, paint);
-        if(partMap != null){
+        if (partMap != null) {
             for (int i = 1; i <= 13; ++i) {
                 ArrayList<String> list = partMap.get(String.valueOf(i)).getMarks();
                 for (int j = 0; j < list.size(); ++j) {

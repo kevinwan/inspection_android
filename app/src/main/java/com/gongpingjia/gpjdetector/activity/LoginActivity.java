@@ -54,8 +54,9 @@ public class LoginActivity extends Activity {
         extra.setBackgroundResource(R.drawable.back);
         slidingmenu_toggler.setVisibility(View.INVISIBLE);
         banner_title.setText("登 录");
-    /*    //test
-        account.setText("15208324770");
+      /*  account: 15680709902 password: 123456 拍照师权限
+        account: 15208324770 password: 123456  检测师权限*/
+       /* account.setText("15208324770");
         password.setText("123456");*/
     }
 
