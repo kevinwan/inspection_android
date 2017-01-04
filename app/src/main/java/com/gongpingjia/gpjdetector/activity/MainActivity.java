@@ -1019,7 +1019,7 @@ public class MainActivity extends FragmentActivity {
                     }*/
 
                     String value = items11list.get(index).getValue();
-                    if (items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
+                    if (items11list.get(index).getKey().equals("CJH") ||items11list.get(index).getKey().equals("CPH") ||items11list.get(index).getKey().equals("FDJH") ||items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
                     } else {
                         if (null == value || value.equals("")) {
@@ -1165,6 +1165,7 @@ public class MainActivity extends FragmentActivity {
                 rootJson.put("extra_capture", extraCaptureArray);
             } else {
                 if(captureListMap == null){
+                    showToast("车辆照片采集中有未填写的项目，无法提交。");
                     return null;
                 }else{
                     ArrayList<CaptureItems> list1 = captureListMap.get("基本信息");
