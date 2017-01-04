@@ -23,4 +23,5 @@
     <color name="new_color">#18A0E0</color>
     <color name="bg_grey">#F0F0F0</color>
     <color name="text_desc_color">#cccccc</color>
+    <color name="discount_price_color">#ff701b</color>
 </resources>
