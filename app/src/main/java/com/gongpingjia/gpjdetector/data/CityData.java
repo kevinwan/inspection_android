@@ -41,7 +41,7 @@ public class CityData implements Parcelable {
 
         try {
 
-            for (int i = 1; i < cityJson.length(); i++) {
+            for (int i = 0; i < cityJson.length(); i++) {
                 JSONObject provItem = cityJson.getJSONObject(i);
                 String provName = provItem.getString("province");
                 mProvList.add(provName);
@@ -54,7 +54,7 @@ public class CityData implements Parcelable {
                     String city = cityName.getString("name");
                     cityUnderProv.add(city);
                 } else {
-                    for (int j = 1; j < cities.length(); j++) {
+                    for (int j = 0; j < cities.length(); j++) {
 
                         JSONObject cityName = new JSONObject(cities.get(j).toString());
                         String city = cityName.getString("name");
@@ -79,7 +79,7 @@ public class CityData implements Parcelable {
         cityNoProvinceData = new ArrayList<Province>();
         try {
 
-            for (int i = 1; i < cityJson.length(); i++) {
+            for (int i = 0; i < cityJson.length(); i++) {
                 JSONObject provItem = cityJson.getJSONObject(i);
                 String provName = provItem.getString("province");
                 Province province = new Province();
@@ -98,12 +98,7 @@ public class CityData implements Parcelable {
                 cityUnderProv.add(city);
 
 
-                int index;
-                if (cities.length() > 1) {
-                    index = 1;
-                } else {
-                    index = 0;
-                }
+                int index = 0;
 
                 for (int j = index; j < cities.length(); j++) {
                     JSONObject jsonObject = new JSONObject(cities.get(j).toString());

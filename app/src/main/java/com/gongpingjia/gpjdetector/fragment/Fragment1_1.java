@@ -430,10 +430,10 @@ public class Fragment1_1 extends Fragment {
             }
         }
         bitmap.recycle();
-
-        PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
+        notifyDataSetChanged() ;
+   /*     PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
                 Uri.fromFile(new File(fileName)), 10086, 3, 2,
-                1000, this);
+                1000, this);*/
         Log.d("msg", "11111111111111");
     }
 

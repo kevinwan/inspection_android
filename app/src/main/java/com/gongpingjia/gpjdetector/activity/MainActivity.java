@@ -1209,22 +1209,19 @@ public class MainActivity extends FragmentActivity {
                     int size4 = list1.size();
                     for (int i = 0; i < size4; ++i) {
                         CaptureItems item = list1.get(i);
-                        if (item.file_path == null || item.file_path.equals("null")) {
-                            showToast("车辆照片采集中有未填写的项目，无法提交。");
-                            return null;
+                        if (item.file_path != null && !item.file_path.equals("null")) {
+                            rootJson.put(item.key, item.desc + "|"
+                                    + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
                         }
-                        rootJson.put(item.key, item.desc + "|"
-                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
+
                     }
                     int size5 = 6;
                     for (int i = 0; i < size5; ++i) {
                         CaptureItems item = list5.get(i);
-                        if (item.file_path == null || item.file_path.equals("null")) {
-                            showToast("车辆照片采集中有未填写的项目，无法提交。");
-                            return null;
+                        if (item.file_path != null && !item.file_path.equals("null")) {
+                            rootJson.put(item.key, item.desc + "|"
+                                    + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
                         }
-                        rootJson.put(item.key, item.desc + "|"
-                                + Utils.bitmapToBase64(BitmapFactory.decodeFile(item.file_path)));
                     }
                     JSONArray extraCaptureArray = new JSONArray();
                     if (list5.size() > size5) {
