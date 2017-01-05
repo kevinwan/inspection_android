@@ -187,7 +187,10 @@ public class kZDatePickerDialog extends DatePickerDialog {
 
 				}
 				if (isHideDayOfMonth) {
-					if (sdk_int < 11) {
+					if (dp != null) {
+						((ViewGroup)((ViewGroup) dp.getChildAt(0)).getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
+					}
+				/*	if (sdk_int < 11) {
 						f = c.getDeclaredField("mDayPicker" );
 						f.setAccessible(true);
 						LinearLayout l= (LinearLayout)f.get(dp);
@@ -197,7 +200,7 @@ public class kZDatePickerDialog extends DatePickerDialog {
 						f.setAccessible(true );
 						LinearLayout l= (LinearLayout)f.get(dp);
 						l.setVisibility(View.GONE);
-					}
+					}*/
 
 				}
 			} catch (SecurityException e) {
