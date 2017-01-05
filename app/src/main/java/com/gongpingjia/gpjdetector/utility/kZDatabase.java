@@ -103,7 +103,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelectionArgs;
         sqlSelectionArgs = new String[]{"cap", "1"};
 
-        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id","checker_order"};
+        String[] sqlSelect = {"key", "name", "value", "priority", "option", "_id", "checker_order"};
         String sqlTables = Constant.getTableName();
 
         qb.setTables(sqlTables);
@@ -119,9 +119,9 @@ public class kZDatabase extends SQLiteAssetHelper {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String sqlSelection = "type = ? AND pic_collector = ? AND pic_collector_sub_cate = ?";
         String[] sqlSelectionArgs;
-        sqlSelectionArgs = new String[]{"cap", "1",pic_collector_sub_cate};
+        sqlSelectionArgs = new String[]{"cap", "1", pic_collector_sub_cate};
 
-        String[] sqlSelect = {"key", "name", "value", "priority", "option","_id"};
+        String[] sqlSelect = {"key", "name", "value", "priority", "option", "_id"};
         String sqlTables = Constant.getTableName();
 
         qb.setTables(sqlTables);
@@ -203,16 +203,17 @@ public class kZDatabase extends SQLiteAssetHelper {
                 "description TEXT," +
                 "price_scale TEXT," +
                 "checker TEXT," +
-                "pic_collector TEXT,"+
-                "pic_collector_sub_cate TEXT,"+
-                "checker_order TEXT,"+
+                "pic_collector TEXT," +
+                "pic_collector_sub_cate TEXT," +
+                "checker_order TEXT," +
                 "pic_collector_order TEXT)");
 
         db.execSQL("INSERT INTO " + tableName + " SELECT * FROM detection");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS history" +
-                " (tableName TEXT PRIMARY KEY, date TEXT, isFinish INTEGER)");
-        db.execSQL("INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0')");
+                " (tableName TEXT PRIMARY KEY, date TEXT, isFinish INTEGER,status TEXT)");
+        db.execSQL("INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
+        Log.d("hhhhhh","INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
         return tableName;
     }
 
@@ -233,6 +234,41 @@ public class kZDatabase extends SQLiteAssetHelper {
             Log.e("SQLiteException", e.toString());
         }
     }
+
+    public void setStatus(String tableName, String status) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.execSQL("UPDATE history SET status = " + status + " WHERE tableName='" + tableName + "'");
+        } catch (SQLiteException e) {
+            Log.e("SQLiteException", e.toString());
+        }
+    }
+
+    public String getStatus() {
+        SQLiteDatabase db = getWritableDatabase();
+        SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
+        String[] sqlSelect = {"status"};
+        String sqlSelection = "tableName=?";
+        String[] sqlSelectionArgs = new String[]{Constant.getTableName()};
+        String sqlTables = "history";
+        dq.setTables(sqlTables);
+        Cursor c = null;
+        String status = null;
+        try {
+             c = dq.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
+             c.moveToFirst();
+             status = c.getString(0);
+             c.close();
+        } catch (Exception e) {
+            if(c != null && !c.isClosed()){
+                c.close();
+            }
+            Log.e("SQLiteException", e.toString());
+        }
+        return status;
+    }
+
+
     public void insertItem(String _id, String key, String name, String value, String type) {
         SQLiteDatabase db = getWritableDatabase();
         SQLiteQueryBuilder dq = new SQLiteQueryBuilder();

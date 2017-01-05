@@ -216,12 +216,14 @@ public class MainActivity extends FragmentActivity {
             shangpai_time = new int[4];
         }
 
-        menu_status = new boolean[8];
+
+        setStatus();
         final Drawable left, right;
         left = res.getDrawable(R.drawable.white_dot_shape);
         left.setBounds(0, 0, left.getMinimumWidth(), left.getMinimumHeight());
         right = res.getDrawable(R.drawable.menu_complete);
         right.setBounds(0, 0, right.getMinimumWidth(), right.getMinimumHeight());
+        Log.d("hhhhhh", "getStatus  status" + menu_status);
         menu.setOnOpenListener(new SlidingMenu.OnOpenListener() {
             @Override
             public void onOpen(int position) {
@@ -255,6 +257,7 @@ public class MainActivity extends FragmentActivity {
         });
 
     }
+
 
     public void showExitDialog() {
         final AlertDialog dialog = new AlertDialog.Builder(this).
@@ -1324,6 +1327,33 @@ public class MainActivity extends FragmentActivity {
         drawBitmap.recycle();
         return bitmaps;
     }
+
+    public String checkStatus() {
+        StringBuilder status = new StringBuilder();
+        for (int i = 0;i < 8;i++){
+            if(menu_status[i]){
+                status.append("1");
+            }else{
+                status.append("0");
+            }
+        }
+        return status.toString();
+    }
+
+    public void setStatus() {
+        menu_status = new boolean[8];
+        String status = database.getStatus();
+        if(status != null){
+            for(int i = 0;i < 8;i++){
+                if(Integer.parseInt(String.valueOf(status.charAt(i))) == 1){
+                    menu_status[i] = true;
+                }else {
+                    menu_status[i] = false;
+                }
+            }
+        }
+    }
+
 
 
     @Override

@@ -162,6 +162,9 @@ public class MenuFragment extends Fragment {
         }*/
 
         final ProgressDialog progressDialog = Constant.showProgress(mainActivity, null, "正在保存...");
+
+        mainActivity.getDatabase().setStatus(Constant.getTableName(), mainActivity.checkStatus());
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -170,7 +173,7 @@ public class MenuFragment extends Fragment {
                 String msg;
                 if (Constant.PHOTO_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
                     msg = "采集的信息已保存，可以在检测定价记录-未提交中，继续完成信息采集";
-                }else{
+                } else {
                     msg = "检测记录已保存，可以在检测定价记录-未提交中，继续检测";
                 }
                 Toast.makeText(mainActivity, msg, Toast.LENGTH_LONG).show();
