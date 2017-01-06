@@ -218,6 +218,7 @@ public class MainActivity extends FragmentActivity {
 
 
         setStatus();
+        loadData();
         final Drawable left, right;
         left = res.getDrawable(R.drawable.white_dot_shape);
         left.setBounds(0, 0, left.getMinimumWidth(), left.getMinimumHeight());
@@ -1022,7 +1023,7 @@ public class MainActivity extends FragmentActivity {
                     }*/
 
                     String value = items11list.get(index).getValue();
-                    if (items11list.get(index).getKey().equals("CJH") ||items11list.get(index).getKey().equals("CPH") ||items11list.get(index).getKey().equals("FDJH") ||items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
+                    if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
                     } else {
                         if (null == value || value.equals("")) {
@@ -1113,12 +1114,15 @@ public class MainActivity extends FragmentActivity {
 
                 //添加三张图片Base64 编码字符串
                 Bitmap[] bitmaps = drawPic();
-                for (int i = 0; i < bitmaps.length; ++i) {
-                    String value = Utils.bitmapToBase64(bitmaps[i]);
-                    bitmaps[i].recycle();
-                    value = null == value ? "" : value;
-                    rootJson.put("extra_pic" + (i + 1), value);
+                if(bitmaps != null){
+                    for (int i = 0; i < bitmaps.length; ++i) {
+                        String value = Utils.bitmapToBase64(bitmaps[i]);
+                        bitmaps[i].recycle();
+                        value = null == value ? "" : value;
+                        rootJson.put("extra_pic" + (i + 1), value);
+                    }
                 }
+
                 //出险记录
                 JSONArray jsonArray = new JSONArray();
                 for (HashMap<String, String> map : chuxian_list) {
@@ -1167,10 +1171,10 @@ public class MainActivity extends FragmentActivity {
                 }
                 rootJson.put("extra_capture", extraCaptureArray);
             } else {
-                if(captureListMap == null){
+                if (captureListMap == null) {
                     showToast("车辆照片采集中有未填写的项目，无法提交。");
                     return null;
-                }else{
+                } else {
                     ArrayList<CaptureItems> list1 = captureListMap.get("基本信息");
                     ArrayList<CaptureItems> list2 = captureListMap.get("发动机舱");
                     ArrayList<CaptureItems> list3 = captureListMap.get("细节");
@@ -1281,7 +1285,7 @@ public class MainActivity extends FragmentActivity {
         drawBitmap.eraseColor(Color.WHITE);
 
         drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_bg), 0, 0, paint);
-
+        if(partMap == null)return null;
         if (-1 != partMap.get("1").getP_level()) {
             drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_part_1_b), 0, 0, paint);
         }
@@ -1322,6 +1326,12 @@ public class MainActivity extends FragmentActivity {
             drawCanvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.car_part_13_b), 0, 0, paint);
         }
         bitmaps[1] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
+        if (baseBitmap == null) {
+            baseBitmap = Bitmap.createBitmap(Constant.CANVAS_WIDTH,
+                    Constant.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(baseBitmap);
+            canvas.drawColor(Color.TRANSPARENT);
+        }
         drawCanvas.drawBitmap(baseBitmap, 0, 0, paint);
         bitmaps[2] = drawBitmap.copy(Bitmap.Config.ARGB_4444, false);
         drawBitmap.recycle();
@@ -1330,10 +1340,10 @@ public class MainActivity extends FragmentActivity {
 
     public String checkStatus() {
         StringBuilder status = new StringBuilder();
-        for (int i = 0;i < 8;i++){
-            if(menu_status[i]){
+        for (int i = 0; i < 8; i++) {
+            if (menu_status[i]) {
                 status.append("1");
-            }else{
+            } else {
                 status.append("0");
             }
         }
@@ -1343,17 +1353,53 @@ public class MainActivity extends FragmentActivity {
     public void setStatus() {
         menu_status = new boolean[8];
         String status = database.getStatus();
-        if(status != null){
-            for(int i = 0;i < 8;i++){
-                if(Integer.parseInt(String.valueOf(status.charAt(i))) == 1){
+        if (status != null) {
+            for (int i = 0; i < 8; i++) {
+                if (Integer.parseInt(String.valueOf(status.charAt(i))) == 1) {
                     menu_status[i] = true;
-                }else {
+                } else {
                     menu_status[i] = false;
                 }
             }
         }
     }
 
+    private void loadData() {
+        if (menu_status[0]) {
+            getDB01Items();
+        }
+        if (Constant.PHOTO_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+            if (menu_status[1]) {
+                getDB11Items("基本信息");
+                getDB11Items("发动机舱");
+                getDB11Items("细节");
+                getDB11Items("内饰");
+                getDB11Items("其他");
+            }
+        }else{
+            if (menu_status[1]) {
+                getDB1Items();
+            }
+            if (menu_status[2]) {
+                getPartMap();
+            }
+            if (menu_status[3]) {
+                getDB3Items();
+            }
+            if (menu_status[4]) {
+                getDB4Items();
+            }
+            if (menu_status[5]) {
+                getDB5Items();
+            }
+            if (menu_status[6]) {
+                getDB6Items();
+            }
+            if (menu_status[7]) {
+                getDB7Items();
+            }
+        }
+    }
 
 
     @Override
