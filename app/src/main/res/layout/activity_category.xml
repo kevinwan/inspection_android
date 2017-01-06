@@ -1,21 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".CategoryActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:fitsSystemWindows="true"
+              android:background="@color/white"
+              tools:context=".CategoryActivity" >
+
+    <include
+        android:id="@+id/view_title"
+        layout="@layout/include_title_bar" />
+
+    <AutoCompleteTextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:imeOptions="actionSearch"
+        android:id="@+id/searchTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:hint="请输入品牌/车型/车系"
+        android:background="@drawable/brand_search_bg"
+        android:singleLine="true"
+        android:textColor="@color/discount_title"
+        android:textColorHint="@color/text_grey_dark"
+        android:textSize="@dimen/text_smaller"/>
+
+
 
     <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <FrameLayout
             android:id="@+id/container_brand"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    <FrameLayout
+            android:layout_height="match_parent" />
+
+        <FrameLayout
             android:id="@+id/container_model"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="80dp"/>
-    <FrameLayout
+            android:layout_marginLeft="100dp" />
+
+        <FrameLayout
             android:id="@+id/container_modeldetail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-</FrameLayout>
+</LinearLayout>

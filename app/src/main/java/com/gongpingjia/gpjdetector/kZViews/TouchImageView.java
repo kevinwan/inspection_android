@@ -17,10 +17,6 @@
  */
 package com.gongpingjia.gpjdetector.kZViews;
 
-import java.lang.ref.WeakReference;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,12 +27,14 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
-import com.gongpingjia.gpjdetector.kZViews.WrapMotionEvent;
+
+import java.lang.ref.WeakReference;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @SuppressLint("NewApi")
 public class TouchImageView extends ImageView {
@@ -415,7 +413,8 @@ public class TouchImageView extends ImageView {
         // ...
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
+//        return FloatMath.sqrt(x * x + y * y);
+        return (float)Math.sqrt(x * x + y * y);
     }
 
     /** Calculate the mid point of the first two fingers */

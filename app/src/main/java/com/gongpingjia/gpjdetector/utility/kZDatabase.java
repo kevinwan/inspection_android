@@ -166,7 +166,7 @@ public class kZDatabase extends SQLiteAssetHelper {
     public Cursor getModelList(String parentBrand) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        String[] sqlSelect = {"slug", "name", "parent", "thumbnail", "logo_img"};
+        String[] sqlSelect = {"slug", "name", "parent", "thumbnail", "logo_img","mum"};
         String sqlSelection = "parent=?";
         String[] sqlSelectionArgs = new String[]{parentBrand};
         String sqlTables = "model";
@@ -174,6 +174,19 @@ public class kZDatabase extends SQLiteAssetHelper {
         Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
         c.moveToFirst();
         return c;
+    }
+
+    public Cursor getModelDetailList(String mBrandSlug,String global_slug) {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String[] sqlSelect = {"detail_model", "detail_model_slug", "price_bn", "year", "volume","control","body_model"};
+        String sqlSelection = "global_slug=?";
+        String[] sqlSelectionArgs = new String[]{global_slug};
+        String sqlTables = "open_model_detail";
+        qb.setTables(sqlTables);
+        Cursor cursor = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, "year", null);
+        cursor.moveToFirst();
+        return cursor;
     }
 
     public Cursor getModelThumbnail(String modelName) {
@@ -213,7 +226,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS history" +
                 " (tableName TEXT PRIMARY KEY, date TEXT, isFinish INTEGER,status TEXT)");
         db.execSQL("INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
-        Log.d("hhhhhh","INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
+        Log.d("hhhhhh", "INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
         return tableName;
     }
 

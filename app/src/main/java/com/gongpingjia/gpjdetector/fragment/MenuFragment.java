@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
+import com.gongpingjia.gpjdetector.data.UserInfo;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
 import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
@@ -171,7 +172,8 @@ public class MenuFragment extends Fragment {
                 progressDialog.dismiss();
                 mainActivity.finish();
                 String msg;
-                if (Constant.PHOTO_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+                UserInfo user = SharedPreUtil.getInstance().getUser();
+                if(user != null && Constant.CHECK_USERTYPE.equals(user.getUser_type())){
                     msg = "采集的信息已保存，可以在检测定价记录-未提交中，继续完成信息采集";
                 } else {
                     msg = "检测记录已保存，可以在检测定价记录-未提交中，继续检测";
@@ -185,7 +187,8 @@ public class MenuFragment extends Fragment {
     public void afterViews() {
         mainActivity = (MainActivity_) getActivity();
         db = mainActivity.getDatabase();
-        if(Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())){
+        UserInfo user = SharedPreUtil.getInstance().getUser();
+        if(user != null && Constant.CHECK_USERTYPE.equals(user.getUser_type())){
 
             btn_fragment2.setVisibility(View.VISIBLE);
             btn_fragment3.setVisibility(View.VISIBLE);

@@ -29,6 +29,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.data.CaptureItems;
@@ -265,7 +266,8 @@ public class Fragment1 extends Fragment {
                             delete_group.setVisibility(View.GONE);
                         }
                         image_title.setText(list.get(position).desc);
-                        touchImageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
+//                        touchImageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
+                        Glide.with(Fragment1.this.getActivity()).load(list.get(position).file_path).placeholder(R.drawable.brandnull).error(R.drawable.brandnull).into(touchImageView);
                         recapture.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -282,7 +284,8 @@ public class Fragment1 extends Fragment {
             });
             if (null != list.get(position).file_path) {
                 if (Utils.isFileExist(list.get(position).file_path)) {
-                    viewHolder.imageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
+                    Glide.with(Fragment1.this.getActivity()).load(list.get(position).file_path).into(viewHolder.imageView);
+//                    viewHolder.imageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
                 }
             } else {
                 viewHolder.imageView.setImageBitmap(null);

@@ -1,19 +1,5 @@
 package com.gongpingjia.gpjdetector.utility;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -31,6 +17,20 @@ import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class UpdateService extends Service {
@@ -53,7 +53,7 @@ public class UpdateService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		notification = new Notification();
+		/*notification = new Notification();
 		notification.icon = android.R.drawable.stat_sys_download;
 		notification.tickerText = getString(R.string.app_name) + "正在下载新版本...";
 		notification.when = System.currentTimeMillis();
@@ -63,7 +63,19 @@ public class UpdateService extends Service {
 
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 		notification.setLatestEventInfo(this, "", "", contentIntent);
-		notificationManager.notify(notificationId, notification);
+		notificationManager.notify(notificationId, notification);*/
+
+		Notification notification = new Notification.Builder(this)//实例化Builder
+				.setTicker(getString(R.string.app_name) + "正在下载新版本...")//在状态栏显示的标题                         .setWhen(java.lang.System.currentTimeMillis())//设置显示的时间，默认就是currentTimeMillis()
+//				.setContentTitle("New mail from ")//设置标题
+//				.setContentText("111")//设置内容
+				.setSmallIcon(android.R.drawable.stat_sys_download)//设置状态栏显示时的图标      .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))//设置显示的大图标    .setContentIntent(PendingIntent.getActivity(MainActivity.this, 0, new Intent(Settings.ACTION_SETTINGS), 0))//设置点击时的意图
+				.setDeleteIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))//设置删除时的意图             .setFullScreenIntent(PendingIntent.getActivity(MainActivity.this, 0, new Intent(Settings.ACTION_SETTINGS), 0), true)//这个将直接打开意图，而不经过状态栏显示再按下
+				.setAutoCancel(false)//设置是否自动按下过后取消
+				.setOngoing(true)//设置为true时就不能删除  除非使用notificationManager.cancel(1)方法
+				.build();//创建Notification
+		notificationManager.notify(notificationId, notification);//管理器通知
+
 
 		myHandler = new MyHandler(Looper.myLooper(), this);
 		Message message = myHandler.obtainMessage(3, 0);

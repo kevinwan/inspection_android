@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.data.CaptureItems;
+import com.gongpingjia.gpjdetector.data.UserInfo;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.data.partItem;
 import com.gongpingjia.gpjdetector.fragment.Fragment0_;
@@ -1060,7 +1061,8 @@ public class MainActivity extends FragmentActivity {
                 rootJson.put(items13list.get(index).getKey(), value);
             }*/
             //2(13)
-            if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+            UserInfo user = SharedPreUtil.getInstance().getUser();
+            if (user != null && Constant.CHECK_USERTYPE.equals(user.getUser_type())) {
                 if (items2list != null) {
                     for (index = 0; index < items2list.size(); ++index) {
                         JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
@@ -1148,7 +1150,7 @@ public class MainActivity extends FragmentActivity {
 
             //照片采集
             int count;
-            if (Constant.CHECK_USERTYPE.equals(SharedPreUtil.getInstance().getUser().getUser_type())) {
+            if (user != null && Constant.CHECK_USERTYPE.equals(user.getUser_type())) {
                 count = 14;
                 for (int i = 0; i < count; ++i) {
                     CaptureItems item = captureList.get(i);

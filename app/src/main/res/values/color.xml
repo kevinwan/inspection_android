@@ -23,5 +23,14 @@
     <color name="new_color">#18A0E0</color>
     <color name="bg_grey">#F0F0F0</color>
     <color name="text_desc_color">#cccccc</color>
+
+    <color name="bg_grey_dark">#E6E6E6</color>
+    <color name="text_grey_dark">#999999</color>
+    <color name="select_list_bg">#E7F5FC</color>
+    <color name="discount_price_other_color">#666666</color>
+    <color name="gray">#f5f5f5</color>
+    <color name="text_black">#555555</color>
     <color name="discount_price_color">#ff701b</color>
+    <color name="text_grey">#ABABAB</color>
+    <color name="text_blue">#13A8EB</color>
 </resources>

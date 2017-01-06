@@ -21,8 +21,9 @@ apply plugin: 'android-apt'
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 20
+    compileSdkVersion 23
     buildToolsVersion "20.0.0"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.gongpingjia.gpjdetector"
@@ -81,5 +82,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile files('libs/umeng-analytics-v5.5.3.jar')
     compile files('libs/getPinYinSZM.jar')
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
 }
 

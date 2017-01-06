@@ -8,5 +8,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="msg_load_ing">加载中...</string>
 
 </resources>

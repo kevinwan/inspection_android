@@ -17,12 +17,12 @@ public class Constant {
     public static int RESULT_EMPTY = 0;
 
     //test SERVER_DOMAIN
-    public static String SERVER_DOMAIN = "http://pad.eyelee.cn";
+//    public static String SERVER_DOMAIN = "http://pad.eyelee.cn";
 
     //test 2
 //    public static String SERVER_DOMAIN = "http://192.168.1.42:8000";
 
-//    public static String SERVER_DOMAIN = "http://pad.gongpingjia.com";
+    public static String SERVER_DOMAIN = "http://pad.gongpingjia.com";
 
     public static String CITY_SERVER_DOMAIN = "http://m.gongpingjia.com";
 //
@@ -88,4 +88,21 @@ public class Constant {
     public static void setTableName(String tableName) {
         Constant.tableName = tableName;
     }
+
+    public static String BRAND_NAME_KEY = "BRAND_NAME";
+
+    public static String BRAND_SLUG_KEY = "BRAND_SLUG";
+
+    public static String MODEL_NAME_KEY = "MODEL_NAME";
+
+    public static String MODEL_SLUG_KEY = "MODEL_SLUG";
+
+    public static String MODEL_DETAIL_NAME_KEY = "MODEL_DETAIL_NAME";
+
+    public static String MODEL_DETAIL_SLUG_KEY = "MODEL_DETAIL_SLUG";
+
+    /**
+     * 图片资源的请求路径地址
+     */
+    public final static String IMG_DOMAIN = "http://gongpingjia.qiniudn.com/";
 }

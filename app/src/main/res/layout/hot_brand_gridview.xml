@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="30dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+
+    <com.gongpingjia.gpjdetector.kZViews.MyGridView
+	        android:id="@+id/gridView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:numColumns="5"
+	        android:scrollbars="none"
+	        android:horizontalSpacing="0px"
+	        android:verticalSpacing="0px"
+	        android:stretchMode="columnWidth"/>
+</LinearLayout>

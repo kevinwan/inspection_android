@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
 
     <LinearLayout
@@ -13,16 +13,16 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:background="@color/banner_bg"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/title_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
                 android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                android:src="@drawable/back" />
+                android:paddingRight="15dp"/>
 
             <TextView
                 android:id="@+id/top_title"
@@ -32,8 +32,9 @@
                 android:ellipsize="end"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:textColor="@color/discount_title"
-                android:textSize="@dimen/text_medium" />
+                android:text="城市列表"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
 
             <TextView
@@ -47,7 +48,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="完成"
-                android:textColor="@color/discount_title"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_small" />
 
 
