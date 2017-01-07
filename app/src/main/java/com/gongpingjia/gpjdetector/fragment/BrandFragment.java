@@ -31,13 +31,13 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.CategoryActivity;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
+import com.gongpingjia.gpjdetector.kZViews.NetworkImageView;
 import com.gongpingjia.gpjdetector.kZViews.PinnedHeaderListView;
 import com.gongpingjia.gpjdetector.util.DhUtil;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
@@ -87,6 +87,9 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
 
     public HotBrandAdapter hotBrandAdapter;
 
+    private String[] mHotBrandName = {"大众", "现代", "福特", "宝马", "别克", "本田", "奥迪", "雪佛兰", "丰田", "日产"};
+
+
     public List<Map<String, String>> mHotBrandList = new ArrayList<Map<String, String>>();
 
     public List<Map<String, String>> mBrandList = new ArrayList<Map<String, String>>();
@@ -107,6 +110,8 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private kZDatabase db;
 
+    ImageLoader mImageLoader;
+
     public BrandFragment() {
     }
 
@@ -115,6 +120,8 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
         super.onCreate(savedInstanceState);
         isNeedUnlimitedBrand = isNotNeedDetail;
         setRetainInstance(true);
+        RequestQueue mQueue = Volley.newRequestQueue(getActivity());
+        mImageLoader = new ImageLoader(mQueue, new BitmapCache());
     }
 
     @Override
@@ -139,16 +146,16 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
 //        hotBrandGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         if (!isFromFilter)
             mListView.addHeaderView(hotBrandView);
-  /*      if(mCategoryData == null){
-//            mCategoryData = GPJApplication.getInstance().getCategoryData();
-        }
-        hotBrandList = mCategoryData.mHotBrandList;
-        if(hotBrandList == null){
-            hotBrandList = new ArrayList<Map<String, String>>();
-        }*/
 
         db = ((CategoryActivity) getActivity()).getDatabase();
         Cursor cursor = db.getBrandList();
+        HashMap<String, String> ulmtdBrandMap = new HashMap<String, String>();
+        ulmtdBrandMap.put("name", "不限品牌");
+        ulmtdBrandMap.put("slug", "ulimtd_slug");
+        ulmtdBrandMap.put("first_letter", "热门品牌");
+        ulmtdBrandMap.put("logo_img", "localimage");
+
+        mBrandList.add(ulmtdBrandMap);
         do {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("slug", cursor.getString(0));
@@ -160,6 +167,15 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
         } while (cursor.moveToNext());
         cursor.close();
 
+        int length = mHotBrandName.length;
+        for (int i = 0; i < length; i++) {
+
+            for (Map<String, String> item : mBrandList) {
+                if (mHotBrandName[i].equals(item.get("name"))) {
+                    mHotBrandList.add(item);
+                }
+            }
+        }
         int size = mBrandList.size();
         letters = new ArrayList<String>();
         Set<String> sets = new HashSet<String>();
@@ -168,7 +184,7 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
         }
         letters.addAll(sets);
         Collections.sort(letters);
-        letters.add(0 , "#");
+        letters.add(0, "#");
 
         hotBrandAdapter = new HotBrandAdapter(getActivity(), mHotBrandList);
         hotBrandGridView.setAdapter(hotBrandAdapter);
@@ -312,7 +328,7 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
                     mListener.onFragmentBrandSelection(mBrandList.get(position - 1).get("slug"),
                             mBrandList.get(position - 1).get("name"),
                             Constant.IMG_DOMAIN + GPJApplication.getInstance().getApiUrlFromMeta("brand_model_logo_img")
-                                    + mBrandList.get(position - 1).get("logo_img") );
+                                    + mBrandList.get(position - 1).get("logo_img"));
                 }
             } else {
                 if (categoryActivity.mModelDetailFragment.isAdded()) {
@@ -321,7 +337,7 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
                 mListener.onFragmentBrandSelection(mBrandList.get(position).get("slug"),
                         mBrandList.get(position).get("name"),
                         Constant.IMG_DOMAIN + GPJApplication.getInstance().getApiUrlFromMeta("brand_model_logo_img")
-                                + mBrandList.get(position).get("logo_img") );
+                                + mBrandList.get(position).get("logo_img"));
             }
 
         }
@@ -403,14 +419,13 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
 
         int selectPosition = -1;
 
-        ImageLoader mImageLoader;
+
 
         // AlphabetIndexer mAlphaIndexer;
 
         public BrandListAdapter(LayoutInflater inflater) {
             mInflater = inflater;
-            RequestQueue mQueue = Volley.newRequestQueue(getActivity());
-            mImageLoader = new ImageLoader(mQueue, new BitmapCache());
+
         }
 
         @Override
@@ -523,7 +538,7 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
 
                 brandHolder.brandLogo.setImageUrl(logo_url, mImageLoader);
 //              ImageLoad.LoadImage(brandHolder.brandLogo, logo_url, R.drawable.brandnull, R.drawable.brandnull);
-//                 Glide.with(BrandFragment.this).load(logo_url).placeholder(R.drawable.brandnull).error(R.drawable.brandnull).into(brandHolder.brandLogo);
+                Glide.with(BrandFragment.this).load(logo_url).placeholder(R.drawable.brandnull).error(R.drawable.brandnull).into(brandHolder.brandLogo);
                 brandHolder.brandText.setText(mBrandList.get(position).get("name"));
 
                 if (letterPos == position) {
@@ -830,9 +845,7 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
                         Constant.IMG_DOMAIN
                                 + ((GPJApplication) getActivity().getApplication()).getApiUrlFromMeta("brand_model_logo_img")
                                 + filename + "?imageView2/0/w/100/h/100";
-
-//                ImageLoad.LoadImage(holder.brandLogo, logo_url, R.drawable.brandnull, R.drawable.brandnull);
-                 Glide.with(BrandFragment.this.getActivity()).load(logo_url).placeholder(R.drawable.brandnull).error(R.drawable.brandnull).into(holder.brandLogo);
+                holder.brandLogo.setImageUrl(logo_url, mImageLoader);
                 holder.info_txt.setText(map.get("name"));
             } catch (Exception e) {
 //                Utils.LogE("热门品牌ITEM异常：" + e.getMessage());

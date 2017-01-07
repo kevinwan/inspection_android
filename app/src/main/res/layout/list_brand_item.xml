@@ -40,7 +40,7 @@
                 android:src="@drawable/blue_current"
                 android:visibility="gone" />
 
-            <com.android.volley.toolbox.NetworkImageView
+            <com.gongpingjia.gpjdetector.kZViews.NetworkImageView
                 android:id="@+id/brandLogo"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
