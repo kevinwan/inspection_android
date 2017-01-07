@@ -150,6 +150,7 @@ public class ModelFragment extends Fragment {
                 }
             }
         }
+        Log.d("hhhhhh","mBrandSlug :"+mBrandSlug +"newlist ："+newlist +"munList :  "+munList);
     }
 
 
@@ -517,8 +518,6 @@ public class ModelFragment extends Fragment {
 
         private kZDatabase db;
 
-//        public List<Map<String, String>> mModelUnderBrand;
-
 
         public ModelDetailFragment() {
         }
@@ -533,7 +532,7 @@ public class ModelFragment extends Fragment {
         private void initData() {
             mModelDetailList.clear();
             db = ((CategoryActivity) getActivity()).getDatabase();
-            Cursor cursor = db.getModelDetailList(mBrandSlug, mModelSlug);
+            Cursor cursor = db.getModelDetailList( mModelSlug);
             do {
                 ModelDetail modeldetail = new ModelDetail();
                 modeldetail.setDetail_model(cursor.getString(0));

@@ -187,7 +187,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         return c;
     }
 
-    public Cursor getModelDetailList(String mBrandSlug,String global_slug) {
+    public Cursor getModelDetailList(String global_slug) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String[] sqlSelect = {"detail_model", "detail_model_slug", "price_bn", "year", "volume","control","body_model"};
@@ -195,7 +195,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelectionArgs = new String[]{global_slug};
         String sqlTables = "open_model_detail";
         qb.setTables(sqlTables);
-        Cursor cursor = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, "year", null);
+        Cursor cursor = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, "year desc", null);
         cursor.moveToFirst();
         return cursor;
     }

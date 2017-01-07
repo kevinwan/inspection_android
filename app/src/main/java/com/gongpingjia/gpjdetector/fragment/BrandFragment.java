@@ -388,21 +388,6 @@ public class BrandFragment extends Fragment implements AbsListView.OnItemClickLi
         }
     }
 
-  /*  @Override
-    public void onDownloadUpdate(String path, String filename, String type, String id) {
-        int position = Integer.valueOf(id);
-        if (position < 0 || position > mCategoryData.mBrandList.size()) {
-            return;
-        }
-
-        String slug = mCategoryData.mBrandList.get(position).get("slug");
-        FileUtils fileUtils = new FileUtils();
-        Bitmap logoImg = fileUtils.readFile2Bitmap(path, filename);
-        if (null != logoImg) {
-            mCategoryData.mBrandLogoImg.put(slug, logoImg);
-            mAdapter.notifyDataSetChanged();
-        }
-    }*/
 
     public interface OnFragmentBrandSelectionListener {
         public void onFragmentBrandSelection(String brandSlug, String brandName, String brand_logo_url);
