@@ -525,10 +525,23 @@ public class Fragment2 extends Fragment {
             }
         }
         bitmap.recycle();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
 
-        PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+
+        }).start();
+
+      /*  PhotoUtil.photoZoom(getActivity(), Uri.fromFile(new File(fileName)),
                 Uri.fromFile(new File(fileName)), 10086, 3, 2,
-                1000, this);
+                1000, this);*/
     }
 
     void setImageVisibility(int part, boolean isVisible) {
