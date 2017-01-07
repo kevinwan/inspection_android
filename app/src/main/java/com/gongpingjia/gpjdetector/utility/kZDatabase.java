@@ -162,6 +162,17 @@ public class kZDatabase extends SQLiteAssetHelper {
         return c;
     }
 
+    public Cursor getAllModelList() {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String[] sqlSelect = {"slug", "name", "parent", "thumbnail", "logo_img","mum"};
+        String sqlTables = "model";
+        qb.setTables(sqlTables);
+        Cursor c = qb.query(db, sqlSelect, null, null, null, null, "name", null);
+        c.moveToFirst();
+        return c;
+    }
+
 
     public Cursor getModelList(String parentBrand) {
         SQLiteDatabase db = getReadableDatabase();
@@ -226,7 +237,6 @@ public class kZDatabase extends SQLiteAssetHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS history" +
                 " (tableName TEXT PRIMARY KEY, date TEXT, isFinish INTEGER,status TEXT)");
         db.execSQL("INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
-        Log.d("hhhhhh", "INSERT INTO history values('" + tableName + "', '" + new DateFormat().format("yyyy-MM-dd kk:mm:ss", Calendar.getInstance(Locale.CHINA)) + "'," + "'0','00000000')");
         return tableName;
     }
 

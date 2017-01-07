@@ -22,7 +22,6 @@ import com.gongpingjia.gpjdetector.fragment.BrandFragment;
 import com.gongpingjia.gpjdetector.fragment.ModelFragment;
 import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
-import com.gongpingjia.gpjdetector.util.NetUtil;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.umeng.analytics.MobclickAgent;
 
@@ -114,8 +113,8 @@ public class CategoryActivity extends AppCompatActivity implements
         // mSwipeBackLayout = getSwipeBackLayout();
         //设置可以滑动的区域，推荐用屏幕像素的一半来指定
         searchImageView = (ImageView) findViewById(R.id.right_accuracy);
-       /* searchImageView.setImageResource(R.drawable.icon_car_search1);
-        searchImageView.setVisibility(View.VISIBLE);*/
+        searchImageView.setImageResource(R.drawable.icon_car_search1);
+        searchImageView.setVisibility(View.VISIBLE);
         searchImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,9 +253,8 @@ public class CategoryActivity extends AppCompatActivity implements
 
     public List<SearchResult> addAllModel() {
 
-        if (null == mBrandSlug) return null;
         List<Map<String, String>> mModelList = new ArrayList<Map<String, String>>();
-        Cursor cursor = database.getModelList(mBrandSlug);
+        Cursor cursor = database.getAllModelList();
         do {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("slug", cursor.getString(0));
@@ -362,11 +360,6 @@ public class CategoryActivity extends AppCompatActivity implements
      */
     @Override
     public void onFragmentModelSelection(String modelSlug, String modelName, String modelThumbnail) {
-        if (!NetUtil.getNetState(CategoryActivity.this)) {
-            Toast.makeText(CategoryActivity.this, "当前网络不可用,请重新连接网络!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         if (mModelDetailFragment.mSildingFinishLayout != null)
             mModelDetailFragment.isSlidfinsh = false;
 

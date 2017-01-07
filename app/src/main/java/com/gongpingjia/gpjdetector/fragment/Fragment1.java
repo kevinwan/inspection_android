@@ -144,13 +144,12 @@ public class Fragment1 extends Fragment {
                 mPopupWindow.dismiss();
             }
         });
-
         mPopupWindow = new PopupWindow(popupView);
-        mPopupWindow = new PopupWindow(popupView, 1120, 1600, true);
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources()));
-
         mPopupWindow.getContentView().setFocusable(true);
         mPopupWindow.getContentView().setFocusableInTouchMode(true);
         mPopupWindow.setAnimationStyle(R.style.anim_menu_bottombar);
@@ -266,8 +265,7 @@ public class Fragment1 extends Fragment {
                             delete_group.setVisibility(View.GONE);
                         }
                         image_title.setText(list.get(position).desc);
-//                        touchImageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
-                        Glide.with(Fragment1.this.getActivity()).load(list.get(position).file_path).placeholder(R.drawable.brandnull).error(R.drawable.brandnull).into(touchImageView);
+                        touchImageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
                         recapture.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -275,8 +273,7 @@ public class Fragment1 extends Fragment {
                                 mPopupWindow.dismiss();
                             }
                         });
-                        mPopupWindow.showAtLocation(getActivity().findViewById(R.id.root_layout),
-                                Gravity.BOTTOM, 0, 120);
+                        mPopupWindow.showAtLocation(getActivity().findViewById(R.id.root_layout), Gravity.CENTER,0,0);
                     }
 
 

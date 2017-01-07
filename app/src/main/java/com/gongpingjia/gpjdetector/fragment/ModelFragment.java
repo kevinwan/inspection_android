@@ -39,15 +39,10 @@ import com.gongpingjia.gpjdetector.kZViews.MyGridView;
 import com.gongpingjia.gpjdetector.kZViews.PinnedHeaderListView;
 import com.gongpingjia.gpjdetector.kZViews.SildingFinishLayout;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
-import com.gongpingjia.gpjdetector.utility.NetDataJson;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,7 +101,6 @@ public class ModelFragment extends Fragment {
     String datas[];
     LayoutInflater mInflater;
     View mainV, closeView;
-    private NetDataJson netWork;
     private kZDatabase db;
     private List<Map<String, String>> mModelUnderBrand = new ArrayList<Map<String, String>>();
     private List<String> munList = new ArrayList<>();
@@ -312,7 +306,6 @@ public class ModelFragment extends Fragment {
 
         // touchView要设置到ListView上面
         mSildingFinishLayout.setTouchView(listV);
-        getData();
 
         mTagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
@@ -380,10 +373,6 @@ public class ModelFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if (netWork != null) {
-            netWork.cancelTask();
-            netWork = null;
-        }
         super.onDestroy();
     }
 
@@ -402,23 +391,6 @@ public class ModelFragment extends Fragment {
     }
 
 
-    public void getData() {
-        netWork = new NetDataJson(new NetDataJson.OnNetDataJsonListener() {
-            @Override
-            public void onDataJsonError(String errorMessage) {
-                if (!TextUtils.isEmpty(errorMessage)) {
-                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                }
-                getFragmentManager().beginTransaction().remove(ModelFragment.this).commitAllowingStateLoss();
-            }
-
-            @Override
-            public void onDataJsonUpdate(JSONObject json) {
-
-                    notifyData();
-            }
-        });
-    }
 
     private void notifyData() {
         adapter.setData(mModelBrandMap, newlist);
@@ -483,8 +455,7 @@ public class ModelFragment extends Fragment {
      *
      * @author Administrator
      */
-    public static class ModelDetailFragment extends Fragment implements AbsListView.OnItemClickListener,
-            NetDataJson.OnNetDataJsonListener {
+    public static class ModelDetailFragment extends Fragment implements AbsListView.OnItemClickListener{
 
         public String mBrandName;
 
@@ -496,12 +467,9 @@ public class ModelFragment extends Fragment {
 
         public String mModelThumbnail;
 
-        // public CategoryData mCategoryData;
         public List<ModelDetail> mModelDetailList = new ArrayList<>();
 
         private OnFragmentModelDetailSelectionListener mListener;
-
-        private NetDataJson mNetModelDetail;
 
         private ModelDetailListAdapter mAdapter;
 
@@ -567,18 +535,14 @@ public class ModelFragment extends Fragment {
             db = ((CategoryActivity) getActivity()).getDatabase();
             Cursor cursor = db.getModelDetailList(mBrandSlug, mModelSlug);
             do {
-//                String[] sqlSelect = {"detail_model", "detail_model_slug", "price_bn", "year", "volume","control","body_model"};
                 ModelDetail modeldetail = new ModelDetail();
                 modeldetail.setDetail_model(cursor.getString(0));
                 modeldetail.setDetail_model_slug(cursor.getString(1));
-//                modeldetail.setEmission_standard(cursor.getString(0));
-//                modeldetail.setMax_reg_year(cursor.getString(0));
-//                modeldetail.setMin_reg_year(cursor.getString(0));
                 modeldetail.setPrice_bn(cursor.getString(2));
                 String year = cursor.getString(3);
                 modeldetail.setYear(year);
                 modeldetail.setVolume(cursor.getString(4));
-                modeldetail.setTransmission(cursor.getString(0));
+                modeldetail.setTransmission(cursor.getString(5));
                 modeldetail.setYear(year);
                 if (Integer.parseInt(year) >= minYear) {
                     mModelDetailList.add(modeldetail);
@@ -593,7 +557,6 @@ public class ModelFragment extends Fragment {
 
             view = inflater.inflate(R.layout.fragment_model_detail, container, false);
             headView = inflater.inflate(R.layout.model_detail_header, null);
-            mNetModelDetail = new NetDataJson(this);
             initView(view, inflater);// 控件初始化
             initData();
             return view;
@@ -605,17 +568,6 @@ public class ModelFragment extends Fragment {
                 currentVolumn = "";
                 currentTransmission = "";
                 initData();
-             /*   String url = API.modelDetail;
-                if (progressDialog != null) {
-                    progressDialog.show();
-                }
-                mNetModelDetail.cancelTask();
-                mNetModelDetail.setUrl(url);
-                mNetModelDetail.addParam("brand", mBrandSlug);
-                mNetModelDetail.addParam("model", mModelSlug);
-                mNetModelDetail.request("get");*/
-
-
             }
         }
 
@@ -706,19 +658,6 @@ public class ModelFragment extends Fragment {
             };
             manualB.setOnClickListener(transmissionListener);
             automaticB.setOnClickListener(transmissionListener);
-
-            if (mBrandSlug != null && mModelSlug != null) {
-              /*  String url = API.modelDetail;
-                if (progressDialog != null) {
-                    progressDialog.show();
-                }
-                mNetModelDetail.cancelTask();
-                mNetModelDetail.setUrl(url);
-                mNetModelDetail.addParam("brand", mBrandSlug);
-                mNetModelDetail.addParam("model", mModelSlug);
-                mNetModelDetail.request("get");*/
-            }
-
 
             gridV = (MyGridView) view.findViewById(R.id.gridView);
             gridV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -824,55 +763,6 @@ public class ModelFragment extends Fragment {
         }
 
 
-        @Override
-        public void onDestroyView() {
-            super.onDestroyView();
-            if (mNetModelDetail != null) {
-                mNetModelDetail.cancelTask();
-                mNetModelDetail = null;
-            }
-        }
-
-        @Override
-        public void onDataJsonUpdate(JSONObject json) {
-            if (null == json) {
-                return;
-            }
-
-            try {
-                JSONArray detail = json.getJSONArray("detail_model");
-                if (null == detail) {
-                    return;
-                }
-                mModelDetailList.clear();
-                for (int i = 0; i < detail.length(); i++) {
-                    JSONObject jo = detail.getJSONObject(i);
-                    if (null != jo) {
-                        ModelDetail modeldetail = new ModelDetail();
-                        modeldetail.setDetail_model(jo.getString("detail_model"));
-                        modeldetail.setDetail_model_slug(jo.getString("detail_model_slug"));
-                        modeldetail.setEmission_standard(jo.getString("emission_standard"));
-                        modeldetail.setMax_reg_year(jo.getString("max_reg_year"));
-                        modeldetail.setMin_reg_year(jo.getString("min_reg_year"));
-                        modeldetail.setPrice_bn(jo.getString("price_bn"));
-                        modeldetail.setTransmission(jo.getString("transmission"));
-                        modeldetail.setVolume(jo.getString("volume"));
-                        String year = jo.getString("year");
-                        modeldetail.setYear(year);
-                        if (Integer.parseInt(year) >= minYear) {
-                            mModelDetailList.add(modeldetail);
-                        }
-                    }
-                }
-                notifyData();
-            } catch (JSONException e) {
-                return;
-            }
-
-
-
-        }
-
         private void notifyData() {
             initVolumneButton();
             mAdapter.setData(mModelDetailList);
@@ -888,18 +778,6 @@ public class ModelFragment extends Fragment {
             updateListView();
         }
 
-        @Override
-        public void onDataJsonError(String errorMessage) {
-            // Toast.makeText(getActivity(), "未找到相应数据", Toast.LENGTH_SHORT).show();
-            // getActivity().onBackPressed();
-            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-                CategoryActivity activity = (CategoryActivity) getActivity();
-                activity.setModelDetailIsShow(true);
-            }
-        }
 
         public void updateListView() {
             if (mModelDetailList.size() != 0) {

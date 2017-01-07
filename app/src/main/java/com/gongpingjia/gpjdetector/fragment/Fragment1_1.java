@@ -29,6 +29,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.data.CaptureItems;
@@ -161,7 +162,8 @@ public class Fragment1_1 extends Fragment {
         });
 
         mPopupWindow = new PopupWindow(popupView);
-        mPopupWindow = new PopupWindow(popupView, 1120, 1600, true);
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources()));
@@ -298,7 +300,7 @@ public class Fragment1_1 extends Fragment {
                             }
                         });
                         mPopupWindow.showAtLocation(getActivity().findViewById(R.id.root_layout),
-                                Gravity.BOTTOM, 0, 120);
+                                Gravity.CENTER, 0, 0);
                     }
 
 
@@ -306,7 +308,7 @@ public class Fragment1_1 extends Fragment {
             });
             if (null != list.get(position).file_path) {
                 if (Utils.isFileExist(list.get(position).file_path)) {
-                    viewHolder.imageView.setImageBitmap(BitmapFactory.decodeFile(list.get(position).file_path));
+                    Glide.with(Fragment1_1.this.getActivity()).load(list.get(position).file_path).into(viewHolder.imageView);
                 }
             } else {
                 viewHolder.imageView.setImageBitmap(null);

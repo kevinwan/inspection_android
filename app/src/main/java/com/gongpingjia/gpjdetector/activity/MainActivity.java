@@ -225,7 +225,6 @@ public class MainActivity extends FragmentActivity {
         left.setBounds(0, 0, left.getMinimumWidth(), left.getMinimumHeight());
         right = res.getDrawable(R.drawable.menu_complete);
         right.setBounds(0, 0, right.getMinimumWidth(), right.getMinimumHeight());
-        Log.d("hhhhhh", "getStatus  status" + menu_status);
         menu.setOnOpenListener(new SlidingMenu.OnOpenListener() {
             @Override
             public void onOpen(int position) {
