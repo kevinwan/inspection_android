@@ -33,4 +33,8 @@
     <color name="discount_price_color">#ff701b</color>
     <color name="text_grey">#ABABAB</color>
     <color name="text_blue">#13A8EB</color>
+    <!-- 按钮选中颜色（蓝色） -->
+    <color name="button_focus_color">#aa18A0E0</color>
+    <!-- 按钮默认颜色 （蓝色）-->
+    <color name="button_normal_color">#18A0E0</color>
 </resources>

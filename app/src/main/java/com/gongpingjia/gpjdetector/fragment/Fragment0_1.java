@@ -167,7 +167,7 @@ public class Fragment0_1 extends Fragment {
                     maxCal.set(Calendar.MONTH, mainActivity.shangpai_time[1] - 1);
 
                     //首次上牌时间选择
-                    mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, false);
+//                    mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, false);
                 } else {
                     Toast.makeText(mainActivity, "请先选择车型", Toast.LENGTH_SHORT).show();
                 }
@@ -250,7 +250,7 @@ public class Fragment0_1 extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
-                mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, negButton);
+//                mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, negButton);
                 return false;
             }
         };

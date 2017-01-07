@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +49,7 @@ import com.gongpingjia.gpjdetector.fragment.Fragment6_;
 import com.gongpingjia.gpjdetector.fragment.FragmentFeedBack;
 import com.gongpingjia.gpjdetector.fragment.MenuFragment_;
 import com.gongpingjia.gpjdetector.global.Constant;
-import com.gongpingjia.gpjdetector.kZViews.kZDatePickerDialog;
+import com.gongpingjia.gpjdetector.kZViews.CheckDatePickerDialog;
 import com.gongpingjia.gpjdetector.receiver.NetReceiver;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
 import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
@@ -768,13 +769,52 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    public void showDateDialog(final View v, final Calendar curCal, final Calendar minCal,
-                               final Calendar maxCal, boolean negButton) {
-        final kZDatePickerDialog datePickerDialog =
+
+
+    public void showDateDialog(final View v, String dialogTitle, final Calendar minCal,
+                               final Calendar maxCal, final boolean negButton) {
+        /**
+         * 日期选择弹框
+         */
+        final CheckDatePickerDialog dateDialog;
+
+        dateDialog = new CheckDatePickerDialog(MainActivity.this);
+        dateDialog.setMinMonth(1);
+        dateDialog.setMaxMonth(12);
+        dateDialog.setDialogCallBack(new CheckDatePickerDialog.OnDialogCallBack() {
+
+            @Override
+            public void onSelectResult(String year, String month, String day) {
+                if (TextUtils.isEmpty(month)) {
+                    ((EditText) v).setText(year + "年");
+                } else {
+                    ((EditText) v).setText(year + "年" + month + "月");
+                }
+            }
+
+            @Override
+            public void onNoSelectResult() {
+                if (negButton) {
+                    ((EditText) v).setText("已到期");
+                }
+            }
+        });
+
+        dateDialog.setMonthPickerVisibility(View.VISIBLE);
+
+        dateDialog.setMinYear(minCal.get(Calendar.YEAR));
+        dateDialog.setMaxYear(maxCal.get(Calendar.YEAR));
+        dateDialog.show();
+        if(negButton){
+            dateDialog.setNoText("已到期");
+        }
+        dateDialog.setTitleText(dialogTitle);
+
+       /* final kZDatePickerDialog datePickerDialog =
                 new kZDatePickerDialog(this, _datePickerDialogCallback, curCal, minCal, maxCal, null);
         datePickerDialog.hideDayOfMonth();
 
-        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "选择", new DialogInterface.OnClickListener() {
+        dateDialog.setButton(DialogInterface.BUTTON_POSITIVE, "选择", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 isPostivebutton = true;
@@ -783,25 +823,25 @@ public class MainActivity extends FragmentActivity {
                         datePicker.getMonth(), datePicker.getDayOfMonth());
                 ((EditText) v).setText(dateTmp);
             }
-        });
+        });*/
 
-        if (negButton) {
-            datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "已到期", new DialogInterface.OnClickListener() {
+      /*  if (negButton) {
+            dateDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "已到期", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     isPostivebutton = false;
-                    DatePicker datePicker = datePickerDialog.getDatePicker();
+                    dateDialog.getMaxYear()
+                    DatePicker datePicker = dateDialog.getDatePicker();
                     _datePickerDialogCallback.onDateSet(datePicker, datePicker.getYear(),
                             datePicker.getMonth(), datePicker.getDayOfMonth());
                     ((EditText) v).setText(dateTmp);
                 }
             });
-        }
-        datePickerDialog.show();
+        }*/
+
     }
 
     private class DateSetListener implements DatePickerDialog.OnDateSetListener {
-
         @Override
         public void onDateSet(DatePicker view, int year, int month, int day) {
             if (isPostivebutton) {

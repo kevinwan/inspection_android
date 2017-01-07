@@ -203,7 +203,7 @@ public class Fragment0 extends Fragment {
                     maxCal.set(Calendar.MONTH, mainActivity.shangpai_time[1] - 1);
 
                     //首次上牌时间选择
-                    mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, false);
+                    mainActivity.showDateDialog(view, "上牌时间", minCal, maxCal, false);
                 } else {
                     Toast.makeText(mainActivity, "请先选择车型", Toast.LENGTH_SHORT).show();
                 }
@@ -231,18 +231,18 @@ public class Fragment0 extends Fragment {
 
         //出厂时间
 //        getDate(edittext3, null, curCal, false);
-        //最近变更时间
-        getDate(edittext5, null, curCal, false);
+      /*  //最近变更时间
+        getDate(edittext5, null, curCal, false,"交强险到期");*/
         //交强险到期时间
         maxCal = Calendar.getInstance();
         maxCal.add(Calendar.YEAR, 3);
-        getDate(edittext4, curCal, maxCal, true);
+        getDate(edittext4, curCal, maxCal, true,"交强险到期");
         //商业险到期时间
-        getDate(edittext5, curCal, maxCal, true);
+        getDate(edittext5, curCal, maxCal, true,"商业险到期");
         //年检到期时间
-        maxCal = Calendar.getInstance();
+       /* maxCal = Calendar.getInstance();
         maxCal.add(Calendar.YEAR, 6);
-        getDate(edittext6, curCal, maxCal, true);
+        getDate(edittext6, curCal, maxCal, true);*/
 
         edittext1.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -349,12 +349,12 @@ public class Fragment0 extends Fragment {
         }
     };
 
-    private void getDate(final View view, final Calendar minCal, final Calendar maxCal, final boolean negButton) {
+    private void getDate(final View view, final Calendar minCal, final Calendar maxCal, final boolean negButton,final String dialog_title) {
         View.OnTouchListener dateListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() != MotionEvent.ACTION_UP) return false;
-                mainActivity.showDateDialog(view, Calendar.getInstance(), minCal, maxCal, negButton);
+                mainActivity.showDateDialog(view, dialog_title, minCal, maxCal, negButton);
                 return false;
             }
         };
