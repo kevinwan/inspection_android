@@ -344,12 +344,13 @@ public class CategoryActivity extends AppCompatActivity implements
 
 
         if (mModelFragment.isAdded()) {
+            mModelFragment.initData1();
             mModelFragment.refresh();
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(R.anim.activity_open_in_anim, R.anim.activity_close_out_anim);
             transaction.replace(R.id.container_model, mModelFragment);
-            transaction.commitAllowingStateLoss();
+            transaction.commit();
         }
         modelDetailIsShow = false;
     }

@@ -786,9 +786,9 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onSelectResult(String year, String month, String day) {
                 if (TextUtils.isEmpty(month)) {
-                    ((EditText) v).setText(year + "年");
+                    ((EditText) v).setText(year);
                 } else {
-                    ((EditText) v).setText(year + "年" + month + "月");
+                    ((EditText) v).setText(year + "-" + month);
                 }
             }
 

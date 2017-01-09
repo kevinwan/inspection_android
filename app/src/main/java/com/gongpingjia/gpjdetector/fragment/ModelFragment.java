@@ -33,7 +33,6 @@ import com.gongpingjia.gpjdetector.activity.CategoryActivity;
 import com.gongpingjia.gpjdetector.adapter.ModelAdapter;
 import com.gongpingjia.gpjdetector.adapter.ModelDetailYearAadpter;
 import com.gongpingjia.gpjdetector.data.ModelDetail;
-import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.kZViews.LoadingDialog;
 import com.gongpingjia.gpjdetector.kZViews.MyGridView;
 import com.gongpingjia.gpjdetector.kZViews.PinnedHeaderListView;
@@ -112,7 +111,7 @@ public class ModelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isNeedUnlimitedModel = isNotNeedDetail;
-        setRetainInstance(true);
+     //   setRetainInstance(true);
     }
 
     private void initData() {
@@ -120,9 +119,11 @@ public class ModelFragment extends Fragment {
         munList.clear();
         newlist.clear();
         mModelBrandMap.clear();
+        Log.d("hhhhhh", "mBrandSlug :  "+mBrandSlug);
         if (null == mBrandSlug) return;
         db = ((CategoryActivity) getActivity()).getDatabase();
         Cursor cursor = db.getModelList(mBrandSlug);
+        Log.d("hhhhhh","initData :  begin");
         do {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("slug", cursor.getString(0));
@@ -150,7 +151,7 @@ public class ModelFragment extends Fragment {
                 }
             }
         }
-        Log.d("hhhhhh","mBrandSlug :"+mBrandSlug +"newlist ："+newlist +"munList :  "+munList);
+        Log.d("hhhhhh","mBrandSlug :"+mBrandSlug +"newlist ："+newlist +"munList :  "+munList+ mModelBrandMap.toString());
     }
 
 
@@ -212,43 +213,12 @@ public class ModelFragment extends Fragment {
         }
 
         adapter = new ModelAdapter(getActivity());
+
         // Set the adapter
         listV = (ExpandableListView) view.findViewById(R.id.list);
         listV.setGroupIndicator(null);
-        initData();
-        if(mModelBrandMap != null){
-            adapter.setData(mModelBrandMap, newlist);
-            listV.setAdapter(adapter);
-        }
-
-        if (mModelUnderBrand == null || mModelUnderBrand.size() == 0) {
-            Toast.makeText(getActivity(), "没有相应车型", Toast.LENGTH_SHORT).show();
-            getFragmentManager().beginTransaction().remove(ModelFragment.this).commitAllowingStateLoss();
-        } else {
-            datas = getMums(newlist);
-
-            mTagFlowLayout.setAdapter(new TagAdapter<String>(datas) {
-                @Override
-                public View getView(FlowLayout parent, int position, String s) {
-                    TextView tv = (TextView) mInflater.inflate(R.layout.tv,
-                            mTagFlowLayout, false);
-                    tv.setText(s);
-                    return tv;
-                }
-            });
-            for (int i = 0; i < adapter.getGroupCount(); i++) {
-                listV.expandGroup(i);
-            }
-
-            Intent intent = getActivity().getIntent();
-            if (intent != null) {
-                String modelsulg = intent.getStringExtra(Constant.MODEL_SLUG_KEY);
-                if (!TextUtils.isEmpty(modelsulg)) {
-                    initAadpterPosition(modelsulg);
-                }
-            }
-        }
-
+        initData1();
+        listV.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         listV.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -304,32 +274,39 @@ public class ModelFragment extends Fragment {
                 }
             }
         });
-
+        refresh();
         // touchView要设置到ListView上面
         mSildingFinishLayout.setTouchView(listV);
 
         mTagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
             public void onSelected(Set<Integer> selectPosSet) {
-                if (selectPosSet.size() == 1) {
-                    listV.setSelectedGroup(selectPosSet.iterator().next());
-                } else {
-                    listV.setSelectedGroup(0);
+                Log.d("hhhhhh","selectPosSet   " +selectPosSet);
+                try {
+                    if (selectPosSet.size() == 1) {
+                        listV.setSelectedGroup(selectPosSet.iterator().next());
+                    } else {
+                        listV.setSelectedGroup(0);
+                    }
+                }catch (Exception e) {
+                    Log.e("hhhhhh","Exception e   :" +e.getMessage());
                 }
-
             }
         });
 
         return view;
     }
 
-    public void clearCheck() {
-        adapter.setCurrentSelectPosition(-1, -1);
+
+
+    public void initData1(){
+        initData();
+        adapter.setData(mModelBrandMap, newlist);
     }
 
     public void refresh() {
+        Log.d("hhhhhh", "refresh  : ");
 //        getData();
-        initData();
         clearCheck();
 //        mModelUnderBrand = mCategoryData.getModelsByBrand(mBrandSlug);
 //        ImageLoad.LoadImage(mImgBrand, brand_logo_url, R.drawable.brandnull, R.drawable.brandnull);
@@ -337,6 +314,10 @@ public class ModelFragment extends Fragment {
         mTxtBrand.setText(mBrandName);
         tvAllSeries.setText("#" + mBrandName + "全系列");
         notifyData();
+    }
+
+    public void clearCheck() {
+        adapter.setCurrentSelectPosition(-1, -1);
     }
 
 
@@ -394,14 +375,22 @@ public class ModelFragment extends Fragment {
 
 
     private void notifyData() {
-        adapter.setData(mModelBrandMap, newlist);
+
+        listV.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < adapter.getGroupCount(); i++) {
+                    listV.expandGroup(i);
+                }
+            }
+        } , 100);
+
         if (mModelBrandMap == null || mModelBrandMap.size() == 0) {
             Toast.makeText(getActivity(), "没有相应车型", Toast.LENGTH_SHORT).show();
             getFragmentManager().beginTransaction().remove(ModelFragment.this).commitAllowingStateLoss();
             return;
         }
         datas = getMums(newlist);
-
         mTagFlowLayout.setAdapter(new TagAdapter<String>(datas) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
@@ -411,32 +400,7 @@ public class ModelFragment extends Fragment {
                 return tv;
             }
         });
-        for (int i = 0; i < adapter.getGroupCount(); i++) {
-            listV.expandGroup(i);
-        }
-
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
-            String modelsulg = intent.getStringExtra(Constant.MODEL_SLUG_KEY);
-            if (!TextUtils.isEmpty(modelsulg)) {
-                initAadpterPosition(modelsulg);
-            }
-        }
 }
-
-    public void initAadpterPosition(String modelSlug) {
-        for (int i = 0; i < newlist.size(); i++) {
-                List<Map<String, String>> listmap = mModelBrandMap.get(newlist.get(i));
-                for (int j = 0; j < listmap.size(); j++) {
-                    Map<String, String> map = listmap.get(j);
-                    String slug = map.get("slug");
-                    if (slug.equals(modelSlug)) {
-                        adapter.setCurrentSelectPosition(i, j);
-                        listV.setSelectedChild(i, j, true);
-                    }
-                }
-        }
-    }
 
 
     /**

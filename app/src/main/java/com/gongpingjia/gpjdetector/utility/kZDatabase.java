@@ -182,7 +182,7 @@ public class kZDatabase extends SQLiteAssetHelper {
         String[] sqlSelectionArgs = new String[]{parentBrand};
         String sqlTables = "model";
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, null, null);
+        Cursor c = qb.query(db, sqlSelect, sqlSelection, sqlSelectionArgs, null, null, "mum", null);
         c.moveToFirst();
         return c;
     }
