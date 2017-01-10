@@ -80,9 +80,9 @@ dependencies {
     compile 'com.embarkmobile:zxing-android-minimal:1.2.1@aar'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     compile 'com.mcxiaoke.volley:library:1.0.+'
-    compile files('libs/umeng-analytics-v5.5.3.jar')
     compile files('libs/getPinYinSZM.jar')
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 

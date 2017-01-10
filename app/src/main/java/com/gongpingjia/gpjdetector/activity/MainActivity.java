@@ -1103,13 +1103,17 @@ public class MainActivity extends FragmentActivity {
             UserInfo user = SharedPreUtil.getInstance().getUser();
             if (user != null && Constant.CHECK_USERTYPE.equals(user.getUser_type())) {
                 if (items2list != null) {
-                    for (index = 0; index < items2list.size(); ++index) {
-                        JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
-                        JSONArray marks = itemJson.getJSONArray("marks");
-                        for (int i = 0; i < marks.length(); ++i) {
-                            marks.put(i, getBase64Img(marks.getString(i)));
+                    try{
+                        for (index = 0; index < items2list.size(); ++index) {
+                            JSONObject itemJson = new JSONObject(items2list.get(index).getValue());
+                            JSONArray marks = itemJson.getJSONArray("marks");
+                            for (int i = 0; i < marks.length(); ++i) {
+                                marks.put(i, getBase64Img(marks.getString(i)));
+                            }
+                            rootJson.put(items2list.get(index).getKey(), itemJson);
                         }
-                        rootJson.put(items2list.get(index).getKey(), itemJson);
+                    }catch(Exception e){
+                        Log.e("MainActivity","marks Exception e  :"+e.getMessage());
                     }
                 }
                 if (items3list != null) {
@@ -1288,9 +1292,9 @@ public class MainActivity extends FragmentActivity {
             //总计 220个字段
             return rootJson;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("MainActivity", "JSONException e  :" + e.getMessage());
         }
-
+        showToast("数据异常，无法提交。");
         return null;
     }
 

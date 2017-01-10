@@ -3,9 +3,11 @@ package com.gongpingjia.gpjdetector.global;
 import android.app.Application;
 
 import com.gongpingjia.gpjdetector.data.CityData;
+import com.gongpingjia.gpjdetector.utility.CrashHandler;
 import com.gongpingjia.gpjdetector.utility.DataManager;
 import com.gongpingjia.gpjdetector.utility.FileUtils;
 import com.gongpingjia.gpjdetector.utility.UserLocation;
+import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.EApplication;
 import org.json.JSONArray;
@@ -46,10 +48,14 @@ public class GPJApplication extends Application {
         super.onCreate();
 
         instance = this;
+        MobclickAgent.setDebugMode(true);
         UserLocation.getInstance().init(getApplicationContext());
         if (!FileUtils.isFileExist(Constant.sdcard + "/GPJImages")) {
             FileUtils.createSDDir(Constant.sdcard + "/GPJImages");
         }
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init();
         mCityJson = new FileUtils().readFile2JsonArray(getRootPath(), "city");
         if (null != mCityJson) {
             mCityData.LoadCityData(mCityJson);
