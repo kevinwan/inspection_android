@@ -81,6 +81,7 @@ public class MainActivity extends FragmentActivity {
 
     kZDatabase database;
     private NetReceiver netReceiver;
+    private String mPageName;
 
     public kZDatabase getDatabase() {
         return database;
@@ -296,6 +297,21 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPageName = getClass().getSimpleName();
+        MobclickAgent.onPageStart(mPageName);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(mPageName);
+        MobclickAgent.onPause(this);
     }
 
     public int searchIndex(String id, ArrayList<kZDBItem> list) {
@@ -1446,16 +1462,4 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
 }

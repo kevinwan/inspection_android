@@ -3,7 +3,6 @@ package com.gongpingjia.gpjdetector.global;
 import android.app.Application;
 
 import com.gongpingjia.gpjdetector.data.CityData;
-import com.gongpingjia.gpjdetector.utility.CrashHandler;
 import com.gongpingjia.gpjdetector.utility.DataManager;
 import com.gongpingjia.gpjdetector.utility.FileUtils;
 import com.gongpingjia.gpjdetector.utility.UserLocation;
@@ -54,8 +53,8 @@ public class GPJApplication extends Application {
             FileUtils.createSDDir(Constant.sdcard + "/GPJImages");
         }
 
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init();
+     /*   CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init();*/
         mCityJson = new FileUtils().readFile2JsonArray(getRootPath(), "city");
         if (null != mCityJson) {
             mCityData.LoadCityData(mCityJson);

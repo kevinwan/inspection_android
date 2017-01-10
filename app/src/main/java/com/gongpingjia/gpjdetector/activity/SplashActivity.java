@@ -1,6 +1,5 @@
 package com.gongpingjia.gpjdetector.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import com.gongpingjia.gpjdetector.global.Constant;
 import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.UpdateHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -25,7 +25,7 @@ import java.util.Date;
 
 
 @EActivity(R.layout.activity_splash)
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     public static Boolean isFirstIn = false;
     SharedPreferences pref;
@@ -42,7 +42,11 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MobclickAgent.setDebugMode(true);
+        // SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+        // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         long startTime = Calendar.getInstance().getTimeInMillis();
         //if the first time running this app
         pref = this.getSharedPreferences("Base", 0);

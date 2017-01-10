@@ -2,7 +2,6 @@ package com.gongpingjia.gpjdetector.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,7 +19,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 /**
  * Created by Administrator on 2016/3/23.
  */
-public class FragmentFeedBack extends Fragment {
+public class FragmentFeedBack extends BaseFragment {
 
 
     View mainV;

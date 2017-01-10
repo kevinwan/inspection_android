@@ -1,6 +1,5 @@
 package com.gongpingjia.gpjdetector.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
  * Created by Kooze on 14-9-4.
  */
 @EActivity(R.layout.activity_login)
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
     @ViewById
     EditText account, password;
@@ -56,8 +55,8 @@ public class LoginActivity extends Activity {
         banner_title.setText("登 录");
       /*  account: 15680709902 password: 123456 拍照师权限
         account: 15208324770 password: 123456  检测师权限*/
-     /*   account.setText("15208324770");
-        password.setText("123456");*/
+        account.setText("15680709902");
+        password.setText("123456");
     }
 
     @Click

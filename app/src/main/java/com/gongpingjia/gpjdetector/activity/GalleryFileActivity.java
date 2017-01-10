@@ -17,7 +17,6 @@
  */
 package com.gongpingjia.gpjdetector.activity;
 
-import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
@@ -29,7 +28,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_galleryfile)
-public class GalleryFileActivity extends Activity {
+public class GalleryFileActivity extends BaseActivity {
 
     @ViewById
     TouchImageView imageView;

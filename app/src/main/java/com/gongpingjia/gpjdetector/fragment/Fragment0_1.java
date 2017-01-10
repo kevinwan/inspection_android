@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_0_1)
-public class Fragment0_1 extends Fragment {
+public class Fragment0_1 extends BaseFragment {
     MainActivity_ mainActivity;
     ArrayList<kZDBItem> list;
     @ViewById

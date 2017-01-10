@@ -59,7 +59,7 @@ import java.util.Set;
  *
  * @author Administrator
  */
-public class ModelFragment extends Fragment {
+public class ModelFragment extends BaseFragment {
 
 //    public CategoryData mCategoryData;
 

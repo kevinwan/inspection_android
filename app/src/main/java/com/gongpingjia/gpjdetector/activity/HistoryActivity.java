@@ -8,12 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.gongpingjia.gpjdetector.R;
 import com.gongpingjia.gpjdetector.adapter.TabsFragmentPagerAdapter;
 import com.gongpingjia.gpjdetector.fragment.Fragment_History_1_;
 import com.gongpingjia.gpjdetector.fragment.Fragment_History_2_;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
-
+import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -45,6 +46,7 @@ public class HistoryActivity extends FragmentActivity {
     Resources resources;
 
     kZDatabase database;
+    private String mPageName;
 
     public kZDatabase getDatabase() {
         return database;
@@ -137,6 +139,22 @@ public class HistoryActivity extends FragmentActivity {
         public void onPageScrollStateChanged(int arg0) {
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPageName = getClass().getSimpleName();
+        MobclickAgent.onPageStart(mPageName);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(mPageName);
+        MobclickAgent.onPause(this);
+    }
+
 
     @Override
     protected void onDestroy() {

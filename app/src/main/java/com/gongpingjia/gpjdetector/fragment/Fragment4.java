@@ -1,7 +1,6 @@
 package com.gongpingjia.gpjdetector.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 
 
 @EFragment(R.layout.fragment_4)
-public class Fragment4 extends Fragment {
+public class Fragment4 extends BaseFragment {
     MainActivity_ mainActivity;
     @ViewById
     TextView banner_title;

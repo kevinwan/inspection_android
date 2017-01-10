@@ -1,7 +1,6 @@
 package com.gongpingjia.gpjdetector.fragment;
 
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 
 
 @EFragment(R.layout.fragment_0_2)
-public class Fragment0_2 extends Fragment {
+public class Fragment0_2 extends BaseFragment {
     @ViewById
     EditText edittext1, edittext3, edittext4, edittext5,
             edittext6, edittext7, edittext8, edittext9, edittext10;

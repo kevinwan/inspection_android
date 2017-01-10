@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -51,7 +50,7 @@ import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_0_1)
-public class Fragment0 extends Fragment {
+public class Fragment0 extends BaseFragment {
     SlidingMenu menu;
     MainActivity_ mainActivity;
     ArrayList<kZDBItem> list;

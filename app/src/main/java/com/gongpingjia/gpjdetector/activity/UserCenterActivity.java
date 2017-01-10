@@ -1,6 +1,5 @@
 package com.gongpingjia.gpjdetector.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ import org.json.JSONObject;
  * Created by Kooze on 14-9-4.
  */
 @EActivity(R.layout.activity_usercenter)
-public class UserCenterActivity extends Activity {
+public class UserCenterActivity extends BaseActivity {
 
 
     @ViewById

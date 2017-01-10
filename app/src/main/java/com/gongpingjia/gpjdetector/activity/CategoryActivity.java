@@ -89,6 +89,8 @@ public class CategoryActivity extends AppCompatActivity implements
     kZDatabase database;
     private ArrayList<Map<String, String>> mBrandList = new ArrayList<>();
 
+    String mPageName;
+
     public kZDatabase getDatabase() {
         return database;
     }
@@ -98,6 +100,7 @@ public class CategoryActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        mPageName = getClass().getSimpleName();
         database = new kZDatabase(CategoryActivity.this);
         Cursor cursor = database.getBrandList();
         do {
@@ -356,6 +359,7 @@ public class CategoryActivity extends AppCompatActivity implements
     }
 
 
+
     /**
      * 型号选择
      */
@@ -418,12 +422,14 @@ public class CategoryActivity extends AppCompatActivity implements
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(mPageName);
         MobclickAgent.onResume(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(mPageName);
         MobclickAgent.onPause(this);
     }
 

@@ -1,6 +1,5 @@
 package com.gongpingjia.gpjdetector.fragment;
 
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 
 @EFragment(R.layout.fragment_0_3)
-public class Fragment0_3 extends Fragment {
+public class Fragment0_3 extends BaseFragment {
 	@ViewById
     CheckBox checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6,
             checkbox7, checkbox8, checkbox9, checkbox10, checkbox11, checkbox12,

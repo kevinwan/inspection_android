@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class CityActivity extends Activity {
+public class CityActivity extends BaseActivity {
 
     private CityData mCityData;
 

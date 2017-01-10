@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 
 
 @EFragment(R.layout.fragment_menu)
-public class MenuFragment extends Fragment {
+public class MenuFragment extends BaseFragment {
 
     View.OnClickListener buttonListener = new View.OnClickListener() {
         @Override

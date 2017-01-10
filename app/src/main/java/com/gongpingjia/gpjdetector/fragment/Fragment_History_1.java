@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +51,7 @@ import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_history_1)
-public class Fragment_History_1 extends Fragment {
+public class Fragment_History_1 extends BaseFragment {
     Activity parentActivity;
 
 

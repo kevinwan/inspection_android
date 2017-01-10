@@ -1,6 +1,5 @@
 package com.gongpingjia.gpjdetector.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
  * Created by Kooze on 14-9-4.
  */
 @EActivity(R.layout.activity_modifypassword)
-public class ModifyPasswordActivity extends Activity {
+public class ModifyPasswordActivity extends BaseActivity {
 
     @ViewById
     EditText oldpassword, newpassword1, newpassword2;

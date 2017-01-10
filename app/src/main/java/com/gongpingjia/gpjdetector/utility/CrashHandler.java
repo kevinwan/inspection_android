@@ -4,6 +4,9 @@ import android.os.Debug;
 import android.os.Environment;
 import android.util.Log;
 
+import com.gongpingjia.gpjdetector.global.GPJApplication;
+import com.umeng.analytics.MobclickAgent;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -64,6 +67,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             // 如果用户没有处理则让系统默认的异常处理器来处理  
             mDefaultHandler.uncaughtException(thread, throwable);  
 	    }else{
+			MobclickAgent.onKillProcess(GPJApplication.getInstance());
 	        android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
 	    }

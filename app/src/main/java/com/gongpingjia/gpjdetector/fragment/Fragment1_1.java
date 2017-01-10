@@ -11,7 +11,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -60,7 +59,7 @@ import java.util.Map;
 
 
 @EFragment(R.layout.fragment_1_1)
-public class Fragment1_1 extends Fragment {
+public class Fragment1_1 extends BaseFragment {
 
     MainActivity_ mainActivity;
     ArrayList<CaptureItems> list1,list2,list3,list4,list5;

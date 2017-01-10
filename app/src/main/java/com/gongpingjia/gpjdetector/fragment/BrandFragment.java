@@ -11,7 +11,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -56,7 +55,7 @@ import java.util.Set;
  *
  * @author Administrator
  */
-public class BrandFragment extends Fragment implements AbsListView.OnItemClickListener
+public class BrandFragment extends BaseFragment implements AbsListView.OnItemClickListener
 //        , NetDownloadFile.OnNetDownloadFileListener
 {
     public static final int RESULT_EMPTY = 3;

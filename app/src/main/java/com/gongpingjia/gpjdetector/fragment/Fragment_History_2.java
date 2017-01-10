@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_history_2)
-public class Fragment_History_2 extends Fragment {
+public class Fragment_History_2 extends BaseFragment {
     Activity parentActivity;
     @ViewById
     ListView listView;
