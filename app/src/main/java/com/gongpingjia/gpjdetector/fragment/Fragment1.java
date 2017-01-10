@@ -250,7 +250,7 @@ public class Fragment1 extends BaseFragment {
 
                     } else {
                         final int count0 = count;
-                        if (position > count0) {
+                        if (position >= count0) {
                             delete_group.setVisibility(View.VISIBLE);
                             delete.setOnClickListener(new View.OnClickListener() {
                                 @Override

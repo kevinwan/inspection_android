@@ -275,7 +275,7 @@ public class Fragment1_1 extends BaseFragment {
                         takePhoto(position);
 
                     } else {
-                        if (type == 5 && position > count) {
+                        if (type == 5 && position >= count) {
                             delete_group.setVisibility(View.VISIBLE);
                             delete.setOnClickListener(new View.OnClickListener() {
                                 @Override
