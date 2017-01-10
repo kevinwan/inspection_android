@@ -256,6 +256,7 @@ public class Fragment1 extends BaseFragment {
                                 @Override
                                 public void onClick(View view) {
                                     mPopupWindow.dismiss();
+                                    db.deleteItem(list.get(position).id);
                                     list.remove(position);
                                     adapter.notifyDataSetChanged();
                                 }

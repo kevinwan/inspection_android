@@ -316,6 +316,16 @@ public class kZDatabase extends SQLiteAssetHelper {
 
     }
 
+    public void deleteItem(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.execSQL("DELETE FROM"+ Constant.getTableName()+"WHERE _id='" + id + "'");
+        } catch (SQLiteException e) {
+            Log.e("SQLiteException", e.toString());
+        }
+    }
+
+
     public void insertItem(String _id, String key, String name, String value, String type,String pic_collector_sub_cate,String checker_order,String pic_collector_order){
         SQLiteDatabase db = getWritableDatabase();
         SQLiteQueryBuilder dq = new SQLiteQueryBuilder();
