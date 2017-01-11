@@ -818,8 +818,10 @@ public class MainActivity extends FragmentActivity {
 
         dateDialog.setMonthPickerVisibility(View.VISIBLE);
 
-        dateDialog.setMinYear(minCal.get(Calendar.YEAR));
-        dateDialog.setMaxYear(maxCal.get(Calendar.YEAR));
+        int minYear = minCal.get(Calendar.YEAR);
+        int maxYear = maxCal.get(Calendar.YEAR);
+        dateDialog.setMinYear(minYear);
+        dateDialog.setMaxYear(maxYear);
         dateDialog.show();
         if(negButton){
             dateDialog.setNoText("已到期");
