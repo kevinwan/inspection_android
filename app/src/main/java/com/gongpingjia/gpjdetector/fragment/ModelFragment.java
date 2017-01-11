@@ -745,6 +745,7 @@ public class ModelFragment extends BaseFragment {
         public void updateListView() {
             if (mModelDetailList.size() != 0) {
                 mAdapter.notifyDataSetChanged();
+                currentSelectList = mModelDetailList;
             } else {
                 Toast.makeText(getActivity(), "暂无相应款型", Toast.LENGTH_SHORT).show();
                 mListener.onFragmentModelDetailNull();
