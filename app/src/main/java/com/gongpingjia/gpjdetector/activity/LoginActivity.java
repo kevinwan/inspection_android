@@ -55,8 +55,8 @@ public class LoginActivity extends BaseActivity {
         banner_title.setText("登 录");
       /*  account: 15680709902 password: 123456 拍照师权限
         account: 15208324770 password: 123456  检测师权限*/
-        account.setText("15680709902");
-        password.setText("123456");
+     /*   account.setText("15680709902");
+        password.setText("123456");*/
     }
 
     @Click
