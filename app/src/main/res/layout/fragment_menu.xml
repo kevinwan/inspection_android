@@ -54,7 +54,7 @@
         style="@style/menu_button"/>
     <Button
         android:id="@+id/btn_fragment7"
-        android:text="   检查意见"
+        android:text="   车况补充说明"
         style="@style/menu_button"/>
 
     <RelativeLayout
@@ -67,10 +67,10 @@
         android:layout_marginRight="18dp"/>
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="保存"
+        android:text="提交"
         android:textSize="18sp"
         android:textColor="#ffffffff"
         android:layout_marginTop="12dp"
@@ -86,11 +86,11 @@
         android:layout_marginRight="24dp"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="36dp"
-            android:text="提交"
+            android:text="保存"
             android:layout_marginRight="4dp"
             android:textSize="18sp"
             android:textColor="#ffffffff"

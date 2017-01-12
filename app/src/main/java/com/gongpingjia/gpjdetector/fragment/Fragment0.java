@@ -33,6 +33,7 @@ import com.gongpingjia.gpjdetector.activity.CityActivity;
 import com.gongpingjia.gpjdetector.activity.MainActivity_;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.global.Constant;
+import com.gongpingjia.gpjdetector.utility.UserLocation;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.androidannotations.annotations.AfterViews;
@@ -114,6 +115,9 @@ public class Fragment0 extends BaseFragment {
     @AfterViews
     public void afterViews() {
         edittext1.requestFocus();
+        if (UserLocation.getInstance().isIslocation()) {
+            edittext17.setText(UserLocation.getInstance().getCity());
+        }
         mainActivity = (MainActivity_) getActivity();
         list = mainActivity.getDB01Items();
         chuxian_list = mainActivity.getchuxian_list();

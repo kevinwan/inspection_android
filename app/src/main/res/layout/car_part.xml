@@ -9,8 +9,8 @@
 
     <FrameLayout
         android:id="@+id/car_parts_frame"
-        android:layout_width="918px"
-        android:layout_height="550px">
+        android:layout_width="310dp"
+        android:layout_height="185dp">
         <View
             android:id="@+id/car_bg"
             android:layout_width="wrap_content"
