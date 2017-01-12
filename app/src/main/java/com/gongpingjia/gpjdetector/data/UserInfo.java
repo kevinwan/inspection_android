@@ -19,6 +19,7 @@ public class UserInfo implements Serializable {
     private String company;
     private String user_type;
     private String password;
+    private String permission;
     private String session;
     private Date expiryDate;
 
@@ -100,5 +101,13 @@ public class UserInfo implements Serializable {
         }
 
 
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }

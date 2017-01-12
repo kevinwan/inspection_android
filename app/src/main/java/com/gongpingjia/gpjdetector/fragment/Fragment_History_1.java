@@ -38,6 +38,7 @@ import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.gongpingjia.gpjdetector.utility.BitmapCache;
 import com.gongpingjia.gpjdetector.utility.QRHelper;
 import com.gongpingjia.gpjdetector.utility.RequestUtils;
+import com.gongpingjia.gpjdetector.utility.SharedPreUtil;
 import com.gongpingjia.gpjdetector.utility.kZDatabase;
 
 import org.androidannotations.annotations.AfterViews;
@@ -212,23 +213,28 @@ public class Fragment_History_1 extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HashMap<String, String> map = list.get(i);
                 if ("1".equals(map.get("report_status"))){
-                    url = map.get("report_url");
-                    webView.loadUrl(url);
-                    LinearLayout qr_view = (LinearLayout) LayoutInflater.from(parentActivity).inflate(R.layout.qr_view, null);
-                    ImageView qr_img = (ImageView) qr_view.findViewById(R.id.qr_img);
-                    qr_img.setImageBitmap(QRHelper.createQR(url, 800, 800));
-                    final AlertDialog alertDialog = new AlertDialog.Builder(parentActivity).setView(qr_view)
-                            .setPositiveButton("完成", null).create();
+                    if("1".equals(SharedPreUtil.getInstance().getUser().getPermission())){
+                        url = map.get("report_url");
+                        webView.loadUrl(url);
+                        LinearLayout qr_view = (LinearLayout) LayoutInflater.from(parentActivity).inflate(R.layout.qr_view, null);
+                        ImageView qr_img = (ImageView) qr_view.findViewById(R.id.qr_img);
+                        qr_img.setImageBitmap(QRHelper.createQR(url, 800, 800));
+                        final AlertDialog alertDialog = new AlertDialog.Builder(parentActivity).setView(qr_view)
+                                .setPositiveButton("完成", null).create();
 
-                    web_title.setText(map.get("model") + " " + map.get("d_model"));
-                    mPopupWindow.showAtLocation(parentActivity.findViewById(R.id.root_layout), Gravity.BOTTOM, 0, 0);
+                        web_title.setText(map.get("model") + " " + map.get("d_model"));
+                        mPopupWindow.showAtLocation(parentActivity.findViewById(R.id.root_layout), Gravity.BOTTOM, 0, 0);
 
-                    qr_img_button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.show();
-                        }
-                    });
+                        qr_img_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alertDialog.show();
+                            }
+                        });
+                    }else{
+                        Toast.makeText(getActivity(),"抱歉，您没有权限查看详细报告",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
             }

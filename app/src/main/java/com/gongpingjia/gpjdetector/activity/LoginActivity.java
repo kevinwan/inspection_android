@@ -113,6 +113,7 @@ public class LoginActivity extends BaseActivity {
                 userInfo.setCompany(jsonObject.getString("company_name"));
                 userInfo.setEmail(jsonObject.getString("email"));
                 userInfo.setPhone(jsonObject.getString("phone"));
+                userInfo.setPermission(jsonObject.getString("permission"));
                 userInfo.setUser_type(jsonObject.getString("user_type"));
             } catch (JSONException e) {
                 e.printStackTrace();

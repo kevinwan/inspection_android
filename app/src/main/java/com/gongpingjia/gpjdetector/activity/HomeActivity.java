@@ -249,6 +249,7 @@ public class HomeActivity extends BaseActivity {
                 userInfo.setEmail(jsonObject.getString("email"));
                 userInfo.setPhone(jsonObject.getString("phone"));
                 userInfo.setUser_type(jsonObject.getString("user_type"));
+                userInfo.setPermission(jsonObject.getString("permission"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
