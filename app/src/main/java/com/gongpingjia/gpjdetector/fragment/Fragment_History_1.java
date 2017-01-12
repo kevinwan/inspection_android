@@ -302,7 +302,7 @@ public class Fragment_History_1 extends BaseFragment {
 
             String report_status = "";
             if ("0".equals(map.get("report_status"))) {
-                report_status = "定价中...";
+                report_status = "定价中";
                 viewHoler.report_status.setTextColor(Color.RED);
             } else if ("1".equals(map.get("report_status"))) {
                 report_status = "已定价";

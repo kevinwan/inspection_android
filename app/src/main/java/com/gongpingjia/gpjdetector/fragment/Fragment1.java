@@ -9,8 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -160,6 +162,23 @@ public class Fragment1 extends BaseFragment {
                 saveData2DB();
             }
         });
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("last_capture_path", last_capture_path);
+        saveData2DB();
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (TextUtils.isEmpty(last_capture_path) && savedInstanceState != null) {
+            last_capture_path = savedInstanceState.getString("last_capture_path");
+        }
     }
 
     private void initGuidePop() {

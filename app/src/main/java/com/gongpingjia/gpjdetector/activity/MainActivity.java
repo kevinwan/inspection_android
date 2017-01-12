@@ -1081,7 +1081,8 @@ public class MainActivity extends FragmentActivity {
                     }*/
 
                     String value = items11list.get(index).getValue();
-                    if (items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
+
+                    if (items11list.get(index).getKey().equals("GHCS") ||items11list.get(index).getKey().equals("CJH") || items11list.get(index).getKey().equals("CPH") || items11list.get(index).getKey().equals("FDJH") || items11list.get(index).getKey().equals("FPJG") || items11list.get(index).getKey().equals("CX") || items11list.get(index).getKey().equals("LCS")) {
 
                     } else {
                         if (null == value || value.equals("")) {
