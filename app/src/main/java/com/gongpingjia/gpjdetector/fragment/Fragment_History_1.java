@@ -181,6 +181,7 @@ public class Fragment_History_1 extends BaseFragment {
                         map.put("time", item.getString("time"));
                         map.put("id", item.getString("id"));
                         map.put("report_url", item.getString("report_url"));
+                        map.put("car_img", item.getString("car_img"));
 
                         list.add(map);
                     }
@@ -261,6 +262,7 @@ public class Fragment_History_1 extends BaseFragment {
                         map.put("id", item.getString("id"));
                         map.put("report_url", item.getString("report_url"));
                         map.put("report_status", item.getString("report_status"));
+                        map.put("car_img", item.getString("car_img"));
                         list.add(map);
                     }
                     adapter.notifyDataSetChanged();
@@ -317,7 +319,7 @@ public class Fragment_History_1 extends BaseFragment {
             viewHoler.report_status.setText(report_status);
             viewHoler.time.setText("检测时间：" + map.get("time"));
 
-            viewHoler.thumbnail.setImageUrl(getThumbnailUrl(map.get("model")), imageLoader);
+            viewHoler.thumbnail.setImageUrl(getThumbnailUrl(map.get("car_img")), imageLoader);
 
             if (position == list.size() - 1) {
                 view.findViewById(R.id.more).setVisibility(View.VISIBLE);
