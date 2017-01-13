@@ -42,6 +42,7 @@ import com.gongpingjia.gpjdetector.activity.SplashActivity;
 import com.gongpingjia.gpjdetector.data.kZDBItem;
 import com.gongpingjia.gpjdetector.data.partItem;
 import com.gongpingjia.gpjdetector.global.Constant;
+import com.gongpingjia.gpjdetector.util.DhUtil;
 import com.gongpingjia.gpjdetector.util.PhotoUtil;
 import com.gongpingjia.gpjdetector.utility.FileUtils;
 import com.gongpingjia.gpjdetector.utility.Utils;
@@ -137,7 +138,6 @@ public class Fragment2 extends BaseFragment {
             if (isTransparentPixel(view, (int) motionEvent.getX(), (int) motionEvent.getY())) {
                 return false;
             } else {
-
                 switch (view.getId()) {
                     case R.id.car_part_1:
                         cur_part = 1;
@@ -186,15 +186,13 @@ public class Fragment2 extends BaseFragment {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (baseBitmap == null) {
-                            baseBitmap = Bitmap.createBitmap(Constant.CANVAS_WIDTH,
-                                    Constant.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888);
+                            baseBitmap = Bitmap.createBitmap(DhUtil.dip2px(getActivity(),310),
+                                    DhUtil.dip2px(getActivity(),185), Bitmap.Config.ARGB_8888);
                             canvas = new Canvas(baseBitmap);
                             canvas.drawColor(Color.TRANSPARENT);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-
-
                         canvas.drawCircle(motionEvent.getX(), motionEvent.getY(), 12, paint);
                         surface.setImageBitmap(baseBitmap);
                         switchPart(cur_part);
@@ -330,8 +328,8 @@ public class Fragment2 extends BaseFragment {
         switchPart(activity.lastpart);
 
         if (baseBitmap == null) {
-            baseBitmap = Bitmap.createBitmap(Constant.CANVAS_WIDTH,
-                    Constant.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888);
+            baseBitmap = Bitmap.createBitmap(DhUtil.dip2px(getActivity(),310),
+                    DhUtil.dip2px(getActivity(),185), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(baseBitmap);
             canvas.drawColor(Color.TRANSPARENT);
         }
@@ -394,14 +392,14 @@ public class Fragment2 extends BaseFragment {
     private void showPopupWindow(View parent, int x, int y) {
         LayoutInflater layoutInflater = (LayoutInflater) mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view;
-        if (x > 600) {
+        if (x > DhUtil.dip2px(getActivity(),200)) {
             view = layoutInflater.inflate(R.layout.popupwindow_right, null);
         } else {
             view = layoutInflater.inflate(R.layout.popupwindow_left, null);
         }
         if (popupWindow == null) {
 
-            popupWindow = new PopupWindow(view, 500, WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow = new PopupWindow(view, DhUtil.dip2px(getActivity(),167), WindowManager.LayoutParams.WRAP_CONTENT);
         } else {
             popupWindow.setContentView(view);
         }
@@ -431,10 +429,10 @@ public class Fragment2 extends BaseFragment {
             }
         });
         WindowManager windowManager = (WindowManager) mainActivity.getSystemService(Context.WINDOW_SERVICE);
-        if (x > 600) {
-            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x - 436, y + 8);
+        if (x > DhUtil.dip2px(getActivity(),200)) {
+            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x - DhUtil.dip2px(getActivity(),145), y + DhUtil.dip2px(getActivity(),3));
         } else {
-            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x, y + 8);
+            popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x, y + DhUtil.dip2px(getActivity(),3));
         }
 
 

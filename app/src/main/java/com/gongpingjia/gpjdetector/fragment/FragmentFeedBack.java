@@ -37,7 +37,7 @@ public class FragmentFeedBack extends BaseFragment {
     private void initView() {
         mainActivity = (MainActivity_) getActivity();
         TextView banner_titleT = (TextView) mainV.findViewById(R.id.banner_title);
-        banner_titleT.setText("检测说明");
+        banner_titleT.setText("车况补充说明");
         contentE = (EditText) mainV.findViewById(R.id.content);
         contentE.setTag("JCBG");
 

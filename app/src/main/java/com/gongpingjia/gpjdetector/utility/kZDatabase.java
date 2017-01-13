@@ -319,7 +319,7 @@ public class kZDatabase extends SQLiteAssetHelper {
     public void deleteItem(String id) {
         SQLiteDatabase db = getWritableDatabase();
         try {
-            db.execSQL("DELETE FROM"+ Constant.getTableName()+"WHERE _id='" + id + "'");
+            db.execSQL("DELETE FROM "+ Constant.getTableName()+" WHERE _id = '" + id + "'");
         } catch (SQLiteException e) {
             Log.e("SQLiteException", e.toString());
         }

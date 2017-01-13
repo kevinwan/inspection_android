@@ -13,157 +13,160 @@
         android:layout_height="185dp">
         <View
             android:id="@+id/car_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_bg"/>
         <View
             android:id="@+id/car_part_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_1"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_2"
             android:background="@drawable/car_part_2"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_3"
             android:background="@drawable/car_part_3"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_4"
             android:background="@drawable/car_part_4"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_5"
             android:background="@drawable/car_part_5"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_6"
             android:background="@drawable/car_part_6"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_7"
             android:background="@drawable/car_part_7"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_8"
             android:background="@drawable/car_part_8"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_9"
             android:background="@drawable/car_part_9"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_10"
             android:background="@drawable/car_part_10"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_11"
             android:background="@drawable/car_part_11"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_12"
             android:background="@drawable/car_part_12"/>
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/car_part_13"
             android:background="@drawable/car_part_13"/>
         <View
             android:id="@+id/b_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_1_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_2_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_3_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_4_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_5_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_6_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_7_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_8_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_9_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_10_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_11_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_12_b"
             android:visibility="gone"/>
         <View
             android:id="@+id/b_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/car_part_13_b"
             android:visibility="gone"/>
-
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/surface"
+            android:scaleType="fitXY"
             android:background="@drawable/car_surface"/>
+
     </FrameLayout>
+
+
 </LinearLayout>

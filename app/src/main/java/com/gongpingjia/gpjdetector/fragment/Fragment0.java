@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.EnhancedEditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -71,6 +72,9 @@ public class Fragment0 extends BaseFragment {
     @ViewById
     Button slidingmenu_toggler, extra;
 
+    @ViewById
+    ImageView known_im;
+
     View views[];
 
     PopupWindow mPopupWindow;
@@ -107,6 +111,11 @@ public class Fragment0 extends BaseFragment {
 
 
     @Click
+    public void known_im() {
+        known_im.setVisibility(View.GONE);
+    }
+
+    @Click
     public void slidingmenu_toggler() {
         mainActivity.getSlidingMenu().toggle();
     }
@@ -115,6 +124,11 @@ public class Fragment0 extends BaseFragment {
     @AfterViews
     public void afterViews() {
         edittext1.requestFocus();
+
+        if (getActivity().getSharedPreferences("fragment_first_in",0).getBoolean("fragment_first_in",true)) {
+            known_im.setVisibility(View.VISIBLE);
+            getActivity().getSharedPreferences("fragment_first_in",0).edit().putBoolean("fragment_first_in",false).commit();
+        }
         if (UserLocation.getInstance().isIslocation()) {
             edittext17.setText(UserLocation.getInstance().getCity());
         }
@@ -125,7 +139,7 @@ public class Fragment0 extends BaseFragment {
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         colors = new LinearLayout[] {baise, heise, yinse, huise, hongse, zongse, hese, lanse,
                 jinse, chengse, mise, huangse, zise, qingse, lvse, otherse};
-        banner_title.setText("车辆信息");
+        banner_title.setText("车辆基本信息");
         final View popupView = mainActivity.getLayoutInflater().inflate(R.layout.popupview, null);
         final Button btnComplete = (Button) popupView.findViewById(R.id.complete);
         final Button add = (Button) popupView.findViewById(R.id.add);
