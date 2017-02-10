@@ -213,8 +213,15 @@ public class Fragment0 extends BaseFragment {
 
 
                 if (null != mainActivity.shangpai_time && !TextUtils.isEmpty(edittext1.getText().toString())) {
-                    minCal.set(Calendar.YEAR, mainActivity.shangpai_time[2]);
-                    maxCal.set(Calendar.YEAR, mainActivity.shangpai_time[0]);
+                    if(mainActivity.shangpai_time[2] == 0){
+                        mainActivity.shangpai_time[2] = 2002;
+                    }else{
+                        minCal.set(Calendar.YEAR, mainActivity.shangpai_time[2]);
+                    }
+                    if(mainActivity.shangpai_time[0] != 0){
+                        maxCal.set(Calendar.YEAR, mainActivity.shangpai_time[0]);
+                    }
+
                     //首次上牌时间选择
                     mainActivity.showDateDialog(view, "上牌时间", minCal, maxCal, false);
                 } else {

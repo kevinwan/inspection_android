@@ -217,6 +217,7 @@ public class MainActivity extends FragmentActivity {
             e.printStackTrace();
             optionJsonArray = new JSONArray();
             shangpai_time = new int[4];
+            MobclickAgent.reportError(this,e.getMessage());
         }
 
 
