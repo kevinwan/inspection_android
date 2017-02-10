@@ -60,9 +60,9 @@ public class Fragment0 extends BaseFragment {
     @ViewById
     TableLayout colorTable;
     @ViewById
-    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6,edittext14,edittext15,edittext16,edittext17;
+    EditText edittext1, edittext2, edittext3, edittext4, edittext5, edittext6, edittext14, edittext15, edittext16, edittext17;
     @ViewById
-    EnhancedEditText edittext7,edittext18;
+    EnhancedEditText edittext7, edittext18;
     @ViewById
     RadioGroup radiogroup8;
 
@@ -90,10 +90,10 @@ public class Fragment0 extends BaseFragment {
     private final int REQUEST_CITY_FRAGMENT1 = 10;
 
     private final int CHANGE_CITY = 101;
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case CHANGE_CITY:
                     String city = msg.obj.toString();
                     edittext17.setText(city);
@@ -125,9 +125,9 @@ public class Fragment0 extends BaseFragment {
     public void afterViews() {
         edittext1.requestFocus();
 
-        if (getActivity().getSharedPreferences("fragment_first_in",0).getBoolean("fragment_first_in",true)) {
+        if (getActivity().getSharedPreferences("fragment_first_in", 0).getBoolean("fragment_first_in", true)) {
             known_im.setVisibility(View.VISIBLE);
-            getActivity().getSharedPreferences("fragment_first_in",0).edit().putBoolean("fragment_first_in",false).commit();
+            getActivity().getSharedPreferences("fragment_first_in", 0).edit().putBoolean("fragment_first_in", false).commit();
         }
         if (UserLocation.getInstance().isIslocation()) {
             edittext17.setText(UserLocation.getInstance().getCity());
@@ -137,7 +137,7 @@ public class Fragment0 extends BaseFragment {
         chuxian_list = mainActivity.getchuxian_list();
         menu = mainActivity.getSlidingMenu();
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-        colors = new LinearLayout[] {baise, heise, yinse, huise, hongse, zongse, hese, lanse,
+        colors = new LinearLayout[]{baise, heise, yinse, huise, hongse, zongse, hese, lanse,
                 jinse, chengse, mise, huangse, zise, qingse, lvse, otherse};
         banner_title.setText("车辆基本信息");
         final View popupView = mainActivity.getLayoutInflater().inflate(R.layout.popupview, null);
@@ -174,7 +174,7 @@ public class Fragment0 extends BaseFragment {
         edittext18.setSuffixColor(Color.parseColor("#ff585858"));
         edittext18.setSuffixText("万公里");
         views = new View[]{edittext1, edittext2, edittext3, edittext4, edittext5, edittext7,
-                radiogroup8,edittext17,edittext16,edittext18};
+                radiogroup8, edittext17, edittext16, edittext18};
         mainActivity.getSlidingMenu().setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
             @Override
             public void onOpened() {
@@ -214,11 +214,7 @@ public class Fragment0 extends BaseFragment {
 
                 if (null != mainActivity.shangpai_time && !TextUtils.isEmpty(edittext1.getText().toString())) {
                     minCal.set(Calendar.YEAR, mainActivity.shangpai_time[2]);
-                    minCal.set(Calendar.MONTH, mainActivity.shangpai_time[3] - 1);
-
                     maxCal.set(Calendar.YEAR, mainActivity.shangpai_time[0]);
-                    maxCal.set(Calendar.MONTH, mainActivity.shangpai_time[1] - 1);
-
                     //首次上牌时间选择
                     mainActivity.showDateDialog(view, "上牌时间", minCal, maxCal, false);
                 } else {
@@ -253,9 +249,9 @@ public class Fragment0 extends BaseFragment {
         //交强险到期时间
         maxCal = Calendar.getInstance();
         maxCal.add(Calendar.YEAR, 3);
-        getDate(edittext4, curCal, maxCal, true,"交强险到期");
+        getDate(edittext4, curCal, maxCal, true, "交强险到期");
         //商业险到期时间
-        getDate(edittext5, curCal, maxCal, true,"商业险到期");
+        getDate(edittext5, curCal, maxCal, true, "商业险到期");
         //年检到期时间
        /* maxCal = Calendar.getInstance();
         maxCal.add(Calendar.YEAR, 6);
@@ -269,7 +265,6 @@ public class Fragment0 extends BaseFragment {
                 return false;
             }
         });
-
 
 
         edittext7.addTextChangedListener(new DoubleTextWatcher(edittext7));
@@ -286,7 +281,7 @@ public class Fragment0 extends BaseFragment {
                 case REQUEST_CITY_FRAGMENT1:
                     isChangCity = true;
                     String city1 = data.getExtras().getString("city");
-                    if(city1 != null){
+                    if (city1 != null) {
                         Message msg = Message.obtain();
                         msg.what = CHANGE_CITY;
                         msg.obj = city1;
@@ -366,7 +361,7 @@ public class Fragment0 extends BaseFragment {
         }
     };
 
-    private void getDate(final View view, final Calendar minCal, final Calendar maxCal, final boolean negButton,final String dialog_title) {
+    private void getDate(final View view, final Calendar minCal, final Calendar maxCal, final boolean negButton, final String dialog_title) {
         View.OnTouchListener dateListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -439,9 +434,10 @@ public class Fragment0 extends BaseFragment {
 
         }
     }
+
     @Background
     public void saveData() {
-       saveDatafromView();
+        saveDatafromView();
     }
 
 
@@ -460,9 +456,9 @@ public class Fragment0 extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(isChangCity){
+        if (isChangCity) {
             isChangCity = false;
-        }else{
+        } else {
             initView();
         }
 

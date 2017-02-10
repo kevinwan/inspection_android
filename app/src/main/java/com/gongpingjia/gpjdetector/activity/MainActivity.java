@@ -345,7 +345,7 @@ public class MainActivity extends FragmentActivity {
             View view = views[i];
             if (null == list || null == view) return;
             int index = searchIndex((String) view.getTag(), list);
-            if (-1 == index) return;
+            if (-1 == index) continue;
             if (view instanceof EditText) {
                 list.get(index).setValue(((TextView) view).getText().toString());
             } else if (view instanceof EnhancedEditText) {
@@ -381,6 +381,9 @@ public class MainActivity extends FragmentActivity {
         String ret_value = searchValue((String) view.getTag(), list);
         if (null == ret_value) return;
         if (view instanceof EditText) {
+            if(view.getTag() == "CX"){
+                Log.d("hhhhhh","view.getTag()  :"+view.getTag()+"ret_value :"+ret_value);
+            }
             ((EditText) view).setText(ret_value);
         } else if (view instanceof EnhancedEditText) {
             ((EnhancedEditText) view).setText(ret_value);

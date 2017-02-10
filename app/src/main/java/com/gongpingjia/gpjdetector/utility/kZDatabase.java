@@ -10,7 +10,9 @@ import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.gongpingjia.gpjdetector.global.Constant;
+import com.gongpingjia.gpjdetector.global.GPJApplication;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -243,9 +245,13 @@ public class kZDatabase extends SQLiteAssetHelper {
     public void updateItem(String key, String value) {
         SQLiteDatabase db = getWritableDatabase();
         try {
+            if(key == "CX"){
+                Log.d("hhhhhh","UPDATE  value :"+value+"key :"+key);
+            }
             db.execSQL("UPDATE" + " " + Constant.getTableName() + " " + "SET value = '" + value + "' " + "WHERE key='" + key + "'");
         } catch (SQLiteException e) {
             Log.e("SQLiteException", e.toString());
+            MobclickAgent.reportError(GPJApplication.getInstance(),e.toString());
         }
     }
 

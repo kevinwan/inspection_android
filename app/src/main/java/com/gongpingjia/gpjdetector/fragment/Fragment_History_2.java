@@ -89,6 +89,9 @@ public class Fragment_History_2 extends BaseFragment {
                                     //删除记录
                                     db.deleteHistory(historyList.get(position).get("tableName"));
                                     historyList.remove(position);
+                                    if(historyList.size() == 0) {
+                                        no_info.setVisibility(View.VISIBLE);
+                                    }
                                     adapter.notifyDataSetChanged();
                                     Toast.makeText(parentActivity, "删除成功。", Toast.LENGTH_SHORT).show();
                                 }
