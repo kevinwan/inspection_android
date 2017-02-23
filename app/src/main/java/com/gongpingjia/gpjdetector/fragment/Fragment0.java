@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -213,12 +214,12 @@ public class Fragment0 extends BaseFragment {
 
 
                 if (null != mainActivity.shangpai_time && !TextUtils.isEmpty(edittext1.getText().toString())) {
-                    if(mainActivity.shangpai_time[2] == 0){
+                    if (mainActivity.shangpai_time[2] == 0) {
                         mainActivity.shangpai_time[2] = 2002;
-                    }else{
+                    } else {
                         minCal.set(Calendar.YEAR, mainActivity.shangpai_time[2]);
                     }
-                    if(mainActivity.shangpai_time[0] != 0){
+                    if (mainActivity.shangpai_time[0] != 0) {
                         maxCal.set(Calendar.YEAR, mainActivity.shangpai_time[0]);
                     }
 
@@ -294,6 +295,10 @@ public class Fragment0 extends BaseFragment {
                         msg.obj = city1;
                         mHandler.sendMessage(msg);
                     }
+                    break;
+                case Constant.REQUEST_CODE_MODEL:
+                    Bundle bundle = data.getExtras();
+                    edittext1.setText(bundle.getString("modelName") + bundle.getString("modelDetailName"));
                     break;
                 default:
                     break;

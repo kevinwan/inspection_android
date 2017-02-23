@@ -484,9 +484,9 @@ public class MainActivity extends FragmentActivity {
 //    }
 
     public ArrayList<kZDBItem> getDB01Items() {
-        if (null != items11list) {
+        /*if (null != items11list) {
             return items11list;
-        } else {
+        } else {*/
             Cursor cursor;
             items11list = new ArrayList<kZDBItem>();
             cursor = database.getDBItems(10);
@@ -499,7 +499,7 @@ public class MainActivity extends FragmentActivity {
             cursor.close();
             menu_status[0] = true;
             return items11list;
-        }
+//        }
     }
 
     public ArrayList<kZDBItem> getDB02Items() {
@@ -962,6 +962,7 @@ public class MainActivity extends FragmentActivity {
                     if (-1 == index) return;
                     getDB01Items().get(index).setValue(bundle.getString("modelName") + bundle.getString("modelDetailName"));
                     String modelDetailSlug = bundle.getString("modelDetailSlug");
+                    fragment0.onActivityResult(requestCode, resultCode, data);
 
                     requestUtils.getParams(modelDetailSlug, new RequestUtils.OngetParamsCallback() {
                         @Override
